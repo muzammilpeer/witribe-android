@@ -1,7 +1,6 @@
 package com.ranisaurus.databaselayer.model;
 
 import com.orm.SugarRecord;
-import com.ranisaurus.newtorklayer.models.Taglines;
 import com.ranisaurus.utilitylayer.string.StringUtil;
 
 /**
@@ -20,12 +19,12 @@ public class DBTaglines extends SugarRecord {
     public DBTaglines() {
     }
 
-    public DBTaglines(Taglines model, String dbCategoryID) {
-        this.taglineId = model.getId();
-        this.howTo = model.getHowTo();
-        this.tagline = model.getTagline();
-        this.categoryID = dbCategoryID;
-    }
+//    public DBTaglines(Taglines model, String dbCategoryID) {
+//        this.taglineId = model.getId();
+//        this.howTo = model.getHowTo();
+//        this.tagline = model.getTagline();
+//        this.categoryID = dbCategoryID;
+//    }
 
     public String getTaglineId() {
         return taglineId;

@@ -8,10 +8,10 @@ import android.view.View;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.baselayer.view.CircularLoader;
-import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.manager.NetworkConfig;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.protocols.IResponseProtocol;
+import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 
 import java.util.ArrayList;
@@ -160,9 +160,9 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
 
 
     @Override
-    public void responseWithError(Exception error, NetworkRequestEnum requestType) {
+    public void responseWithError(Exception error, BaseNetworkRequest request) {
         try {
-            Log4a.e("Webservice error", error == null || error.getMessage() == null ? "Exception" : error.getMessage() + "Data fetched for Request URL = " + requestType.getRelativeUrl());
+            Log4a.e("Webservice error", error == null || error.getMessage() == null ? "Exception" : error.getMessage() + "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName());
             hideLoader();
         } catch (Exception e) {
             Log4a.printException(e);
@@ -170,9 +170,9 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     }
 
     @Override
-    public void successWithData(Object data, NetworkRequestEnum requestType) {
+    public void successWithData(Object data, BaseNetworkRequest request) {
         try {
-            Log4a.e("Webservice success", "Data fetched for Request URL = " + requestType.getRelativeUrl());
+            Log4a.e("Webservice success", "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName());
             hideLoader();
         } catch (Exception e) {
             Log4a.printException(e);

@@ -1,6 +1,7 @@
 package com.ranisaurus.newtorklayer.requests;
 
 import com.google.gson.JsonObject;
+import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.protocols.IRequestProtocol;
 import com.ranisaurus.utilitylayer.reflection.ReflectionUtil;
 
@@ -17,6 +18,8 @@ abstract public class BaseNetworkRequest implements IRequestProtocol {
     //Data model property
     protected Object dataModel = null;
 
+    protected NetworkRequestEnum networkRequestEnum;
+
     public BaseNetworkRequest() {
         //do any thing
     }
@@ -27,6 +30,10 @@ abstract public class BaseNetworkRequest implements IRequestProtocol {
     public BaseNetworkRequest(Object model) {
         //passing data model to object level variables
         this.dataModel = model;
+    }
+
+    public NetworkRequestEnum getNetworkRequestEnum() {
+        return networkRequestEnum;
     }
 
     public Object getDataModel() {

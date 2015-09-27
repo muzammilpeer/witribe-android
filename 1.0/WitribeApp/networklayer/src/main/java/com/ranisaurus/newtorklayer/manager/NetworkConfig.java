@@ -6,8 +6,8 @@ import android.content.Context;
  * Created by MuzammilPeer on 3/13/2015.
  */
 public class NetworkConfig {
+    private static String baseURL = "http://pitelevision.com/amfphp/Amfphp/index.php?contentType=application/json";
     public Context context;
-    private String baseURL;
     private boolean isBaseURL;
 
     public NetworkConfig() {
@@ -15,6 +15,10 @@ public class NetworkConfig {
 
     public NetworkConfig(Context context) {
         this.context = context;
+    }
+
+    public static String getBaseURL() {
+        return baseURL;
     }
 
     public Context getContext() {
@@ -25,15 +29,11 @@ public class NetworkConfig {
         this.context = context;
     }
 
-    public String getBaseURL() {
-        return baseURL;
-    }
-
     public boolean isBaseURL() {
-        return (baseURL == null && baseURL.length() > 0) ? false : true;
+        return (getBaseURL() == null && getBaseURL().length() > 0) ? false : true;
     }
 
-    public void setBaseURL(String baseURL) {
-        this.baseURL = baseURL;
+    public static void setBaseURL(String url) {
+        baseURL = url;
     }
 }

@@ -3,7 +3,6 @@ package com.ranisaurus.newtorklayer.manager;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.protocols.IResponseProtocol;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 
@@ -46,12 +45,12 @@ public class NetworkManager {
 
     // methods
 
-    public void executeRequest(BaseNetworkRequest request,
-                               final IResponseProtocol delegate, final NetworkRequestEnum requestType)
+    public void executeRequest(final BaseNetworkRequest request,
+                               final IResponseProtocol delegate)
             throws Exception {
 
         if (null == request) {
-            this.respondto(delegate, null, requestType);
+            this.respondto(delegate, null, request);
         }
 
         // if (!internet.isAvailable()) {
@@ -68,9 +67,9 @@ public class NetworkManager {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
                             if (result != null) {
-                                respondto(delegate, result, requestType);
+                                respondto(delegate, result, request);
                             } else {
-                                respondto(delegate, e, requestType);
+                                respondto(delegate, e, request);
                             }
                         }
                     });
@@ -84,9 +83,9 @@ public class NetworkManager {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
                             if (result != null) {
-                                respondto(delegate, result, requestType);
+                                respondto(delegate, result, request);
                             } else {
-                                respondto(delegate, e, requestType);
+                                respondto(delegate, e, request);
                             }
                         }
                     });
@@ -99,9 +98,9 @@ public class NetworkManager {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
                             if (result != null) {
-                                respondto(delegate, result, requestType);
+                                respondto(delegate, result, request);
                             } else {
-                                respondto(delegate, e, requestType);
+                                respondto(delegate, e, request);
                             }
                         }
                     });
@@ -116,16 +115,16 @@ public class NetworkManager {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
                             if (result != null) {
-                                respondto(delegate, result, requestType);
+                                respondto(delegate, result, request);
                             } else {
-                                respondto(delegate, e, requestType);
+                                respondto(delegate, e, request);
                             }
                         }
                     });
 
         } else {
             this.respondto(delegate, new Exception("No Request type defined"),
-                    requestType);
+                    request);
         }
 
     }
@@ -134,15 +133,15 @@ public class NetworkManager {
     //private methods
 
     private void respondto(IResponseProtocol delegate, Exception error,
-                           NetworkRequestEnum type) {
+                           BaseNetworkRequest request) {
         if (null != delegate) {
-            delegate.responseWithError(error, type);
+            delegate.responseWithError(error, request);
         }
     }
 
-    private void respondto(IResponseProtocol delegate, Object data, NetworkRequestEnum type) {
+    private void respondto(IResponseProtocol delegate, Object data, BaseNetworkRequest request) {
         if (null != delegate) {
-            delegate.successWithData(data, type);
+            delegate.successWithData(data, request);
         }
     }
 

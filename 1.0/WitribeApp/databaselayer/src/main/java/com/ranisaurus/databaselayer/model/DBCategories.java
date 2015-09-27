@@ -1,7 +1,6 @@
 package com.ranisaurus.databaselayer.model;
 
 import com.orm.SugarRecord;
-import com.ranisaurus.newtorklayer.models.Categories;
 import com.ranisaurus.utilitylayer.string.StringUtil;
 
 /**
@@ -15,10 +14,10 @@ public class DBCategories extends SugarRecord {
     public DBCategories() {
     }
 
-    public DBCategories(Categories model) {
-        this.categoryId = model.getId();
-        this.category = model.getCategory();
-    }
+//    public DBCategories(Categories model) {
+//        this.categoryId = model.getId();
+//        this.category = model.getCategory();
+//    }
 
     public String getCategoryId() {
         return categoryId;
