@@ -1,5 +1,8 @@
 package com.witribe.witribeapp;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,10 @@ import com.ranisaurus.utilitylayer.network.GsonUtil;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends BaseFragment {
+
+    private Uri imageUri;
+    private String selectedImagePath = "";
+
 
     public MainActivityFragment() {
     }
@@ -56,6 +63,11 @@ public class MainActivityFragment extends BaseFragment {
     @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
+
+
+        //open camera
+        captureCameraPicture();
+
     }
 
     @Override
@@ -91,6 +103,16 @@ public class MainActivityFragment extends BaseFragment {
         params[1] = "13";
         params[2] = "1";
 
+        //let's suppose we have image testing thing
+        try {
+
+
+            Bitmap image = getCaptureCameraPictureBitmap(4);
+            String filePath = getCaptureCameraPictureFilePath();
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+
         WitribeAMFRequest request = new WitribeAMFRequest(params, NetworkRequestEnum.ADD_FAVOURITE_LISTING);
         try {
             NetworkManager.getInstance().executeRequest(request, this);
@@ -101,6 +123,42 @@ public class MainActivityFragment extends BaseFragment {
 
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (imageUri == null) {
+            outState.putString("file-uri", "");
+        } else {
+            outState.putString("file-uri", imageUri.toString());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getBaseActivity().RESULT_OK) {
+            if (requestCode == 1) {
+                String fileName = "";
+                try {
+                    selectedImagePath = imageUri.getPath().toString();
+                    fileName = selectedImagePath.substring(
+                            selectedImagePath.lastIndexOf('/') + 1,
+                            selectedImagePath.length());
+
+                    Log4a.d("Capture Image Name = ", fileName);
+
+                } catch (Exception e) {
+                    Log4a.printException(e);
+                }
+            }
+        } else if (resultCode == getBaseActivity().RESULT_CANCELED) {
+            Intent returnIntent = new Intent();
+            getBaseActivity().setResult(getBaseActivity().RESULT_CANCELED, returnIntent);
+            getBaseActivity().finish();
+        }
+    }
 
     @Override
     public void responseWithError(Exception error, BaseNetworkRequest request) {

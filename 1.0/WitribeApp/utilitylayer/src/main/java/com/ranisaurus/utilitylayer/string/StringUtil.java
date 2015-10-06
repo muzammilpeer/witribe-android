@@ -15,4 +15,6 @@ public class StringUtil {
     public static String getCleanTagline(String tagline) {
         return tagline.replaceAll("\"", "");
     }
+
+
 }

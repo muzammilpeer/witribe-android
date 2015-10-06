@@ -1,6 +1,9 @@
 package com.ranisaurus.baselayer.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +15,9 @@ import com.ranisaurus.newtorklayer.manager.NetworkConfig;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.protocols.IResponseProtocol;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
+import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +29,14 @@ import butterknife.ButterKnife;
  * A placeholder fragment containing a simple view.
  */
 public class BaseFragment extends Fragment implements IResponseProtocol {
+    protected static int CAPTURE_IMAGE_REQUEST_CODE = 101;
     protected View mView; //main layout inflated by fragment
     protected Context mContext;
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
     private List localDataSource = new ArrayList();
+    private Uri captureImageURI;
+    //        outState.putString("file-uri", "");
+    private String captureImageURIKey = "captureImageURI";
 
 
     public BaseFragment() {
@@ -39,6 +48,14 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
 //        if (getParentFragment == null) {
 //            setRetainINstance(true);
 //        }
+
+        // This is a handling for activity recreation for Samsung device capture image from camera
+        if (savedInstanceState != null) {
+            if (!savedInstanceState.getString(captureImageURIKey).equals("")) {
+                captureImageURI = Uri.parse(savedInstanceState.getString(captureImageURIKey));
+            }
+        }
+
     }
 
 
@@ -107,6 +124,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
 
         //set current base activity context
         mContext = getBaseActivity();
+
     }
 
     public void initObjects() {
@@ -156,6 +174,49 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
 
     protected void hideLoader() {
         CircularLoader.hideProgressLoader();
+    }
+
+
+    protected void captureCameraPicture() {
+        ImageUtil.captureCameraImage(getBaseActivity(), CAPTURE_IMAGE_REQUEST_CODE);
+    }
+
+    protected String getCaptureCameraPictureFilePath() throws Exception {
+        if (captureImageURI != null && captureImageURI.getPath() != null) {
+            return captureImageURI.getPath();
+        } else {
+            throw new Exception("File not saved or captured");
+        }
+    }
+
+    protected Bitmap getCaptureCameraPictureBitmap(int sampleSize) throws Exception {
+        return FileUtil.getResizeBitmapObject(getCaptureCameraPictureFilePath(), sampleSize);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (captureImageURI == null) {
+            outState.putString(captureImageURIKey, "");
+        } else {
+            outState.putString(captureImageURIKey, captureImageURI.toString());
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getBaseActivity().RESULT_OK) {
+            if (requestCode == 1) {
+                Log4a.d("Capture Image Name = ", FileUtil.getFileNameFromURI(captureImageURI));
+            }
+        } else if (resultCode == getBaseActivity().RESULT_CANCELED) {
+            Intent returnIntent = new Intent();
+            getBaseActivity().setResult(getBaseActivity().RESULT_CANCELED, returnIntent);
+            getBaseActivity().finish();
+        }
     }
 
 
