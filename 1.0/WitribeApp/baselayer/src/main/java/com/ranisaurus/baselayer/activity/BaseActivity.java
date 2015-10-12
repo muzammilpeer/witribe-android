@@ -2,6 +2,7 @@ package com.ranisaurus.baselayer.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import butterknife.ButterKnife;
 public class BaseActivity extends AppCompatActivity {
 
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
+
+    private TabLayout tabLayoutView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,14 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log4a.printException(e);
         }
+    }
+
+    public TabLayout getTabLayoutView() {
+        return tabLayoutView;
+    }
+
+    public void setTabLayoutView(TabLayout tabLayoutView) {
+        this.tabLayoutView = tabLayoutView;
     }
 
     public void restoreToolBarColorWithStatusBar() {
