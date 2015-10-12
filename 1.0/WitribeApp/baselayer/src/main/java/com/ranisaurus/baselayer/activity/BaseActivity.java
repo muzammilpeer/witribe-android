@@ -135,6 +135,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void popFragmentTillLast() {
+        FragmentManager fm = getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount() - 1; ++i) {
+            fm.popBackStack();
+        }
+    }
+
     public Fragment getLastFragment() {
         FragmentManager fm = getSupportFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {

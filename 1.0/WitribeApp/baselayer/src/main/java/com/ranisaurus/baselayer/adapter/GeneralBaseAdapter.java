@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ranisaurus.baselayer.cell.BaseCell;
+import com.ranisaurus.newtorklayer.models.BaseModel;
 import com.ranisaurus.utilitylayer.reflection.ReflectionUtil;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class GeneralBaseAdapter<VH extends BaseCell>
     Class<VH> viewHolderClass;
     int mResourceID;
     private Context mContext;
-    private List<?> mObjects;
+    private List<? extends BaseModel> mObjects;
 
-    public GeneralBaseAdapter(Context context, int resourceId, Class<VH> vhClass, List<?> dataSource) {
+    public GeneralBaseAdapter(Context context, int resourceId, Class<VH> vhClass, List<? extends BaseModel> dataSource) {
         mContext = context;
         mResourceID = resourceId;
         viewHolderClass = vhClass;
@@ -48,7 +49,7 @@ public class GeneralBaseAdapter<VH extends BaseCell>
 
 
     //utils
-    public Object getItem(int position) {
+    public BaseModel getItem(int position) {
         return mObjects.get(position);
     }
 

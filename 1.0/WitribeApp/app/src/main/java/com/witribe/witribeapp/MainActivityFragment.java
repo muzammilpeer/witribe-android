@@ -23,18 +23,28 @@ import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
+import com.witribe.witribeapp.fragment.ListSubCategoriesFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends BaseFragment {
 
+    @Bind(R.id.container_viewpager)
+    ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private int selectedTabIndex;
 
 
     private Uri imageUri;
     private String selectedImagePath = "";
+
+    private List subCategoriesDataSource = new ArrayList();
 
 
     public MainActivityFragment() {
@@ -52,6 +62,8 @@ public class MainActivityFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, R.layout.fragment_main);
 
+        getBaseActivity().getTabLayoutView().setVisibility(View.VISIBLE);
+
         return mView;
     }
 
@@ -59,8 +71,8 @@ public class MainActivityFragment extends BaseFragment {
     public void initViews() {
         super.initViews();
 
-//        getBaseActivity().hideBackButton();
-//        getBaseActivity().restoreToolBarColorWithStatusBar();
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager(), subCategoriesDataSource);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
     }
 
@@ -74,10 +86,7 @@ public class MainActivityFragment extends BaseFragment {
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
-
-        //open camera
-//        captureCameraPicture();
-
+        getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -131,6 +140,17 @@ public class MainActivityFragment extends BaseFragment {
 
     }
 
+    private void getChannelsDataRequest() {
+        String[] params = new String[2];
+        WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNELS);
+        try {
+            NetworkManager.getInstance().executeRequest(request, this);
+
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -176,6 +196,11 @@ public class MainActivityFragment extends BaseFragment {
                     case LOGIN_WITRIBE_USER: {
                         Log4a.e("Error ", "some error in network");
                     }
+                    break;
+                    case GET_CHANNELS: {
+                        Log4a.e("Error ", "some error in network");
+                    }
+                    break;
                 }
             }
         } catch (Exception e) {
@@ -201,13 +226,11 @@ public class MainActivityFragment extends BaseFragment {
                         // Create the adapter that will return a fragment for each of the three
                         // primary sections of the activity.
                         // Set up the ViewPager with the sections adapter.
-                        mViewPager = (ViewPager) mView.findViewById(R.id.container_viewpager);
+                        subCategoriesDataSource.clear();
+                        subCategoriesDataSource.addAll(model.getData());
 
-                        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager(), model.getData());
-                        mViewPager.setAdapter(mSectionsPagerAdapter);
-                        getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
-
-                        mSectionsPagerAdapter.notifyDataSetChanged();
+                        //get all channels
+                        getChannelsDataRequest();
                     }
                     break;
                     case ADD_FAVOURITE_LISTING: {
@@ -218,12 +241,45 @@ public class MainActivityFragment extends BaseFragment {
                     }
                     break;
 
+                    case GET_CHANNELS: {
+                        DataListResponseModel model = (DataListResponseModel) GsonUtil.getObjectFromJsonObject(data, DataListResponseModel.class);
+                        Log4a.e("Response ", model.toString() + "");
+                        this.getLocalDataSource().clear();
+                        this.getLocalDataSource().addAll(model.getData());
+
+                        mSectionsPagerAdapter.notifyDataSetChanged();
+                        getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
+                    }
+                    break;
+
                 }
             }
         } catch (Exception e) {
             Log4a.printException(e);
         }
     }
+
+    private DataListResponseModel filterChannel(String channelName, List<Data> records) {
+        DataListResponseModel result = new DataListResponseModel();
+        ArrayList<Data> dataList = new ArrayList<Data>();
+
+        if (channelName.equalsIgnoreCase("all")) {
+            dataList.addAll(records);
+        } else {
+            for (Data record : records) {
+                if (record != null) {
+                    if (record.category != null) {
+                        if (record.category.equalsIgnoreCase(channelName) == true) {
+                            dataList.add(record);
+                        }
+                    }
+                }
+            }
+        }
+        result.setData(dataList);
+        return result;
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -254,7 +310,6 @@ public class MainActivityFragment extends BaseFragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pager, container, false);
-//            rootView.setBackgroundColor(android.R.color.holo_red_light);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getString(ARG_SECTION_NUMBER)));
             return rootView;
@@ -263,10 +318,10 @@ public class MainActivityFragment extends BaseFragment {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private Data[] mDataSource;
+        private List<Data> mDataSource;
 
 
-        public SectionsPagerAdapter(FragmentManager fm, Data[] dataSource) {
+        public SectionsPagerAdapter(FragmentManager fm, List dataSource) {
             super(fm);
             mDataSource = dataSource;
         }
@@ -275,19 +330,19 @@ public class MainActivityFragment extends BaseFragment {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(mDataSource[position]);
+            return ListSubCategoriesFragment.newInstance(filterChannel(mDataSource.get(position).displayTitle, getLocalDataSource()));
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return mDataSource.length;
+            return mDataSource.size() - 1;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
 
-            return mDataSource[position].displayTitle;
+            return mDataSource.get(position).displayTitle;
         }
 
         @Override
@@ -298,6 +353,7 @@ public class MainActivityFragment extends BaseFragment {
                 Log4a.printException(e);
             }
         }
+
     }
 
 

@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
+import com.ranisaurus.utilitylayer.logger.Log4a;
+import com.witribe.witribeapp.fragment.LoginFragment;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -90,10 +92,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+        Log4a.e("Fragment Count =", getFragmentsCount() + "");
         int id = item.getItemId();
 
         if (id == R.id.nav_live_channels) {
-
+            popAllFragment();
+//            replaceFragment(new MainActivityFragment(), R.id.container_main);
         } else if (id == R.id.nav_video_on_demand) {
 
         } else if (id == R.id.nav_education) {
@@ -107,7 +112,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_login) {
-
+            replaceFragment(new LoginFragment(), R.id.container_main);
         } else if (id == R.id.nav_logout) {
 
         }
