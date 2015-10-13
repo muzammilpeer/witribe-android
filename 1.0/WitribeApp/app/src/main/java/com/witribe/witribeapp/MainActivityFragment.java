@@ -1,6 +1,7 @@
 package com.witribe.witribeapp;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,6 +72,9 @@ public class MainActivityFragment extends BaseFragment {
     public void initViews() {
         super.initViews();
 
+        this.getLocalDataSource().clear();
+        subCategoriesDataSource.clear();
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager(), subCategoriesDataSource);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -79,6 +83,7 @@ public class MainActivityFragment extends BaseFragment {
     @Override
     public void initObjects() {
         super.initObjects();
+
 
     }
 
@@ -336,7 +341,7 @@ public class MainActivityFragment extends BaseFragment {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return mDataSource.size() - 1;
+            return mDataSource.size();
         }
 
         @Override
@@ -354,6 +359,19 @@ public class MainActivityFragment extends BaseFragment {
             }
         }
 
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mSectionsPagerAdapter.notifyDataSetChanged();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            mSectionsPagerAdapter.notifyDataSetChanged();
+        }
     }
 
 
