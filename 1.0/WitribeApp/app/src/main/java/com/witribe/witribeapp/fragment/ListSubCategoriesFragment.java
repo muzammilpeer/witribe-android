@@ -103,7 +103,6 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     public void initNetworkCalls() {
         super.initNetworkCalls();
 
-//        getChannelsDataRequest();
     }
 
     @Override
@@ -112,56 +111,56 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
         switch (v.getId()) {
         }
     }
+//
+//    private void getChannelsDataRequest() {
+//        String[] params = new String[2];
+//        WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNELS);
+//        try {
+//            NetworkManager.getInstance().executeRequest(request, this);
+//
+//        } catch (Exception e) {
+//            Log4a.printException(e);
+//        }
+//    }
 
-    private void getChannelsDataRequest() {
-        String[] params = new String[2];
-        WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNELS);
-        try {
-            NetworkManager.getInstance().executeRequest(request, this);
+//    @Override
+//    public void responseWithError(Exception error, BaseNetworkRequest request) {
+//        super.responseWithError(error, request);
+//        try {
+//            if (mView != null) {
+//                switch (request.getNetworkRequestEnum()) {
+//                    case GET_CHANNELS: {
+//                        Log4a.e("Error ", "some error in network");
+//                    }
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            Log4a.printException(e);
+//        }
+//    }
 
-        } catch (Exception e) {
-            Log4a.printException(e);
-        }
-    }
-
-    @Override
-    public void responseWithError(Exception error, BaseNetworkRequest request) {
-        super.responseWithError(error, request);
-        try {
-            if (mView != null) {
-                switch (request.getNetworkRequestEnum()) {
-                    case GET_CHANNELS: {
-                        Log4a.e("Error ", "some error in network");
-                    }
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            Log4a.printException(e);
-        }
-    }
-
-    @Override
-    public void successWithData(Object data, BaseNetworkRequest request) {
-        super.successWithData(data, request);
-        try {
-            if (mView != null) {
-                switch (request.getNetworkRequestEnum()) {
-
-                    case GET_CHANNELS: {
-                        DataListResponseModel model = (DataListResponseModel) GsonUtil.getObjectFromJsonObject(data, DataListResponseModel.class);
-                        Log4a.e("Response ", model.toString() + "");
-                        this.getLocalDataSource().clear();
-                        this.getLocalDataSource().addAll(Arrays.asList(model.getData()));
-                        dataGeneralBaseAdapter.notifyDataSetChanged();
-                    }
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            Log4a.printException(e);
-        }
-    }
+//    @Override
+//    public void successWithData(Object data, BaseNetworkRequest request) {
+//        super.successWithData(data, request);
+//        try {
+//            if (mView != null) {
+//                switch (request.getNetworkRequestEnum()) {
+//
+//                    case GET_CHANNELS: {
+//                        DataListResponseModel model = (DataListResponseModel) GsonUtil.getObjectFromJsonObject(data, DataListResponseModel.class);
+//                        Log4a.e("Response ", model.toString() + "");
+//                        this.getLocalDataSource().clear();
+//                        this.getLocalDataSource().addAll(Arrays.asList(model.getData()));
+//                        dataGeneralBaseAdapter.notifyDataSetChanged();
+//                    }
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            Log4a.printException(e);
+//        }
+//    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.ranisaurus.baselayer.activity;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -109,22 +110,22 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment frag, int containerID) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(containerID, frag).addToBackStack(null)
-                .commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.saveFragmentInstanceState(frag);
+        fragmentManager.beginTransaction().replace(containerID, frag).addToBackStack(null).commit();
+
     }
 
     public void replaceFragmentWithoutStack(Fragment frag, int containerID) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(containerID, frag)
-                .commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.saveFragmentInstanceState(frag);
+        fragmentManager.beginTransaction().replace(containerID, frag).commit();
     }
 
     public void addFragment(Fragment frag, int containerID) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(containerID,
-                        frag).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.saveFragmentInstanceState(frag);
+        fragmentManager.beginTransaction().add(containerID, frag).commit();
     }
 
 

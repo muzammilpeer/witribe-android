@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +42,16 @@ public class MainActivityFragment extends BaseFragment {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private int selectedTabIndex;
 
+    private int mCurrentlyShowingFragment;
+
 
     private Uri imageUri;
     private String selectedImagePath = "";
 
     private List subCategoriesDataSource = new ArrayList();
 
+    private DataListResponseModel channels;
+    private DataListResponseModel channelsCategory;
 
     public MainActivityFragment() {
     }
@@ -55,12 +60,34 @@ public class MainActivityFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (savedInstanceState != null)
+        {
+            channels = savedInstanceState.getParcelable("channels");
+            channelsCategory = savedInstanceState.getParcelable("channelsCategory");
+            Log4a.e("onCreateView" , "SAVEINSTANCE = "+subCategoriesDataSource.size());
+            if (channelsCategory != null)
+            {
+                subCategoriesDataSource.clear();
+                subCategoriesDataSource.addAll(channelsCategory.getData());
+            }
+
+            if (channels != null)
+            {
+                getLocalDataSource().clear();
+                getLocalDataSource().addAll(channels.getData());
+            }
+        }
+
+
+
         super.onCreateView(inflater, R.layout.fragment_main);
 
         getBaseActivity().getTabLayoutView().setVisibility(View.VISIBLE);
@@ -69,11 +96,27 @@ public class MainActivityFragment extends BaseFragment {
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState == null) {
+            mCurrentlyShowingFragment = 0;
+        } else {
+            mCurrentlyShowingFragment = savedInstanceState.getInt("currently_showing_fragment");
+
+
+
+        }
+
+    }
+
+
+
+    @Override
     public void initViews() {
         super.initViews();
 
-        this.getLocalDataSource().clear();
-        subCategoriesDataSource.clear();
+//        this.getLocalDataSource().clear();
+//        subCategoriesDataSource.clear();
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager(), subCategoriesDataSource);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -112,18 +155,27 @@ public class MainActivityFragment extends BaseFragment {
 //            Log4a.printException(e);
 //        }
 
-
-        WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNEL_CATEGORIES);
-        try {
-            NetworkManager.getInstance().executeRequest(request, this);
-        } catch (Exception e) {
-            Log4a.printException(e);
+        if (channels != null)
+        {
+            mSectionsPagerAdapter.notifyDataSetChanged();
+            getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
         }
 
-        String[] params = new String[3];
-        params[0] = "39056";
-        params[1] = "13";
-        params[2] = "1";
+        if (subCategoriesDataSource == null || subCategoriesDataSource.size() == 0)
+        {
+            Log4a.e("Network Call", "GET_CHANNEL_CATEGORIES");
+            WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNEL_CATEGORIES);
+            try {
+                NetworkManager.getInstance().executeRequest(request, this);
+            } catch (Exception e) {
+                Log4a.printException(e);
+            }
+        }
+
+//        String[] params = new String[3];
+//        params[0] = "39056";
+//        params[1] = "13";
+//        params[2] = "1";
 
         //let's suppose we have image testing thing
 //        try {
@@ -146,6 +198,7 @@ public class MainActivityFragment extends BaseFragment {
     }
 
     private void getChannelsDataRequest() {
+        Log4a.e("Network Call ", "GET_CHANNELS");
         String[] params = new String[2];
         WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNELS);
         try {
@@ -159,6 +212,20 @@ public class MainActivityFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("currently_showing_fragment", mCurrentlyShowingFragment);
+
+        Log4a.e("onSaveInstanceState", "SAVEINSTANCE = " + subCategoriesDataSource.size());
+
+
+        if (channels != null)
+        {
+            outState.putParcelable("channels", channels);
+        }
+
+        if (channelsCategory != null)
+        {
+            outState.putParcelable("channelsCategory",channelsCategory);
+        }
 
         if (imageUri == null) {
             outState.putString("file-uri", "");
@@ -231,6 +298,7 @@ public class MainActivityFragment extends BaseFragment {
                         // Create the adapter that will return a fragment for each of the three
                         // primary sections of the activity.
                         // Set up the ViewPager with the sections adapter.
+                        channelsCategory = model;
                         subCategoriesDataSource.clear();
                         subCategoriesDataSource.addAll(model.getData());
 
@@ -249,6 +317,8 @@ public class MainActivityFragment extends BaseFragment {
                     case GET_CHANNELS: {
                         DataListResponseModel model = (DataListResponseModel) GsonUtil.getObjectFromJsonObject(data, DataListResponseModel.class);
                         Log4a.e("Response ", model.toString() + "");
+                        channels = model;
+
                         this.getLocalDataSource().clear();
                         this.getLocalDataSource().addAll(model.getData());
 
@@ -368,9 +438,15 @@ public class MainActivityFragment extends BaseFragment {
 
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mSectionsPagerAdapter.notifyDataSetChanged();
+            if (subCategoriesDataSource.size() != 0)
+            {
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            mSectionsPagerAdapter.notifyDataSetChanged();
+            if (subCategoriesDataSource.size() != 0)
+            {
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
         }
     }
 

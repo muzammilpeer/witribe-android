@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -15,9 +16,7 @@ import com.ranisaurus.newtorklayer.manager.NetworkConfig;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.protocols.IResponseProtocol;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
-import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.ranisaurus.utilitylayer.view.ImageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +44,13 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getParentFragment == null) {
-//            setRetainINstance(true);
-//        }
+
+        if (getParentFragment() == null)
+        {
+            setRetainInstance(true);
+        }else {
+//            setRetainInstance(false);
+        }
 
         // This is a handling for activity recreation for Samsung device capture image from camera
         if (savedInstanceState != null) {
@@ -178,7 +181,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
 
 
     protected void captureCameraPicture() {
-        ImageUtil.captureCameraImage(getBaseActivity(), CAPTURE_IMAGE_REQUEST_CODE);
+//        ImageUtil.captureCameraImage(getBaseActivity(), CAPTURE_IMAGE_REQUEST_CODE);
     }
 
     protected String getCaptureCameraPictureFilePath() throws Exception {
@@ -189,9 +192,9 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
         }
     }
 
-    protected Bitmap getCaptureCameraPictureBitmap(int sampleSize) throws Exception {
-        return FileUtil.getResizeBitmapObject(getCaptureCameraPictureFilePath(), sampleSize);
-    }
+//    protected Bitmap getCaptureCameraPictureBitmap(int sampleSize) throws Exception {
+//        return FileUtil.getResizeBitmapObject(getCaptureCameraPictureFilePath(), sampleSize);
+//    }
 
 
     @Override
@@ -210,7 +213,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getBaseActivity().RESULT_OK) {
             if (requestCode == 1) {
-                Log4a.d("Capture Image Name = ", FileUtil.getFileNameFromURI(captureImageURI));
+//                Log4a.d("Capture Image Name = ", FileUtil.getFileNameFromURI(captureImageURI));
             }
         } else if (resultCode == getBaseActivity().RESULT_CANCELED) {
             Intent returnIntent = new Intent();
@@ -223,7 +226,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     @Override
     public void responseWithError(Exception error, BaseNetworkRequest request) {
         try {
-            Log4a.e("Webservice error", error == null || error.getMessage() == null ? "Exception" : error.getMessage() + "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName());
+            Log4a.e("Webservice error", error == null || error.getMessage() == null ? "Exception" : error.getMessage() + "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName() + " , Method Name = " + request.getNetworkRequestEnum().getMethodName());
             hideLoader();
         } catch (Exception e) {
             Log4a.printException(e);
@@ -233,7 +236,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     @Override
     public void successWithData(Object data, BaseNetworkRequest request) {
         try {
-            Log4a.e("Webservice success", "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName());
+            Log4a.e("Webservice success", "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName() + " , Method Name = " + request.getNetworkRequestEnum().getMethodName());
             hideLoader();
         } catch (Exception e) {
             Log4a.printException(e);

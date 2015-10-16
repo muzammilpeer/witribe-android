@@ -52,8 +52,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //setup first screen
         MainActivityFragment fragment = new MainActivityFragment();
         addFragment(fragment, R.id.container_main);
-
     }
+
+
 
 
     @Override
