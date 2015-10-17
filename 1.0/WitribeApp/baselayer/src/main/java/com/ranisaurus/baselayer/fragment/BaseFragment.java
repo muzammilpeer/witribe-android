@@ -2,11 +2,9 @@ package com.ranisaurus.baselayer.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -45,12 +43,12 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getParentFragment() == null)
-        {
-            setRetainInstance(true);
-        }else {
-//            setRetainInstance(false);
-        }
+//        if (getParentFragment() == null)
+//        {
+//            setRetainInstance(true);
+//        }else {
+//            setRetainInstance(true);
+//        }
 
         // This is a handling for activity recreation for Samsung device capture image from camera
         if (savedInstanceState != null) {

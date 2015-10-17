@@ -10,17 +10,10 @@ import android.view.ViewGroup;
 
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
-import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
-import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
-import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
-import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.cell.ListSubCategoryCell;
-
-import java.util.Arrays;
 
 import butterknife.Bind;
 
@@ -61,10 +54,16 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
         super.onCreateView(inflater, R.layout.fragment_listchannels);
 
         if (getArguments() != null) {
-            DataListResponseModel modelData = getArguments().getParcelable(ARG_CATEGORY_NAME);
-            this.getLocalDataSource().clear();
-            this.getLocalDataSource().addAll(modelData.getData());
-            dataGeneralBaseAdapter.notifyDataSetChanged();
+            try {
+                DataListResponseModel modelData = getArguments().getParcelable(ARG_CATEGORY_NAME);
+                if (modelData != null && modelData.getData().size() > 0) {
+                    this.getLocalDataSource().clear();
+                    this.getLocalDataSource().addAll(modelData.getData());
+                    dataGeneralBaseAdapter.notifyDataSetChanged();
+                }
+            } catch (Exception e) {
+                Log4a.printException(e);
+            }
         }
 
         return mView;

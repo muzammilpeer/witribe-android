@@ -9,6 +9,7 @@ import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.BaseModel;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.witribe.witribeapp.R;
+import com.witribe.witribeapp.fragment.ChannelDetailFragment;
 
 import butterknife.Bind;
 
@@ -32,6 +33,8 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     public void updateCell(BaseModel model) {
         position = this.getAdapterPosition();
 
+        mDataSource = model;
+
         if (model instanceof Data) {
             Data dataSource = (Data) model;
 
@@ -50,6 +53,7 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-//        getBaseActivity().replaceFragment(TagLineFragment.createInstance(mDataSource), R.id.container_main);
+        Data dataSource = (Data) mDataSource;
+        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(dataSource), R.id.container_main);
     }
 }

@@ -26,9 +26,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +34,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         .setAction("Action", null).show();
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        setTabLayoutView((TabLayout) findViewById(R.id.container_tabs));
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -47,11 +50,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setTabLayoutView((TabLayout) findViewById(R.id.container_tabs));
-
         //setup first screen
-        MainActivityFragment fragment = new MainActivityFragment();
-        addFragment(fragment, R.id.container_main);
+        if (savedInstanceState == null) {
+            MainActivityFragment fragment = new MainActivityFragment();
+            addFragment(fragment, R.id.container_main);
+        }
     }
 
 
