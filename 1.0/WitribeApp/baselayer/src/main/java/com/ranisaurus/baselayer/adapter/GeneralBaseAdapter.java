@@ -30,6 +30,10 @@ public class GeneralBaseAdapter<VH extends BaseCell>
         this.mObjects = dataSource;
     }
 
+    public List<? extends BaseModel> getmObjects() {
+        return mObjects;
+    }
+
     @Override
     public VH onCreateViewHolder(ViewGroup viewGroup, int i) {
         View inflatedView = LayoutInflater.from(mContext).inflate(mResourceID, viewGroup, false);
@@ -38,6 +42,7 @@ public class GeneralBaseAdapter<VH extends BaseCell>
 
     @Override
     public void onBindViewHolder(VH viewHolder, int i) {
+        viewHolder.setAdapter(this);
         viewHolder.updateCell(getItem(i));
     }
 

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
+import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.newtorklayer.models.BaseModel;
 
 import butterknife.ButterKnife;
@@ -16,6 +17,8 @@ abstract public class BaseCell<T extends BaseModel> extends RecyclerView.ViewHol
     protected T mDataSource;
     protected long position;
 
+    protected GeneralBaseAdapter mAdapter;
+
     public BaseCell(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -26,4 +29,8 @@ abstract public class BaseCell<T extends BaseModel> extends RecyclerView.ViewHol
     }
 
     abstract public void updateCell(T model);
+
+    public void setAdapter(GeneralBaseAdapter adapter) {
+        mAdapter = adapter;
+    }
 }

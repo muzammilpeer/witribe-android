@@ -1,11 +1,11 @@
 package com.ranisaurus.baselayer.activity;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class BaseActivity extends AppCompatActivity {
 
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
-
+    protected ActionBarDrawerToggle mToggle;
     private TabLayout tabLayoutView;
 
     @Override
@@ -111,20 +111,17 @@ public class BaseActivity extends AppCompatActivity {
 
     public void replaceFragment(Fragment frag, int containerID) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.saveFragmentInstanceState(frag);
         fragmentManager.beginTransaction().replace(containerID, frag).addToBackStack(null).commit();
 
     }
 
     public void replaceFragmentWithoutStack(Fragment frag, int containerID) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.saveFragmentInstanceState(frag);
         fragmentManager.beginTransaction().replace(containerID, frag).commit();
     }
 
     public void addFragment(Fragment frag, int containerID) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.saveFragmentInstanceState(frag);
         fragmentManager.beginTransaction().add(containerID, frag).commit();
     }
 
@@ -145,7 +142,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public Fragment getLastFragment() {
         FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
+        if (fm.getBackStackEntryCount() >= 0) {
             return fm.getFragments().get(fm.getBackStackEntryCount());
         }
         return null;

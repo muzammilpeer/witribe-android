@@ -8,8 +8,11 @@ import com.koushikdutta.ion.Ion;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.BaseModel;
 import com.ranisaurus.newtorklayer.models.Data;
+import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.ChannelDetailFragment;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 
@@ -27,6 +30,7 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     public ListSubCategoryCell(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
+
     }
 
     @Override
@@ -53,7 +57,9 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Data dataSource = (Data) mDataSource;
-        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(dataSource), R.id.container_main);
+        DataListResponseModel sharedData = new DataListResponseModel();
+        sharedData.setData((ArrayList) mAdapter.getmObjects());
+
+        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData), R.id.container_main);
     }
 }
