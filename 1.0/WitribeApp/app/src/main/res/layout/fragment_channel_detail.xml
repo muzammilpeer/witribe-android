@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -22,6 +24,35 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:src="@android:drawable/ic_dialog_email" />
+
+        <LinearLayout
+            android:id="@+id/ll_viewers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/fab_favourite"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/iv_channel"
+            android:layout_toLeftOf="@+id/fab_favourite"
+            android:layout_toStartOf="@+id/fab_favourite"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="Viewers :" />
+
+            <TextView
+                android:id="@+id/tv_viewer_count"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="43434" />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_channel"

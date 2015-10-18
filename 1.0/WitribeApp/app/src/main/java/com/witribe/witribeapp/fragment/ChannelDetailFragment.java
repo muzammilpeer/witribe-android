@@ -7,9 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
+import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.R;
@@ -23,21 +27,33 @@ import butterknife.Bind;
 public class ChannelDetailFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String ARG_CATEGORY_NAME = "category_name";
+    private static final String ARG_SELECTED_DATA = "selected_data";
     //     UI references.
     @Bind(R.id.rc_related_channels)
     RecyclerView rcRelatedChannels;
 
+    @Bind(R.id.iv_channel)
+    ImageView ivChannel;
+
+    @Bind(R.id.tv_channel)
+    TextView tvChannelsDescription;
+
+    @Bind(R.id.tv_viewer_count)
+    TextView tvViewersCount;
+
     GeneralBaseAdapter<ListSubCategoryCell> dataGeneralBaseAdapter;
 
     private DataListResponseModel currentData;
+    private Data selectedData;
 //    private StaggeredGridLayoutManager gaggeredGridLayoutManager;
 
 
-    public static ChannelDetailFragment newInstance(DataListResponseModel filterList) {
+    public static ChannelDetailFragment newInstance(DataListResponseModel filterList, Data sData) {
         ChannelDetailFragment fragment = new ChannelDetailFragment();
         Bundle args = new Bundle();
 
         args.putParcelable(ARG_CATEGORY_NAME, filterList);
+        args.putParcelable(ARG_SELECTED_DATA, sData);
 
         fragment.setArguments(args);
         return fragment;
@@ -57,6 +73,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         if (getArguments() != null) {
             try {
                 currentData = getArguments().getParcelable(ARG_CATEGORY_NAME);
+                selectedData = getArguments().getParcelable(ARG_SELECTED_DATA);
             } catch (Exception e) {
                 Log4a.printException(e);
             }
@@ -104,6 +121,27 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         rcRelatedChannels.setAdapter(dataGeneralBaseAdapter);
 
         dataGeneralBaseAdapter.notifyDataSetChanged();
+
+        ivChannel.setOnClickListener(this);
+
+
+        String imageUrl = "http://pitelevision.com/" + selectedData.mobile_large_image;
+
+        Ion.with(ivChannel.getContext())
+                .load(imageUrl)
+                .withBitmap()
+                .placeholder(android.R.color.white)
+                .error(android.R.color.darker_gray)
+                .intoImageView(ivChannel);
+
+        if (selectedData.description != null && selectedData.description.length() > 0) {
+            tvChannelsDescription.setText(selectedData.description);
+        } else {
+            tvChannelsDescription.setText(getString(R.string.no_content_available));
+        }
+        tvViewersCount.setText(selectedData.totalViews);
+
+        getBaseActivity().getSupportActionBar().setTitle(selectedData.title);
     }
 
     @Override
@@ -116,6 +154,11 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.iv_channel: {
+                WebViewFragment fragment = WebViewFragment.newInstance(selectedData);
+                getBaseActivity().replaceFragment(fragment, R.id.container_main);
+            }
+            break;
         }
     }
 

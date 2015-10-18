@@ -2,6 +2,7 @@ package com.ranisaurus.baselayer.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -122,7 +123,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     public void initViews() {
         //Injection Views
         ButterKnife.bind(this, mView);
-
+        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         //set current base activity context
         mContext = getBaseActivity();
 

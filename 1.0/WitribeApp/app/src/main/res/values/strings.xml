@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WitribeApp</string>
     <string name="related_channels">Related Channels</string>
+    <string name="no_content_available">No Content available</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -36,6 +37,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="exit_title">Warning</string>
+    <string name="exit_message">Do you want to exit the application?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"

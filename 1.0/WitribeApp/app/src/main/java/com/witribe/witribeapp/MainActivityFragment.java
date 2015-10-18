@@ -53,9 +53,16 @@ public class MainActivityFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
-        Log4a.e("onCreate", "Called");
         setHasOptionsMenu(true);
+
+        Log4a.e("onCreate", "MainActivityFragment");
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log4a.e("onResume", "MainActivityFragment");
     }
 
     @Override
@@ -73,6 +80,8 @@ public class MainActivityFragment extends BaseFragment {
         super.onCreateView(inflater, R.layout.fragment_main);
 
         getBaseActivity().getTabLayoutView().setVisibility(View.VISIBLE);
+
+        Log4a.e("onCreateView", "MainActivityFragment");
 
         return mView;
     }

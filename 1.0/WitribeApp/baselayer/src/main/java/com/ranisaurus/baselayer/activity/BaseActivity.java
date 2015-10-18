@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -21,7 +24,11 @@ public class BaseActivity extends AppCompatActivity {
 
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
     protected ActionBarDrawerToggle mToggle;
+    protected DrawerLayout mDrawer;
+    protected Toolbar mToolbar;
+
     private TabLayout tabLayoutView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,11 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    public void refreshNavigationToolbar() {
+
+    }
+
     public TabLayout getTabLayoutView() {
         return tabLayoutView;
     }
@@ -95,6 +107,18 @@ public class BaseActivity extends AppCompatActivity {
 
     public void hideBackButton() {
 
+    }
+
+    public void showToolBar() {
+        if (mToolbar != null) {
+            mToolbar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideToolBar() {
+        if (mToolbar != null) {
+            mToolbar.setVisibility(View.GONE);
+        }
     }
 
     public void setScreenTitle(int title) {
@@ -127,10 +151,21 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void popAllFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        for (int i = 0; i < manager.getBackStackEntryCount(); ++i) {
+            trans.remove(manager.getFragments().get(i));
         }
+        trans.commit();
+        manager.popBackStack();
+    }
+
+    public void popFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove(fragment);
+        trans.commit();
+        manager.popBackStack();
     }
 
     public void popFragmentTillLast() {

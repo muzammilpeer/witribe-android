@@ -13,6 +13,7 @@ import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.models.DataSingleResponseModel;
+import com.ranisaurus.newtorklayer.models.Response;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -26,15 +27,21 @@ import butterknife.Bind;
  */
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
 
+    public static Response user_profile;
+
     // UI references.
     @Bind(R.id.email)
     AutoCompleteTextView mEmailView;
+
     @Bind(R.id.password)
     EditText mPasswordView;
+
     @Bind(R.id.email_sign_in_button)
     Button mEmailSignInButton;
+
     @Bind(R.id.login_progress)
     View mProgressView;
+
     @Bind(R.id.login_form)
     View mLoginFormView;
 
@@ -90,6 +97,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
         switch (v.getId()) {
             case R.id.email_sign_in_button: {
+                Log4a.e("Login request ", "hit");
                 loginDataRequest();
             }
             break;
@@ -138,6 +146,10 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     case LOGIN_WITRIBE_USER: {
                         DataSingleResponseModel model = (DataSingleResponseModel) GsonUtil.getObjectFromJsonObject(data, DataSingleResponseModel.class);
                         Log4a.e("Response ", model.toString() + "");
+                        LoginFragment.user_profile = model.getData().response;
+                        getBaseActivity().popAllFragment();
+                        getBaseActivity().refreshNavigationToolbar();
+                        Log4a.e("Fragment Count after login  = ", getBaseActivity().getFragmentsCount() + "");
                     }
                     break;
                 }

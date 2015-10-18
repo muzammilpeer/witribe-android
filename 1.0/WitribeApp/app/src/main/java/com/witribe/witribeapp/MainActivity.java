@@ -1,5 +1,6 @@
 package com.witribe.witribeapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +18,10 @@ import android.view.ViewGroup;
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.fragment.LoginFragment;
+import com.witribe.witribeapp.fragment.WebViewFragment;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, Toolbar.OnClickListener {
 
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setTabLayoutView((TabLayout) findViewById(R.id.container_tabs));
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mToggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
-        drawer.setDrawerListener(mToggle);
-        drawer.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+        mDrawer.setDrawerListener(mToggle);
+        mDrawer.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         mToggle.syncState();
 
 
@@ -64,27 +66,68 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-
+    public void refreshNavigationToolbar() {
+        if (getFragmentsCount() == 1) {
+            mToggle.setDrawerIndicatorEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mDrawer.setDrawerListener(mToggle);
+        } else {
+            mToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mToggle.syncState();
+    }
 
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            if (getFragmentsCount() == 1) {
+            if (getFragmentsCount() == 0) {
+                exitAppDialog();
+            } else if (getFragmentsCount() == 1) {
                 mToggle.setDrawerIndicatorEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                drawer.setDrawerListener(mToggle);
+                mDrawer.setDrawerListener(mToggle);
+                mToggle.syncState();
+                super.onBackPressed();
             } else {
+                if (getLastFragment() instanceof WebViewFragment) {
+                    Log4a.e("Last screen was watch live", "check it");
+                    showToolBar();
+                }
+
                 mToggle.setDrawerIndicatorEnabled(false);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                mToggle.syncState();
+                super.onBackPressed();
             }
-            mToggle.syncState();
-            super.onBackPressed();
         }
+
+
     }
+
+    private void exitAppDialog() {
+        // warning dialog that user is about to exit app
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.exit_title)
+                .setMessage(R.string.exit_message)
+                .setPositiveButton(R.string.yes,
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                // Stop the activity
+                                popAllFragment();
+                                finish();
+                            }
+
+                        }).setNegativeButton(R.string.no, null).show();
+    }
+
 
     @Override
     public void replaceFragment(Fragment frag, int containerID) {
@@ -106,8 +149,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (v.getContentDescription().toString().equalsIgnoreCase("Navigate up")) {
             onBackPressed();
         } else if (v.getContentDescription().toString().equalsIgnoreCase("Open navigation drawer")) {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.openDrawer(GravityCompat.START);
+            mDrawer.openDrawer(GravityCompat.START);
         }
 
         Log4a.e("click recieved", v.getContentDescription().toString());
@@ -163,8 +205,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

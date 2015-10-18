@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 /**
- * Created by muzammilpeer on 10/13/15.
+ * Created by muzammilpeer on 10/18/15.
  */
-public class ListSubCategoryCell extends BaseCell implements View.OnClickListener {
+public class RelatedChannelCell extends BaseCell implements View.OnClickListener {
 
     @Bind(R.id.category_photo)
     ImageView ivCategoryPhoto;
@@ -27,7 +27,7 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     @Bind(R.id.category_name)
     TextView tvCategoryName;
 
-    public ListSubCategoryCell(View itemView) {
+    public RelatedChannelCell(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
 
@@ -44,7 +44,6 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
 
             tvCategoryName.setText(dataSource.title);
             String imageUrl = "http://pitelevision.com/" + dataSource.mobile_small_image;
-//            Log4a.e("Channel Image URL ",imageUrl);
 
             Ion.with(itemView.getContext())
                     .load(imageUrl)
@@ -60,7 +59,6 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     public void onClick(View v) {
         DataListResponseModel sharedData = new DataListResponseModel();
         sharedData.setData((ArrayList) mAdapter.getmObjects());
-
         Data dataSource = (Data) mDataSource;
 
         getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
