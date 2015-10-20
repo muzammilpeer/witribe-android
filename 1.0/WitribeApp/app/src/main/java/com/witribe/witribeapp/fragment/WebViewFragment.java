@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,13 @@ public class WebViewFragment extends BaseFragment {
     @Bind(R.id.vw_playerview)
     VideoView vwPlayerView;
 
+    @Bind(R.id.fab_recording)
+    FloatingActionButton fabRecording;
+
     private Data currentData;
+
+    private boolean recording=false;
+
 
     public static WebViewFragment newInstance(Data filterList) {
         WebViewFragment fragment = new WebViewFragment();
@@ -105,6 +113,22 @@ public class WebViewFragment extends BaseFragment {
         vwPlayerView.requestFocus();
         switchFullScreen();
         getBaseActivity().hideToolBar();
+
+
+        fabRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recording) {
+                    recording = false;
+                    getBaseActivity().stopScreenRecording();
+                } else {
+                    recording = true;
+                    getBaseActivity().startScreenRecording();
+                }
+            }
+        });
+
+
 
     }
 

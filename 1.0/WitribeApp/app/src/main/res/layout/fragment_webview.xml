@@ -4,6 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <SurfaceView
+        android:id="@+id/surface"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_recording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email" />
     <WebView
         android:id="@+id/wv_webview"
         android:layout_width="match_parent"

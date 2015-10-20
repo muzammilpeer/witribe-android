@@ -1,6 +1,8 @@
 package com.ranisaurus.baselayer.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.ButterKnife;
 
-public class BaseActivity extends AppCompatActivity {
+abstract public class BaseActivity extends AppCompatActivity {
 
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
     protected ActionBarDrawerToggle mToggle;
@@ -187,6 +189,14 @@ public class BaseActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         return fm.getBackStackEntryCount();
     }
+
+    //recording features
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    abstract public void startScreenRecording();
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    abstract public void stopScreenRecording();
 
     @Override
     protected void onStop() {

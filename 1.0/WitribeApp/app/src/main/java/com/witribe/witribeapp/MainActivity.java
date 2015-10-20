@@ -15,12 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.fragment.LoginFragment;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, Toolbar.OnClickListener {
+public class MainActivity extends RecordingActivity implements NavigationView.OnNavigationItemSelectedListener, Toolbar.OnClickListener {
 
 
     @Override
