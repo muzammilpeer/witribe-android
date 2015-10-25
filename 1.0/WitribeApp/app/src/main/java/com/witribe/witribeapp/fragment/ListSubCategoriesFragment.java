@@ -7,6 +7,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
@@ -26,6 +28,13 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     // UI references.
     @Bind(R.id.rc_subcategories)
     RecyclerView rcSubCategories;
+
+    @Bind(R.id.ll_subcategories)
+    LinearLayout llSubcategories;
+
+    @Bind(R.id.pb_subcategories)
+    ProgressBar pbSubCategories;
+
     GeneralBaseAdapter<ListSubCategoryCell> dataGeneralBaseAdapter;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
     private String selectedCategory;
@@ -53,6 +62,8 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, R.layout.fragment_listchannels);
 
+        showLoader();
+
         if (getArguments() != null) {
             try {
                 DataListResponseModel modelData = getArguments().getParcelable(ARG_CATEGORY_NAME);
@@ -60,6 +71,9 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
                     this.getLocalDataSource().clear();
                     this.getLocalDataSource().addAll(modelData.getData());
                     dataGeneralBaseAdapter.notifyDataSetChanged();
+                    hideLoader(false);
+                }else {
+                    hideLoader(true);
                 }
             } catch (Exception e) {
                 Log4a.printException(e);
@@ -107,6 +121,28 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     public void onClick(View v) {
 
         switch (v.getId()) {
+        }
+    }
+
+
+    @Override
+    protected void showLoader() {
+        pbSubCategories.setVisibility(View.VISIBLE);
+        rcSubCategories.setVisibility(View.GONE);
+        llSubcategories.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void hideLoader(boolean isError) {
+        pbSubCategories.setVisibility(View.GONE);
+
+        if (isError)
+        {
+            llSubcategories.setVisibility(View.VISIBLE);
+            rcSubCategories.setVisibility(View.GONE);
+        }else {
+            llSubcategories.setVisibility(View.GONE);
+            rcSubCategories.setVisibility(View.VISIBLE);
         }
     }
 }

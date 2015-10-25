@@ -19,8 +19,6 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
-import com.ranisaurus.newtorklayer.manager.NetworkConfig;
-import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -70,6 +68,8 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         ChannelDetailFragment fragment = new ChannelDetailFragment();
         Bundle args = new Bundle();
 
+        Log4a.e("newInstance = "," channels = " + filterList.getData().size() + " ,instance = " +  sData);
+
         args.putParcelable(ARG_CATEGORY_NAME, filterList);
         args.putParcelable(ARG_SELECTED_DATA, sData);
 
@@ -108,6 +108,8 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         super.initViews();
 
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
+
+        getBaseActivity().showToolBar();
     }
 
     @Override
@@ -202,6 +204,15 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         }
     }
 
+    @Override
+    protected void showLoader() {
+        super.showLoader();
+    }
+
+    @Override
+    protected void hideLoader(boolean isError) {
+        super.hideLoader(isError);
+    }
 
     @Override
     public void onDestroyView() {
@@ -214,14 +225,14 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     public void onDestroy() {
         super.onDestroy();
 
-        NetworkManager.setConfiguration(new NetworkConfig(null));
-        getLocalDataSource().clear();
-        if (dataGeneralBaseAdapter != null)
-        {
-            dataGeneralBaseAdapter.notifyDataSetChanged();
-        }
-        setLocalDataSource(null);
-        System.gc();
+//        NetworkManager.setConfiguration(new NetworkConfig(null));
+//        getLocalDataSource().clear();
+//        if (dataGeneralBaseAdapter != null)
+//        {
+//            dataGeneralBaseAdapter.notifyDataSetChanged();
+//        }
+//        setLocalDataSource(null);
+//        System.gc();
         Log4a.e("onDestroy", "IN DETAIL FRAGMENT");
     }
 }

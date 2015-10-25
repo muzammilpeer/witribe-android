@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,7 +30,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
     // UI references.
     @Bind(R.id.email)
-    AutoCompleteTextView mEmailView;
+    EditText mEmailView;
 
     @Bind(R.id.password)
     EditText mPasswordView;
@@ -42,14 +41,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Bind(R.id.login_progress)
     View mProgressView;
 
-    @Bind(R.id.login_form)
-    View mLoginFormView;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
     }
 
 
@@ -67,9 +64,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void initViews() {
         super.initViews();
-
-//        getBaseActivity().hideBackButton();
-//        getBaseActivity().restoreToolBarColorWithStatusBar();
 
     }
 

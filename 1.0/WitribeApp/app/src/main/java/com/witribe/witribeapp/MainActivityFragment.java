@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
@@ -33,6 +35,13 @@ public class MainActivityFragment extends BaseFragment {
 
     @Bind(R.id.container_viewpager)
     ViewPager mViewPager;
+
+    @Bind(R.id.ll_viewpager)
+    LinearLayout llViewPager;
+
+    @Bind(R.id.pb_viewpager)
+    ProgressBar pbViewPager;
+
     private ChannelsCategoryViewPagaerAdapter mSectionsPagerAdapter;
     private int selectedTabIndex;
 
@@ -80,6 +89,11 @@ public class MainActivityFragment extends BaseFragment {
         super.onCreateView(inflater, R.layout.fragment_main);
 
         getBaseActivity().getTabLayoutView().setVisibility(View.VISIBLE);
+
+        if (channels != null)
+        {
+            hideLoader(false);
+        }
 
         Log4a.e("onCreateView", "MainActivityFragment");
 
@@ -139,6 +153,7 @@ public class MainActivityFragment extends BaseFragment {
         if (channelsCategory == null || channelsCategory.getData().size() == 0)
         {
             Log4a.e("Network Call", "GET_CHANNEL_CATEGORIES");
+            showLoader();
             WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNEL_CATEGORIES);
             try {
                 NetworkManager.getInstance().executeRequest(request, this);
@@ -147,6 +162,28 @@ public class MainActivityFragment extends BaseFragment {
             }
         }
 
+    }
+
+    @Override
+    protected void showLoader() {
+        pbViewPager.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.GONE);
+        llViewPager.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void hideLoader(boolean isError) {
+        pbViewPager.setVisibility(View.GONE);
+
+        if (isError)
+        {
+            llViewPager.setVisibility(View.VISIBLE);
+            mViewPager.setVisibility(View.GONE);
+            getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
+        }else {
+            llViewPager.setVisibility(View.GONE);
+            mViewPager.setVisibility(View.VISIBLE);
+        }
     }
 
     private void getChannelsDataRequest() {
@@ -241,9 +278,11 @@ public class MainActivityFragment extends BaseFragment {
                     break;
                     case GET_CHANNELS: {
                         Log4a.e("Error ", "some error in network");
+                        hideLoader(true);
                     }break;
                     case GET_CHANNEL_CATEGORIES: {
                         Log4a.e("Error ", "some error in network");
+                        hideLoader(true);
                     }
                     break;
                 }
@@ -297,6 +336,8 @@ public class MainActivityFragment extends BaseFragment {
 
                         mSectionsPagerAdapter.notifyDataSetChanged();
                         getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
+
+                        hideLoader(false);
                     }
                     break;
 

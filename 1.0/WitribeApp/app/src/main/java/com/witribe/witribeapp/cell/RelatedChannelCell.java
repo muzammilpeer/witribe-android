@@ -74,6 +74,8 @@ public class RelatedChannelCell extends BaseCell implements View.OnClickListener
         sharedData.setData((ArrayList) mAdapter.getmObjects());
         Data dataSource = (Data) mDataSource;
 
-        getBaseActivity().replaceFragmentWithoutStack(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+        ChannelDetailFragment detailFragment =  (ChannelDetailFragment)getBaseActivity().getLastFragment();
+        getBaseActivity().popFragment(detailFragment);
+        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
     }
 }

@@ -64,7 +64,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     // custom onCreateView
     public void onCreateView(LayoutInflater inflater, int resource) {
         mContext = getBaseActivity();
-        mView = inflater.inflate(resource, null, false);
+        mView = inflater.inflate(resource, null, true);
         setupFragment();
     }
 
@@ -123,7 +123,8 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     public void initViews() {
         //Injection Views
         ButterKnife.bind(this, mView);
-        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+//        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //set current base activity context
         mContext = getBaseActivity();
 
@@ -174,7 +175,7 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
         CircularLoader.showProgressLoader(mContext);
     }
 
-    protected void hideLoader() {
+    protected void hideLoader(boolean isError) {
         CircularLoader.hideProgressLoader();
     }
 
@@ -226,7 +227,6 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     public void responseWithError(Exception error, BaseNetworkRequest request) {
         try {
             Log4a.e("Webservice error", error == null || error.getMessage() == null ? "Exception" : error.getMessage() + "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName() + " , Method Name = " + request.getNetworkRequestEnum().getMethodName());
-            hideLoader();
         } catch (Exception e) {
             Log4a.printException(e);
         }
@@ -236,7 +236,6 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     public void successWithData(Object data, BaseNetworkRequest request) {
         try {
             Log4a.e("Webservice success", "Data fetched for Request URL = " + request.getNetworkRequestEnum().getServiceName() + " , Method Name = " + request.getNetworkRequestEnum().getMethodName());
-            hideLoader();
         } catch (Exception e) {
             Log4a.printException(e);
         }

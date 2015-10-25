@@ -13,13 +13,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.fragment.LoginFragment;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 
-public class MainActivity extends RecordingActivity implements NavigationView.OnNavigationItemSelectedListener, Toolbar.OnClickListener {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, Toolbar.OnClickListener {
+
+
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
+
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+
+    @Bind(R.id.container_tabs)
+    TabLayout mTabLayout;
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
 
     @Override
@@ -27,43 +43,31 @@ public class MainActivity extends RecordingActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
         mToolbar.setNavigationOnClickListener(this);
 
         setSupportActionBar(mToolbar);
-
-        setTabLayoutView((TabLayout) findViewById(R.id.container_tabs));
-
-
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        setTabLayoutView(mTabLayout);
 
         mToggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         mDrawer.setDrawerListener(mToggle);
-        mDrawer.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         mToggle.syncState();
 
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //setup first screen
         if (savedInstanceState == null) {
             MainActivityFragment fragment = new MainActivityFragment();
             addFragment(fragment, R.id.container_main);
-//            replaceFragmentWithoutStack(fragment,R.id.container_main);
         }
+
+
     }
 
     public void refreshNavigationToolbar() {
@@ -199,12 +203,26 @@ public class MainActivity extends RecordingActivity implements NavigationView.On
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_login) {
-            replaceFragment(new LoginFragment(), R.id.container_main);
+            if (getLastFragment() instanceof LoginFragment == false)
+            {
+                replaceFragment(new LoginFragment(), R.id.container_main);
+            }
         } else if (id == R.id.nav_logout) {
 
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    @Override
+    public void startScreenRecording() {
+
+    }
+
+    @Override
+    public void stopScreenRecording() {
+
     }
 }

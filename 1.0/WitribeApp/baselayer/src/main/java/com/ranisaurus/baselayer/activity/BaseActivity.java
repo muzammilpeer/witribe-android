@@ -1,7 +1,6 @@
 package com.ranisaurus.baselayer.activity;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,7 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.animation.DecelerateInterpolator;
 
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -114,6 +113,7 @@ abstract public class BaseActivity extends AppCompatActivity {
     public void showToolBar() {
         if (mToolbar != null) {
             mToolbar.setVisibility(View.VISIBLE);
+            mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
         }
     }
 
@@ -128,11 +128,11 @@ abstract public class BaseActivity extends AppCompatActivity {
     }
 
     public void hideKeyboard() {
-        View view = getCurrentFocus();
-        if (view != null) {
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
-                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+//        View view = getCurrentFocus();
+//        if (view != null) {
+//            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+//                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//        }
     }
 
     public void replaceFragment(Fragment frag, int containerID) {

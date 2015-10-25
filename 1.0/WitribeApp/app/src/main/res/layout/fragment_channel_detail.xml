@@ -2,10 +2,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/svMainView"
     android:layout_width="match_parent"
-
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    >
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -76,9 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fab_favourite"
-            android:maxLines="7"
+            android:maxLines="4"
             android:text="@string/large_text"
-            android:minLines="7" />
+            android:minLines="3" />
 
         <TextView
             android:id="@+id/tv_related_channels"
@@ -93,7 +93,7 @@
             android:id="@+id/rc_related_channels"
             android:layout_width="match_parent"
             android:layout_height="@dimen/related_cell_height"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="false"
             android:layout_below="@id/tv_related_channels"
             android:scrollbars="horizontal|vertical">
 
