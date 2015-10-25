@@ -15,4 +15,5 @@ public class ToolBarUtil {
             window.setStatusBarColor(color);
         }
     }
+
 }

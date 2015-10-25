@@ -91,6 +91,8 @@ public class MainActivityFragment extends BaseFragment {
         super.initViews();
         mSectionsPagerAdapter = new ChannelsCategoryViewPagaerAdapter(getChildFragmentManager(), subCategoriesDataSource, getLocalDataSource());
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+
     }
 
     @Override
@@ -117,6 +119,8 @@ public class MainActivityFragment extends BaseFragment {
         super.initListenerOrAdapter();
 
         getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
+
+        getBaseActivity().getSupportActionBar().setTitle(R.string.app_name);
     }
 
     @Override
@@ -236,6 +240,9 @@ public class MainActivityFragment extends BaseFragment {
                     }
                     break;
                     case GET_CHANNELS: {
+                        Log4a.e("Error ", "some error in network");
+                    }break;
+                    case GET_CHANNEL_CATEGORIES: {
                         Log4a.e("Error ", "some error in network");
                     }
                     break;

@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">WitribeApp</string>
+    <string name="live_stream">Live Stream</string>
+
+    <string name="tab_1">tab 1</string>
+    <string name="tab_2">tab 2</string>
+
     <string name="related_channels">Related Channels</string>
     <string name="no_content_available">No Content available</string>
 
@@ -26,6 +31,7 @@
 
 
     <!-- Strings related to login -->
+    <string name="unauthorized_access">Please login first to watch</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>

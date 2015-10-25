@@ -88,11 +88,10 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
 
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<ListSubCategoryCell>(mContext, R.layout.row_list_subcategory, ListSubCategoryCell.class, this.getLocalDataSource());
-        rcSubCategories.setHasFixedSize(true);
 
         gaggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
         rcSubCategories.setLayoutManager(gaggeredGridLayoutManager);
-
+        rcSubCategories.setHasFixedSize(false);
         rcSubCategories.setAdapter(dataGeneralBaseAdapter);
 
         dataGeneralBaseAdapter.notifyDataSetChanged();

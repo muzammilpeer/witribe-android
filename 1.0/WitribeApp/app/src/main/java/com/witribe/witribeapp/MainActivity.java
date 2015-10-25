@@ -62,6 +62,7 @@ public class MainActivity extends RecordingActivity implements NavigationView.On
         if (savedInstanceState == null) {
             MainActivityFragment fragment = new MainActivityFragment();
             addFragment(fragment, R.id.container_main);
+//            replaceFragmentWithoutStack(fragment,R.id.container_main);
         }
     }
 
@@ -185,7 +186,6 @@ public class MainActivity extends RecordingActivity implements NavigationView.On
 
         if (id == R.id.nav_live_channels) {
             popAllFragment();
-//            replaceFragment(new MainActivityFragment(), R.id.container_main);
         } else if (id == R.id.nav_video_on_demand) {
 
         } else if (id == R.id.nav_education) {

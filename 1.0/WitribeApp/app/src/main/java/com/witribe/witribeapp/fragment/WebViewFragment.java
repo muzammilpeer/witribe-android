@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +83,7 @@ public class WebViewFragment extends BaseFragment {
 
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
         getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
     }
 
     @Override
@@ -130,6 +130,7 @@ public class WebViewFragment extends BaseFragment {
 
 
 
+        getBaseActivity().getSupportActionBar().setTitle(R.string.live_stream);
     }
 
     private void switchFullScreen() {

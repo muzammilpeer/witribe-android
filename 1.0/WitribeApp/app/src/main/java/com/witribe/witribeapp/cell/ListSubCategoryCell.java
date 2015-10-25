@@ -1,9 +1,12 @@
 package com.witribe.witribeapp.cell;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.BaseModel;
@@ -11,6 +14,7 @@ import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.ChannelDetailFragment;
+import com.witribe.witribeapp.view.SquareImageView;
 
 import java.util.ArrayList;
 
@@ -22,7 +26,10 @@ import butterknife.Bind;
 public class ListSubCategoryCell extends BaseCell implements View.OnClickListener {
 
     @Bind(R.id.category_photo)
-    ImageView ivCategoryPhoto;
+    SquareImageView ivCategoryPhoto;
+
+    @Bind(R.id.pb_category_photo)
+    ProgressBar pbCategoryPhoto;
 
     @Bind(R.id.category_name)
     TextView tvCategoryName;
@@ -43,15 +50,21 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
             Data dataSource = (Data) model;
 
             tvCategoryName.setText(dataSource.title);
-            String imageUrl = "http://pitelevision.com/" + dataSource.mobile_small_image;
+            String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image).replaceAll(" ", "%20");
 //            Log4a.e("Channel Image URL ",imageUrl);
 
-            Ion.with(itemView.getContext())
-                    .load(imageUrl)
-                    .withBitmap()
-                    .placeholder(android.R.color.white)
-                    .error(android.R.color.darker_gray)
-                    .intoImageView(ivCategoryPhoto);
+            Ion.with(itemView.getContext()).load(imageUrl).withBitmap()
+//                    .placeholder(R.drawable.bg_placeholder)
+//                    .error(R.drawable.bg_placeholder)
+                    .asBitmap()
+                    .setCallback(new FutureCallback<Bitmap>() {
+                        @Override
+                        public void onCompleted(Exception e, Bitmap result) {
+                            ivCategoryPhoto.setImageBitmap(result != null ? result : BitmapFactory.decodeResource(ivCategoryPhoto.getContext().getResources(), R.drawable.bg_placeholder));
+                            pbCategoryPhoto.setVisibility(View.GONE);
+                            ivCategoryPhoto.setVisibility(View.VISIBLE);
+                        }
+                    });
         }
 
     }
