@@ -13,11 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.fragment.LoginFragment;
 import com.witribe.witribeapp.fragment.WebViewFragment;
+import com.witribe.witribeapp.manager.UserManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +41,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     Toolbar mToolbar;
 
 
+    @Bind(R.id.iv_profile_picture)
+    ImageView ivProfileImage;
+
+    @Bind(R.id.tv_full_name)
+    TextView tvFullName;
+
+    @Bind(R.id.tv_email_address)
+    TextView tvCustomerID;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +59,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ButterKnife.bind(this);
 
 
-
-
-        mToolbar.setNavigationOnClickListener(this);
-
         setSupportActionBar(mToolbar);
         setTabLayoutView(mTabLayout);
 
+
+        //setup first screen
+        if (savedInstanceState == null) {
+            if (UserManager.getInstance().isUserLoggedIn()) {
+                MainActivityFragment fragment = new MainActivityFragment();
+                addFragment(fragment, R.id.container_main);
+            } else {
+                LoginFragment fragment = new LoginFragment();
+                addFragment(fragment, R.id.container_main);
+            }
+        }
+
+        refreshNavigationViewData();
+    }
+
+    @Override
+    public void setupNavigationDrawer() {
+        super.setupNavigationDrawer();
+
+        mToolbar.setNavigationOnClickListener(this);
         mToggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
@@ -60,15 +89,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mToggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
-        //setup first screen
-        if (savedInstanceState == null) {
-            MainActivityFragment fragment = new MainActivityFragment();
-            addFragment(fragment, R.id.container_main);
+    @Override
+    public void refreshNavigationViewData() {
+        super.refreshNavigationViewData();
+
+        if (UserManager.getInstance().isUserLoggedIn()) {
+            //setup left navigation bar
+            setupNavigationDrawer();
+
+            tvFullName.setText(UserManager.getInstance().getUserProfile().getFirstName() + " " + UserManager.getInstance().getUserProfile().getLastName());
+            tvCustomerID.setText(UserManager.getInstance().getUserProfile().getCustomerID());
+
+            MenuItem mi = navigationView.getMenu().getItem(3).getSubMenu().getItem(4);
+            mi.setTitle(getString(R.string.menu_logout));
+            navigationView.getMenu().getItem(3).getSubMenu().removeItem(4);
+
+//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_logout).setVisible(true);
+//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_login).setVisible(false);
+        } else {
+            tvFullName.setText("");
+            tvCustomerID.setText("");
+            navigationView.removeAllViews();
+            navigationView.getMenu().getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_login));
+//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_logout).setVisible(false);
+//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_login).setVisible(true);
         }
 
-
+        this.invalidateOptionsMenu();
     }
+
 
     public void refreshNavigationToolbar() {
         if (getFragmentsCount() == 1) {
@@ -180,6 +231,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+//            menu.getItem(0).setIcon(R.drawable.ic_content_remove);
+
+//        if (UserManager.getInstance().isUserLoggedIn()) {
+//            menu.getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_logout));
+//        }else {
+//            menu.getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_login));
+//        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -203,12 +266,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_login) {
-            if (getLastFragment() instanceof LoginFragment == false)
-            {
-                replaceFragment(new LoginFragment(), R.id.container_main);
+            if (item.getTitle().toString().equalsIgnoreCase(getString(R.string.menu_logout))) {
+                UserManager.getInstance().logoutUser();
+                refreshNavigationViewData();
+            } else {
+                // login button
+                if (getLastFragment() instanceof LoginFragment == false) {
+                    replaceFragment(new LoginFragment(), R.id.container_main);
+                }
             }
-        } else if (id == R.id.nav_logout) {
-
+        }else if (id == R.id.nav_logout)
+        {
+            UserManager.getInstance().logoutUser();
+            refreshNavigationViewData();
         }
 
         mDrawer.closeDrawer(GravityCompat.START);

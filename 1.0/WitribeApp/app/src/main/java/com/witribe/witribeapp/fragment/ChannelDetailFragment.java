@@ -24,6 +24,7 @@ import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.cell.RelatedChannelCell;
+import com.witribe.witribeapp.manager.UserManager;
 
 import java.util.Collections;
 
@@ -68,7 +69,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         ChannelDetailFragment fragment = new ChannelDetailFragment();
         Bundle args = new Bundle();
 
-        Log4a.e("newInstance = "," channels = " + filterList.getData().size() + " ,instance = " +  sData);
+        Log4a.e("newInstance = ", " channels = " + filterList.getData().size() + " ,instance = " + sData);
 
         args.putParcelable(ARG_CATEGORY_NAME, filterList);
         args.putParcelable(ARG_SELECTED_DATA, sData);
@@ -151,7 +152,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         rlChannel.setOnClickListener(this);
 
 
-        final String imageUrl =  ("http://pitelevision.com/" + selectedData.mobile_large_image).replaceAll(" ", "%20");
+        final String imageUrl = ("http://pitelevision.com/" + selectedData.mobile_large_image).replaceAll(" ", "%20");
         Ion.with(ivChannel.getContext()).load(imageUrl).withBitmap()
                 .placeholder(R.drawable.bg_placeholder)
                 .error(R.drawable.bg_placeholder)
@@ -160,15 +161,13 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                     @Override
                     public void onCompleted(Exception e, Bitmap result) {
                         Log4a.e("Image Url = ", imageUrl);
-                        if (ivChannel != null && ivChannel.getContext() != null)
-                        {
+                        if (ivChannel != null && ivChannel.getContext() != null) {
                             ivChannel.setImageBitmap(result != null ? result : BitmapFactory.decodeResource(ivChannel.getContext().getResources(), R.drawable.bg_placeholder));
                             pbChannel.setVisibility(View.GONE);
                             ivChannel.setVisibility(View.VISIBLE);
                         }
                     }
                 });
-
 
 
         if (selectedData.description != null && selectedData.description.length() > 0) {
@@ -192,12 +191,11 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 
         switch (v.getId()) {
             case R.id.rl_channel: {
-                if (LoginFragment.user_profile != null)
-                {
+                if (UserManager.getInstance().isUserLoggedIn()) {
                     WebViewFragment fragment = WebViewFragment.newInstance(selectedData);
                     getBaseActivity().replaceFragment(fragment, R.id.container_main);
-                }else {
-                    Snackbar.make(v,R.string.unauthorized_access,Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(v, R.string.unauthorized_access, Snackbar.LENGTH_SHORT).show();
                 }
             }
             break;

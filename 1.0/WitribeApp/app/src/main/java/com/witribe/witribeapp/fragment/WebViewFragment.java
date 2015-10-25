@@ -18,6 +18,7 @@ import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.R;
+import com.witribe.witribeapp.manager.UserManager;
 
 import butterknife.Bind;
 
@@ -27,7 +28,7 @@ import butterknife.Bind;
 public class WebViewFragment extends BaseFragment {
 
     private static final String ARG_CATEGORY_NAME = "category_name";
-    //     UI references.
+    //UI references.
     @Bind(R.id.wv_webview)
     WebView wvWebView;
 
@@ -96,15 +97,14 @@ public class WebViewFragment extends BaseFragment {
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
-
-//        wvWebView.loadUrl("http://pitelevision.com:1935/pitelevision/samaanews3_240p/playlist.m3u8?&token=aUyy89dhy6n82b22");
         wvWebView.setVisibility(View.GONE);
         vwPlayerView.setVisibility(View.VISIBLE);
 
         MediaController mediaController = new MediaController(getBaseActivity());
         mediaController.setAnchorView(vwPlayerView);
         vwPlayerView.setMediaController(mediaController);
-        String fullUrl = currentData.video_iosStreamUrl + "&token=" + LoginFragment.user_profile.getToken();
+
+        String fullUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
         Log4a.e("Streaming URL = ", fullUrl);
 
         MediaPlayer mediaPlayer = new MediaPlayer();

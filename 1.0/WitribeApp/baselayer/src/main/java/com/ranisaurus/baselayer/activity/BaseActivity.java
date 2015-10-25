@@ -56,6 +56,17 @@ abstract public class BaseActivity extends AppCompatActivity {
     }
 
 
+    public void refreshNavigationViewData()
+    {
+
+    }
+
+    public void setupNavigationDrawer()
+    {
+
+    }
+
+
     //setup will be called by oncreateView
     protected void setupActivity() {
         try {

@@ -12,12 +12,13 @@ import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.models.DataSingleResponseModel;
-import com.ranisaurus.newtorklayer.models.Response;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
+import com.witribe.witribeapp.MainActivityFragment;
 import com.witribe.witribeapp.R;
+import com.witribe.witribeapp.manager.UserManager;
 
 import butterknife.Bind;
 
@@ -25,8 +26,6 @@ import butterknife.Bind;
  * Created by muzammilpeer on 10/12/15.
  */
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
-
-    public static Response user_profile;
 
     // UI references.
     @Bind(R.id.email)
@@ -140,9 +139,18 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     case LOGIN_WITRIBE_USER: {
                         DataSingleResponseModel model = (DataSingleResponseModel) GsonUtil.getObjectFromJsonObject(data, DataSingleResponseModel.class);
                         Log4a.e("Response ", model.toString() + "");
-                        LoginFragment.user_profile = model.getData().response;
-                        getBaseActivity().popAllFragment();
-                        getBaseActivity().refreshNavigationToolbar();
+                        UserManager.getInstance().saveUserProfile(model.getData().response);
+
+                        Log4a.e("Fragment Count in Login = ", getBaseActivity().getFragmentsCount() + "");
+                        if (getBaseActivity().getLastFragment() instanceof LoginFragment && getBaseActivity().getFragmentsCount() == 0)
+                        {
+                            getBaseActivity().popFragment(getBaseActivity().getLastFragment());
+                            getBaseActivity().addFragment(new MainActivityFragment(), R.id.container_main);
+                        }else {
+                            getBaseActivity().popAllFragment();
+                            getBaseActivity().refreshNavigationToolbar();
+                        }
+                        getBaseActivity().refreshNavigationViewData();
                         Log4a.e("Fragment Count after login  = ", getBaseActivity().getFragmentsCount() + "");
                     }
                     break;
