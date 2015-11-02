@@ -19,8 +19,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     //all Appcompact library reference latest to v22 and material design.
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.android.support:appcompat-v7:23.0.1'
@@ -28,9 +27,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
     compile 'com.android.support:multidex:1.0.0'
-
     //View Injections
     compile 'com.jakewharton:butterknife:7.0.1'
-
     compile project(':databaselayer')
+    compile project(':ffmpeglayer')
 }

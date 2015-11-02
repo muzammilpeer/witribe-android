@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselayer" />
             <option value="$PROJECT_DIR$/databaselayer" />
+            <option value="$PROJECT_DIR$/ffmpeglayer" />
             <option value="$PROJECT_DIR$/networklayer" />
             <option value="$PROJECT_DIR$/utilitylayer" />
           </set>

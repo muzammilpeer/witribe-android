@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselayer/baselayer.iml" filepath="$PROJECT_DIR$/baselayer/baselayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/databaselayer/databaselayer.iml" filepath="$PROJECT_DIR$/databaselayer/databaselayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ffmpeglayer/ffmpeglayer.iml" filepath="$PROJECT_DIR$/ffmpeglayer/ffmpeglayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/networklayer/networklayer.iml" filepath="$PROJECT_DIR$/networklayer/networklayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/utilitylayer/utilitylayer.iml" filepath="$PROJECT_DIR$/utilitylayer/utilitylayer.iml" />
     </modules>
