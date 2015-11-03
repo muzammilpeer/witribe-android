@@ -97,6 +97,9 @@ public class WebViewFragment extends BaseFragment {
     public void initViews() {
         super.initViews();
 
+        switchFullScreen();
+        getBaseActivity().hideToolBar();
+
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
         getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -106,15 +109,20 @@ public class WebViewFragment extends BaseFragment {
     public void initObjects() {
         super.initObjects();
 
-        //Install FFMpeg
-        String cpuArchNameFromAssets = CpuArchHelper.getCpuArch().getArchFullName();
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Install FFMpeg
+                String cpuArchNameFromAssets = CpuArchHelper.getCpuArch().getArchFullName();
 
-        if (!TextUtils.isEmpty(cpuArchNameFromAssets)) {
-            InstallationManager installationManager = InstallationManager.getInstance(cpuArchNameFromAssets,getBaseActivity());
-            installationManager.installFFMpegInDevice();
-        } else {
-            Log4a.printException(new Exception("Device not supported"));
-        }
+                if (!TextUtils.isEmpty(cpuArchNameFromAssets)) {
+                    InstallationManager installationManager = InstallationManager.getInstance(cpuArchNameFromAssets, getBaseActivity());
+                    installationManager.installFFMpegInDevice();
+                } else {
+                    Log4a.printException(new Exception("Device not supported"));
+                }
+            }
+        });
 
         //FFMpeg manager debuggin on
         FFmpegManager.getInstance().setContext(getBaseActivity());
@@ -143,8 +151,6 @@ public class WebViewFragment extends BaseFragment {
         vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
         vwPlayerView.start();
         vwPlayerView.requestFocus();
-        switchFullScreen();
-        getBaseActivity().hideToolBar();
 
 
         fabRecording.setOnClickListener(new View.OnClickListener() {
@@ -154,20 +160,21 @@ public class WebViewFragment extends BaseFragment {
                     recording = false;
 //                    getBaseActivity().stopScreenRecording();
 
-                    timeSwapBuff += timeInMilliseconds;
-                    customHandler.removeCallbacks(updateTimerThread);
-
-
-                    if (!vwPlayerView.isPlaying())
-                    {
-                        vwPlayerView.start();
-                        vwPlayerView.requestFocus();
-                    }
 
                     getBaseActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             try {
+                                timeSwapBuff += timeInMilliseconds;
+                                customHandler.removeCallbacks(updateTimerThread);
+
+                                if (!vwPlayerView.isPlaying())
+                                {
+                                    vwPlayerView.resume();
+                                    vwPlayerView.requestFocus();
+                                }
+
+                                //stop the recording
                                 FFmpegManager.getInstance().stopLiveStreamRecording();
                             } catch (Exception e) {
                                 Log4a.printException(e);
@@ -177,15 +184,21 @@ public class WebViewFragment extends BaseFragment {
 
                 } else if (recording == false && vwPlayerView.isPlaying() ){
                     recording = true;
-                    MP4_FILE_PATH  = Environment.getExternalStorageDirectory().getAbsolutePath()  +"/test/"+ UUID.randomUUID() +".mp4";
-
-                    startTime = SystemClock.uptimeMillis();
-                    customHandler.postDelayed(updateTimerThread, 1000);
 
                     getBaseActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            vwPlayerView.stopPlayback();
+                            MP4_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test/" + UUID.randomUUID() + ".mp4";
+
+                            startTime = SystemClock.uptimeMillis();
+                            customHandler.postDelayed(updateTimerThread, 1000);
+
+                            if (vwPlayerView.canPause())
+                            {
+                                vwPlayerView.pause();
+                            }else {
+                                vwPlayerView.stopPlayback();
+                            }
                             FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, null);
                         }
                     });

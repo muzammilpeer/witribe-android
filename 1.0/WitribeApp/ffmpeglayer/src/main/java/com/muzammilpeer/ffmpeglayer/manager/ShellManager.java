@@ -1,6 +1,8 @@
 package com.muzammilpeer.ffmpeglayer.manager;
 
 
+import android.os.AsyncTask;
+
 import com.muzammilpeer.ffmpeglayer.imanager.IBufferStream;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 
@@ -15,6 +17,9 @@ import java.io.OutputStreamWriter;
  */
 public class ShellManager {
 
+    private InputStreamAsync inputStreamAsync;
+    private ErrorStreamAsync errorStreamAsync;
+
     private Process mProcess;
     private int pID;
     private BufferedReader mReaderBuffer;
@@ -22,7 +27,7 @@ public class ShellManager {
     private BufferedWriter mWriterBuffer;
 
     private boolean isTaskRunning = false;
-    private boolean isLogBuffer = false;
+    private boolean isLogBuffer = true;
 
     private static ShellManager ourInstance = new ShellManager();
 
@@ -53,8 +58,12 @@ public class ShellManager {
 
             isTaskRunning = true;
             setupOutputStream(delegate);
-//            setupInputStream(delegate);
-//            setupErrorStream(delegate);
+
+            inputStreamAsync = new InputStreamAsync();
+            inputStreamAsync.execute("");
+
+            errorStreamAsync = new ErrorStreamAsync();
+            errorStreamAsync.execute("");
 
         } catch (IOException e) {
             if (delegate != null)
@@ -200,5 +209,30 @@ public class ShellManager {
 
     public void setLoggingEnable(boolean isLogBuffer) {
         this.isLogBuffer = isLogBuffer;
+    }
+
+
+    class InputStreamAsync extends AsyncTask<String,Void,String>
+    {
+        IBufferStream mDelegate = null;
+
+        @Override
+        protected String doInBackground(String... params) {
+            setupInputStream(mDelegate);
+            return null;
+        }
+
+    }
+
+    class ErrorStreamAsync extends AsyncTask<String,Void,String>
+    {
+        IBufferStream mDelegate = null;
+
+        @Override
+        protected String doInBackground(String... params) {
+            setupErrorStream(mDelegate);
+            return null;
+        }
+
     }
 }

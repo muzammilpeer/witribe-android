@@ -11,8 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -122,16 +120,26 @@ abstract public class BaseActivity extends AppCompatActivity {
     }
 
     public void showToolBar() {
-        if (mToolbar != null) {
-            mToolbar.setVisibility(View.VISIBLE);
-            mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().show();
         }
+
+//        if (mToolbar != null) {
+//            mToolbar.setVisibility(View.VISIBLE);
+//            mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
+//        }
     }
 
     public void hideToolBar() {
-        if (mToolbar != null) {
-            mToolbar.setVisibility(View.GONE);
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().hide();
         }
+
+//        if (mToolbar != null) {
+//            mToolbar.setVisibility(View.GONE);
+//        }
     }
 
     public void setScreenTitle(int title) {
