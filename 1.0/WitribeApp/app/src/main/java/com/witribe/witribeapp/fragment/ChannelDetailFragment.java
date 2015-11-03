@@ -19,9 +19,16 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
+import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
+import com.ranisaurus.newtorklayer.manager.NetworkManager;
+import com.ranisaurus.newtorklayer.models.ChannelScheduleRequestModel;
+import com.ranisaurus.newtorklayer.models.ChannelScheduleResponseModel;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
+import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
+import com.ranisaurus.newtorklayer.requests.TVScheduleRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
+import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.cell.RelatedChannelCell;
 import com.witribe.witribeapp.manager.UserManager;
@@ -184,6 +191,26 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     public void initNetworkCalls() {
         super.initNetworkCalls();
 
+
+        Log4a.e("Network Call", "GET_CHANNEL_SCHEDULE");
+        showLoader();
+        ChannelScheduleRequestModel requestModel = new ChannelScheduleRequestModel();
+        requestModel.setUserid("0");
+        requestModel.setChannellist(selectedData.title.toLowerCase());
+        requestModel.setFromdatetime("201511020000");
+        requestModel.setTodatetime("201511030000");
+        requestModel.setDeviceview("other");
+        requestModel.setChannellogo("0");
+
+        Log4a.e("Channel Name = ", requestModel.getChannellist());
+
+        TVScheduleRequest request = new TVScheduleRequest(requestModel, NetworkRequestEnum.GET_CHANNEL_SCHEDULE);
+        try {
+            NetworkManager.getInstance().executeRequest(request, this);
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+
     }
 
     @Override
@@ -233,4 +260,46 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 //        System.gc();
         Log4a.e("onDestroy", "IN DETAIL FRAGMENT");
     }
+
+
+
+
+    @Override
+    public void responseWithError(Exception error, BaseNetworkRequest request) {
+        super.responseWithError(error, request);
+        try {
+            if (mView != null) {
+                switch (request.getNetworkRequestEnum()) {
+                    case GET_CHANNEL_SCHEDULE: {
+                        Log4a.e("Error ", "some error in network");
+                        hideLoader(true);
+                    }
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+    }
+
+    @Override
+    public void successWithData(Object data, BaseNetworkRequest request) {
+        super.successWithData(data, request);
+        try {
+            if (mView != null) {
+                switch (request.getNetworkRequestEnum()) {
+
+                    case GET_CHANNEL_SCHEDULE: {
+                        ChannelScheduleResponseModel model = (ChannelScheduleResponseModel) GsonUtil.getObjectFromJsonObject(data, ChannelScheduleResponseModel.class);
+                        Log4a.e("Response ", model.toString() + "");
+                        hideLoader(false);
+                    }
+                }
+            }
+        } catch (Exception e)
+        {
+            Log4a.printException(e);
+        }
+    }
+
 }

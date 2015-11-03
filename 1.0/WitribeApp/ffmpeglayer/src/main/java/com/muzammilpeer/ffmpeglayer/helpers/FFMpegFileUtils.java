@@ -28,6 +28,7 @@ public class FFMpegFileUtils {
 
         // create files directory under /data/data/package name
         File filesDirectory = getFilesDirectory(context);
+        Log4a.e("Installation Path", filesDirectory.getAbsolutePath() + outputFileName);
 
         InputStream is;
         try {

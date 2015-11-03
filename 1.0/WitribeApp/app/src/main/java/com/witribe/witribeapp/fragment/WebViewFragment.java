@@ -1,7 +1,11 @@
 package com.witribe.witribeapp.fragment;
 
+import android.annotation.TargetApi;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.MediaController;
-import android.widget.VideoView;
 
 import com.muzammilpeer.ffmpeglayer.helpers.CpuArchHelper;
 import com.muzammilpeer.ffmpeglayer.manager.FFmpegManager;
@@ -23,6 +26,9 @@ import com.muzammilpeer.ffmpeglayer.manager.InstallationManager;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.utilitylayer.logger.Log4a;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.PlayerVideoView;
+import com.ranisaurus.utilitylayer.view.WindowUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.manager.UserManager;
 
@@ -41,7 +47,7 @@ public class WebViewFragment extends BaseFragment {
     WebView wvWebView;
 
     @Bind(R.id.vw_playerview)
-    VideoView vwPlayerView;
+    PlayerVideoView vwPlayerView;
 
     @Bind(R.id.fab_recording)
     FloatingActionButton fabRecording;
@@ -101,13 +107,34 @@ public class WebViewFragment extends BaseFragment {
         getBaseActivity().hideToolBar();
 
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
-        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+
+//        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+
+        wvWebView.setVisibility(View.GONE);
+        vwPlayerView.setVisibility(View.VISIBLE);
+
+        getBaseActivity().getSupportActionBar().setTitle(R.string.live_stream);
+
+
+        if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
+        } else {
+            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+            vwPlayerView.setDimensions(size.WIDTH, size.WIDTH);
+
+        }
     }
 
     @Override
     public void initObjects() {
         super.initObjects();
+
+        streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+        Log4a.e("Streaming URL = ", streamingUrl);
+
 
         getBaseActivity().runOnUiThread(new Runnable() {
             @Override
@@ -124,91 +151,109 @@ public class WebViewFragment extends BaseFragment {
             }
         });
 
-        //FFMpeg manager debuggin on
-        FFmpegManager.getInstance().setContext(getBaseActivity());
-
-
-
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
-        wvWebView.setVisibility(View.GONE);
-        vwPlayerView.setVisibility(View.VISIBLE);
-
-
-
+        //FFMpeg manager debuggin on
+        FFmpegManager.getInstance().setContext(getBaseActivity());
 
         MediaController mediaController = new MediaController(getBaseActivity());
         mediaController.setAnchorView(vwPlayerView);
         vwPlayerView.setMediaController(mediaController);
 
-        streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
-        Log4a.e("Streaming URL = ", streamingUrl);
 
         vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
         vwPlayerView.start();
         vwPlayerView.requestFocus();
+        vwPlayerView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Log4a.e("setOnErrorListener", "came");
+                return false;
+            }
+        });
+
+        vwPlayerView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log4a.e("setOnCompletionListener", "came");
+            }
+        });
+
+        vwPlayerView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                Log4a.e("setOnInfoListener", "came");
+                return false;
+            }
+        });
+
+        vwPlayerView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                Log4a.e("setOnPreparedListener", "came");
+            }
+        });
 
 
         fabRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log4a.e("Clicking check it","nothing happend Recording");
                 if (recording) {
+                    Log4a.e("Click","Stop Recording");
                     recording = false;
-//                    getBaseActivity().stopScreenRecording();
+                    timeSwapBuff += timeInMilliseconds;
+                    customHandler.removeCallbacks(updateTimerThread);
 
+                    if (!vwPlayerView.isPlaying()) {
+                        vwPlayerView.resume();
+                        vwPlayerView.requestFocus();
+                    }
 
-                    getBaseActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                timeSwapBuff += timeInMilliseconds;
-                                customHandler.removeCallbacks(updateTimerThread);
+                    //stop the recording
+                    FFmpegManager.getInstance().stopLiveStreamRecording();
 
-                                if (!vwPlayerView.isPlaying())
-                                {
-                                    vwPlayerView.resume();
-                                    vwPlayerView.requestFocus();
-                                }
+//                    getBaseActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                            } catch (Exception e) {
+//                                Log4a.printException(e);
+//                            }
+//                        }
+//                    });
 
-                                //stop the recording
-                                FFmpegManager.getInstance().stopLiveStreamRecording();
-                            } catch (Exception e) {
-                                Log4a.printException(e);
-                            }
-                        }
-                    });
-
-                } else if (recording == false && vwPlayerView.isPlaying() ){
+                } else if (recording == false) {
                     recording = true;
+                    Log4a.e("Click","Start Recording");
+                    MP4_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test/" + UUID.randomUUID() + ".mp4";
 
-                    getBaseActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            MP4_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test/" + UUID.randomUUID() + ".mp4";
+                    startTime = SystemClock.uptimeMillis();
+                    customHandler.postDelayed(updateTimerThread, 1000);
 
-                            startTime = SystemClock.uptimeMillis();
-                            customHandler.postDelayed(updateTimerThread, 1000);
+                    if (vwPlayerView.canPause()) {
+                        vwPlayerView.pause();
+                    } else {
+                        vwPlayerView.stopPlayback();
+                    }
+                    FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, null);
 
-                            if (vwPlayerView.canPause())
-                            {
-                                vwPlayerView.pause();
-                            }else {
-                                vwPlayerView.stopPlayback();
-                            }
-                            FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, null);
-                        }
-                    });
+//                    getBaseActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                        }
+//                    });
                 }
             }
         });
 
 
 
-        getBaseActivity().getSupportActionBar().setTitle(R.string.live_stream);
     }
 
     private void switchFullScreen() {
@@ -267,4 +312,20 @@ public class WebViewFragment extends BaseFragment {
         }
 
     };
+
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log4a.e("onConfigurationChanged", " called");
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+            vwPlayerView.setDimensions(size.WIDTH, size.WIDTH);
+        } else {
+            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
+        }
+    }
+
 }

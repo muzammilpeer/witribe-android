@@ -33,7 +33,10 @@ public enum NetworkRequestEnum {
     SEARCH_RESULTS_WITH_WORDS(17, "TeachService", "searchResultsWithWords"),
     ADD_FAVOURITE_LISTING(18, "NewWiTribeService", "addFavouritelisting"),
     DELETE_FAVOURITE_LISTING(19, "NewWiTribeService", "deleteFavouritelisting"),
-    GET_COUNTRY_CODE(20, "NewWiTribeService", "getCountryCode"),;// semicolon needed when fields / methods follow
+    GET_COUNTRY_CODE(20, "NewWiTribeService", "getCountryCode"),
+    GET_CHANNEL_SCHEDULE(20, "http://timesofindia.indiatimes.com/", "tvschedulejson.cms"),
+
+    ;// semicolon needed when fields / methods follow
 
     public static boolean isProduction = false;
     /**
@@ -46,10 +49,10 @@ public enum NetworkRequestEnum {
     private String methodName;
 
 
-    NetworkRequestEnum(int code, String relativeUrl, String description) {
+    NetworkRequestEnum(int code, String sName, String mName) {
         this.code = code;
-        this.serviceName = relativeUrl;
-        this.methodName = description;
+        this.serviceName = sName;
+        this.methodName = mName;
     }
 
     public static NetworkRequestEnum getStatus(int i) {

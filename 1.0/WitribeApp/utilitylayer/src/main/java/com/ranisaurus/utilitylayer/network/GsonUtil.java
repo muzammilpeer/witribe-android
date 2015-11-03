@@ -77,10 +77,10 @@ public class GsonUtil {
                     if (returnValue != null) {
                         Log4a.e(method.getName(), returnValue);
                         if (flag) {
-                            sb.append(method.getName() + "=" + returnValue);
+                            sb.append(method.getName().substring(3).toLowerCase() + "=" + returnValue);
                             flag = false;
                         } else {
-                            sb.append("&" + method.getName() + "="
+                            sb.append("&" + method.getName().substring(3).toLowerCase() + "="
                                     + returnValue);
                         }
                     }
