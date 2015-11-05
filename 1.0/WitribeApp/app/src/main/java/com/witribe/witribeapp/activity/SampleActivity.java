@@ -23,13 +23,4 @@ public class SampleActivity extends BaseActivity {
     }
 
 
-    @Override
-    public void startScreenRecording() {
-
-    }
-
-    @Override
-    public void stopScreenRecording() {
-
-    }
 }

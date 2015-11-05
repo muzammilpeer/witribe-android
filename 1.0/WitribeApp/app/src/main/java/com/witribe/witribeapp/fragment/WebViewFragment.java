@@ -3,6 +3,8 @@ package com.witribe.witribeapp.fragment;
 import android.annotation.TargetApi;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -17,7 +19,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.MediaController;
 
 import com.muzammilpeer.ffmpeglayer.helpers.CpuArchHelper;
@@ -26,7 +27,6 @@ import com.muzammilpeer.ffmpeglayer.manager.InstallationManager;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.PlayerVideoView;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
 import com.witribe.witribeapp.R;
@@ -43,9 +43,6 @@ public class WebViewFragment extends BaseFragment {
 
     private static final String ARG_CATEGORY_NAME = "category_name";
     //UI references.
-    @Bind(R.id.wv_webview)
-    WebView wvWebView;
-
     @Bind(R.id.vw_playerview)
     PlayerVideoView vwPlayerView;
 
@@ -63,7 +60,6 @@ public class WebViewFragment extends BaseFragment {
     private Thread mThread;
 
 
-
     public static WebViewFragment newInstance(Data filterList) {
         WebViewFragment fragment = new WebViewFragment();
         Bundle args = new Bundle();
@@ -78,6 +74,8 @@ public class WebViewFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        WindowUtil.hideSystemUi(getBaseActivity());
         setHasOptionsMenu(true);
     }
 
@@ -103,7 +101,24 @@ public class WebViewFragment extends BaseFragment {
     public void initViews() {
         super.initViews();
 
-        switchFullScreen();
+
+
+        getBaseActivity().isFullScreenOptionEnable = true;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getBaseActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        getBaseActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
+
+//        switchFullScreen();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().
+                getMetrics(displayMetrics);
+        int fullScreenWidth=displayMetrics.widthPixels;
+        int fullScreenHeight=displayMetrics.heightPixels;
+
+        vwPlayerView.setDimensions(fullScreenHeight, fullScreenWidth);
+
         getBaseActivity().hideToolBar();
 
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
@@ -112,18 +127,39 @@ public class WebViewFragment extends BaseFragment {
 //        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
-        wvWebView.setVisibility(View.GONE);
         vwPlayerView.setVisibility(View.VISIBLE);
 
         getBaseActivity().getSupportActionBar().setTitle(R.string.live_stream);
 
 
         if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int height = displaymetrics.heightPixels;
+            int width = displaymetrics.widthPixels;
+            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.width = width;
+            params.height=height;
+            params.setMargins(0, 0, 0, 0);
+
+            vwPlayerView.setLayoutParams(params);
+
+//            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+//            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
         } else {
-            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-            vwPlayerView.setDimensions(size.WIDTH, size.WIDTH);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int height = displaymetrics.heightPixels;
+            int width = displaymetrics.widthPixels;
+            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.width = width;
+            params.height=height / 3;
+            params.setMargins(0, 0, 0, 0);
+            vwPlayerView.setLayoutParams(params);
+
+//            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+//            vwPlayerView.setDimensions(size.WIDTH, size.WIDTH);
 
         }
     }
@@ -256,15 +292,16 @@ public class WebViewFragment extends BaseFragment {
 
     }
 
-    private void switchFullScreen() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-        params.width = metrics.widthPixels;
-        params.height = metrics.heightPixels;
-        params.leftMargin = 0;
-        vwPlayerView.setLayoutParams(params);
-    }
+
+//    private void switchFullScreen() {
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+//        params.width = metrics.widthPixels;
+//        params.height = metrics.heightPixels;
+//        params.leftMargin = 0;
+//        vwPlayerView.setLayoutParams(params);
+//    }
 
     private void backFullScreen() {
         DisplayMetrics metrics = new DisplayMetrics();
@@ -320,11 +357,38 @@ public class WebViewFragment extends BaseFragment {
         super.onConfigurationChanged(newConfig);
         Log4a.e("onConfigurationChanged", " called");
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-            vwPlayerView.setDimensions(size.WIDTH, size.WIDTH);
+
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int height = displaymetrics.heightPixels;
+            int width = displaymetrics.widthPixels;
+            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.width = width;
+            params.height=height;
+            params.setMargins(0, 0, 0, 0);
+
+            vwPlayerView.setLayoutParams(params);
+
+            vwPlayerView.setDimensions(width, height);
+
+
         } else {
-            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
+//            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
+//            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
+
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int height = displaymetrics.heightPixels;
+            int width = displaymetrics.widthPixels;
+            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.width = width;
+            params.height=height / 3;
+            params.setMargins(0, 0, 0, 0);
+            vwPlayerView.setLayoutParams(params);
+
+            vwPlayerView.setDimensions(width, height);
+
         }
     }
 

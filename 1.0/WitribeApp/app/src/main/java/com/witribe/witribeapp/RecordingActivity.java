@@ -17,7 +17,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Surface;
@@ -91,21 +90,21 @@ abstract public class RecordingActivity  extends BaseActivity {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void startScreenRecording() {
-        Snackbar.make(mToolbar,"Start Recording",Snackbar.LENGTH_SHORT).show();
-        Intent permissionIntent = mMediaProjectionManager.createScreenCaptureIntent();
-        startActivityForResult(permissionIntent, REQUEST_CODE_CAPTURE_PERM);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void stopScreenRecording() {
-        releaseEncoders();
-        Snackbar.make(mToolbar,"Stop Recording \n File Path :" +internalStoragePath,Snackbar.LENGTH_SHORT).show();
-    }
-
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    public void startScreenRecording() {
+//        Snackbar.make(mToolbar,"Start Recording",Snackbar.LENGTH_SHORT).show();
+//        Intent permissionIntent = mMediaProjectionManager.createScreenCaptureIntent();
+//        startActivityForResult(permissionIntent, REQUEST_CODE_CAPTURE_PERM);
+//    }
+//
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    public void stopScreenRecording() {
+//        releaseEncoders();
+//        Snackbar.make(mToolbar,"Stop Recording \n File Path :" +internalStoragePath,Snackbar.LENGTH_SHORT).show();
+//    }
+//
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (REQUEST_CODE_CAPTURE_PERM == requestCode) {

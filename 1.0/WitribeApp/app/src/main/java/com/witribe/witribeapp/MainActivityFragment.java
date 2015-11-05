@@ -21,6 +21,7 @@ import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
+import com.ranisaurus.utilitylayer.view.WindowUtil;
 import com.witribe.witribeapp.adapter.ChannelsCategoryViewPagaerAdapter;
 
 import java.util.ArrayList;
@@ -103,6 +104,9 @@ public class MainActivityFragment extends BaseFragment {
     @Override
     public void initViews() {
         super.initViews();
+
+        WindowUtil.showSystemUi(getBaseActivity());
+
         mSectionsPagerAdapter = new ChannelsCategoryViewPagaerAdapter(getChildFragmentManager(), subCategoriesDataSource, getLocalDataSource());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 

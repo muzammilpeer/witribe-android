@@ -1,5 +1,6 @@
 package com.witribe.witribeapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
-import com.witribe.witribeapp.MainActivityFragment;
+import com.witribe.witribeapp.MainActivity;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.manager.UserManager;
 
@@ -45,7 +46,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
     }
 
 
@@ -53,8 +54,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, R.layout.fragment_login);
-
-        getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
 
         return mView;
     }
@@ -100,6 +99,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void loginDataRequest() {
+        showLoader();
         String[] params = new String[2];
         params[0] = mEmailView.getText().toString() + "";
         params[1] = mPasswordView.getText().toString() + "";
@@ -120,6 +120,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             if (mView != null) {
                 switch (request.getNetworkRequestEnum()) {
                     case LOGIN_WITRIBE_USER: {
+                        hideLoader(true);
                         Log4a.e("Error ", "some error in network");
                     }
                 }
@@ -137,21 +138,16 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 switch (request.getNetworkRequestEnum()) {
 
                     case LOGIN_WITRIBE_USER: {
+                        hideLoader(false);
                         DataSingleResponseModel model = (DataSingleResponseModel) GsonUtil.getObjectFromJsonObject(data, DataSingleResponseModel.class);
                         Log4a.e("Response ", model.toString() + "");
                         UserManager.getInstance().saveUserProfile(model.getData().response);
 
-                        Log4a.e("Fragment Count in Login = ", getBaseActivity().getFragmentsCount() + "");
-                        if (getBaseActivity().getLastFragment() instanceof LoginFragment && getBaseActivity().getFragmentsCount() == 0)
-                        {
-                            getBaseActivity().popFragment(getBaseActivity().getLastFragment());
-                            getBaseActivity().addFragment(new MainActivityFragment(), R.id.container_main);
-                        }else {
-                            getBaseActivity().popAllFragment();
-                            getBaseActivity().refreshNavigationToolbar();
-                        }
-                        getBaseActivity().refreshNavigationViewData();
+                        getBaseActivity().popAllFragment();
                         Log4a.e("Fragment Count after login  = ", getBaseActivity().getFragmentsCount() + "");
+                        Intent intent = new Intent(getBaseActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getBaseActivity().finish();
                     }
                     break;
                 }

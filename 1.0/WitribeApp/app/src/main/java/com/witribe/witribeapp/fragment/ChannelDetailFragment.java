@@ -29,6 +29,7 @@ import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.TVScheduleRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
+import com.ranisaurus.utilitylayer.view.WindowUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.cell.RelatedChannelCell;
 import com.witribe.witribeapp.manager.UserManager;
@@ -114,6 +115,9 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     @Override
     public void initViews() {
         super.initViews();
+
+        getBaseActivity().isFullScreenOptionEnable = false;
+        WindowUtil.showSystemUi(getBaseActivity());
 
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
 

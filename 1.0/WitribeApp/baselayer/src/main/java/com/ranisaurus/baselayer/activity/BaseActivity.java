@@ -1,7 +1,5 @@
 package com.ranisaurus.baselayer.activity;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,10 +26,13 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     private TabLayout tabLayoutView;
 
+    public boolean isFullScreenOptionEnable = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public void initViews() {
@@ -124,11 +125,6 @@ abstract public class BaseActivity extends AppCompatActivity {
         {
             getSupportActionBar().show();
         }
-
-//        if (mToolbar != null) {
-//            mToolbar.setVisibility(View.VISIBLE);
-//            mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-//        }
     }
 
     public void hideToolBar() {
@@ -136,10 +132,6 @@ abstract public class BaseActivity extends AppCompatActivity {
         {
             getSupportActionBar().hide();
         }
-
-//        if (mToolbar != null) {
-//            mToolbar.setVisibility(View.GONE);
-//        }
     }
 
     public void setScreenTitle(int title) {
@@ -211,11 +203,11 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     //recording features
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    abstract public void startScreenRecording();
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    abstract public void stopScreenRecording();
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    abstract public void startScreenRecording();
+//
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    abstract public void stopScreenRecording();
 
     @Override
     protected void onStop() {

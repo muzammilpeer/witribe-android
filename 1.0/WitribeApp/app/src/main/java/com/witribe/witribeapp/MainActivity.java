@@ -1,6 +1,7 @@
 package com.witribe.witribeapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,7 +19,8 @@ import android.widget.TextView;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.witribe.witribeapp.fragment.LoginFragment;
+import com.ranisaurus.utilitylayer.view.WindowUtil;
+import com.witribe.witribeapp.activity.LoginActivity;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 import com.witribe.witribeapp.manager.UserManager;
 
@@ -51,6 +53,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TextView tvCustomerID;
 
 
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && isFullScreenOptionEnable) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        }else if (isFullScreenOptionEnable == false){
+            WindowUtil.showSystemUi(this);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +85,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         //setup first screen
         if (savedInstanceState == null) {
-            if (UserManager.getInstance().isUserLoggedIn()) {
-                MainActivityFragment fragment = new MainActivityFragment();
-                addFragment(fragment, R.id.container_main);
-            } else {
-                LoginFragment fragment = new LoginFragment();
-                addFragment(fragment, R.id.container_main);
-            }
+            MainActivityFragment fragment = new MainActivityFragment();
+            addFragment(fragment, R.id.container_main);
+
+//            if (UserManager.getInstance().isUserLoggedIn()) {
+//                MainActivityFragment fragment = new MainActivityFragment();
+//                addFragment(fragment, R.id.container_main);
+//            } else {
+//                LoginFragment fragment = new LoginFragment();
+//                addFragment(fragment, R.id.container_main);
+//            }
         }
 
         refreshNavigationViewData();
@@ -102,19 +125,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             tvFullName.setText(UserManager.getInstance().getUserProfile().getFirstName() + " " + UserManager.getInstance().getUserProfile().getLastName());
             tvCustomerID.setText(UserManager.getInstance().getUserProfile().getCustomerID());
 
-            MenuItem mi = navigationView.getMenu().getItem(3).getSubMenu().getItem(4);
-            mi.setTitle(getString(R.string.menu_logout));
-            navigationView.getMenu().getItem(3).getSubMenu().removeItem(4);
-
-//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_logout).setVisible(true);
-//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_login).setVisible(false);
+//            MenuItem mi = navigationView.getMenu().getItem(3).getSubMenu().getItem(4);
+//            mi.setTitle(getString(R.string.menu_logout));
+//            navigationView.getMenu().getItem(3).getSubMenu().removeItem(4);
         } else {
             tvFullName.setText("");
             tvCustomerID.setText("");
-            navigationView.removeAllViews();
-            navigationView.getMenu().getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_login));
-//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_logout).setVisible(false);
-//            navigationView.getMenu().getItem(3).getSubMenu().findItem(R.id.nav_login).setVisible(true);
+//            navigationView.getMenu().getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_login));
         }
 
         this.invalidateOptionsMenu();
@@ -233,13 +250,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-//            menu.getItem(0).setIcon(R.drawable.ic_content_remove);
-
-//        if (UserManager.getInstance().isUserLoggedIn()) {
-//            menu.getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_logout));
-//        }else {
-//            menu.getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_login));
-//        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -265,34 +275,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.nav_about) {
 
-        } else if (id == R.id.nav_login) {
-            if (item.getTitle().toString().equalsIgnoreCase(getString(R.string.menu_logout))) {
-                UserManager.getInstance().logoutUser();
-                refreshNavigationViewData();
-            } else {
-                // login button
-                if (getLastFragment() instanceof LoginFragment == false) {
-                    replaceFragment(new LoginFragment(), R.id.container_main);
-                }
-            }
-        }else if (id == R.id.nav_logout)
+        } else if (id == R.id.nav_logout)
         {
             UserManager.getInstance().logoutUser();
-            refreshNavigationViewData();
+            popAllFragment();
+            finish();
+            Intent intent = new Intent(this , LoginActivity.class);
+            startActivity(intent);
+
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    @Override
-    public void startScreenRecording() {
-
-    }
-
-    @Override
-    public void stopScreenRecording() {
-
     }
 }
