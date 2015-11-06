@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.ImageUtil;
 
 import java.io.File;
@@ -22,6 +23,25 @@ import java.util.Locale;
 public class FileUtil {
 
     // Image File Name Format = IMG_yyyyMMdd_HHmmss.png
+    public static String createFolder(String appName)
+    {
+
+        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        rootPath += "/"+ appName;
+
+        File dir = new File(rootPath);
+        try{
+            if(dir.mkdir()) {
+                Log4a.e("Directory created","True");
+            } else {
+                Log4a.e("Directory created", "False");
+            }
+        }catch(Exception e){
+            Log4a.printException(e);
+        }
+
+        return rootPath;
+    }
 
     private static String getTempDirectoryPath(Context ctx) {
         File cache;

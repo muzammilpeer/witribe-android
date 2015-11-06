@@ -1,4 +1,12 @@
 <resources>
+    <string name="title_recorded_list">Recorded List</string>
+    <string name="title_views">Views:</string>
+    <string name="title_recording">Recording:</string>
+    <string name="title_time">Time:</string>
+    <string name="title_filesize">Size:</string>
+    <string name="title_fps">FPS:</string>
+    <string name="title_bitrate">Bit Rate:</string>
+
     <string name="app_name">WitribeApp</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="no_content">No content available</string>

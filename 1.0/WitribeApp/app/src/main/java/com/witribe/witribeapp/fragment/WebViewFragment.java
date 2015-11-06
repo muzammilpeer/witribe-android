@@ -1,15 +1,12 @@
 package com.witribe.witribeapp.fragment;
 
 import android.annotation.TargetApi;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -20,12 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
+import android.widget.TextView;
 
 import com.muzammilpeer.ffmpeglayer.helpers.CpuArchHelper;
+import com.muzammilpeer.ffmpeglayer.imanager.IBufferStream;
 import com.muzammilpeer.ffmpeglayer.manager.FFmpegManager;
 import com.muzammilpeer.ffmpeglayer.manager.InstallationManager;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.Data;
+import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.PlayerVideoView;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
@@ -49,9 +49,24 @@ public class WebViewFragment extends BaseFragment {
     @Bind(R.id.fab_recording)
     FloatingActionButton fabRecording;
 
+    @Bind(R.id.tvViewersCount)
+    TextView tvViewersCount;
+
+    @Bind(R.id.tvTime)
+    TextView tvTime;
+
+    @Bind(R.id.tvFileSize)
+    TextView tvFileSize;
+
+    @Bind(R.id.tvFPS)
+    TextView tvFPS;
+
+    @Bind(R.id.tvBitRate)
+    TextView tvBitRate;
+
     private Data currentData;
 
-    private boolean recording=false;
+    private boolean recording = false;
 
     private String streamingUrl;
 
@@ -102,7 +117,6 @@ public class WebViewFragment extends BaseFragment {
         super.initViews();
 
 
-
         getBaseActivity().isFullScreenOptionEnable = true;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -114,8 +128,8 @@ public class WebViewFragment extends BaseFragment {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().
                 getMetrics(displayMetrics);
-        int fullScreenWidth=displayMetrics.widthPixels;
-        int fullScreenHeight=displayMetrics.heightPixels;
+        int fullScreenWidth = displayMetrics.widthPixels;
+        int fullScreenHeight = displayMetrics.heightPixels;
 
         vwPlayerView.setDimensions(fullScreenHeight, fullScreenWidth);
 
@@ -132,36 +146,29 @@ public class WebViewFragment extends BaseFragment {
         getBaseActivity().getSupportActionBar().setTitle(R.string.live_stream);
 
 
-        if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = displaymetrics.heightPixels;
-            int width = displaymetrics.widthPixels;
-            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-            params.width = width;
-            params.height=height;
-            params.setMargins(0, 0, 0, 0);
-
-            vwPlayerView.setLayoutParams(params);
-
-//            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-//            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
-        } else {
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = displaymetrics.heightPixels;
-            int width = displaymetrics.widthPixels;
-            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-            params.width = width;
-            params.height=height / 3;
-            params.setMargins(0, 0, 0, 0);
-            vwPlayerView.setLayoutParams(params);
-
-//            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-//            vwPlayerView.setDimensions(size.WIDTH, size.WIDTH);
-
-        }
+//        if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+//            DisplayMetrics displaymetrics = new DisplayMetrics();
+//            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//            int height = displaymetrics.heightPixels;
+//            int width = displaymetrics.widthPixels;
+//            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+//            params.width = width;
+//            params.height=height-40;
+//            params.setMargins(0, 0, 0, 0);
+//
+//            vwPlayerView.setLayoutParams(params);
+//        } else {
+//
+//            DisplayMetrics displaymetrics = new DisplayMetrics();
+//            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//            int height = displaymetrics.heightPixels;
+//            int width = displaymetrics.widthPixels;
+//            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+//            params.width = width;
+//            params.height=height / 3;
+//            params.setMargins(0, 0, 0, 0);
+//            vwPlayerView.setLayoutParams(params);
+//        }
     }
 
     @Override
@@ -193,6 +200,8 @@ public class WebViewFragment extends BaseFragment {
     @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
+
+        tvViewersCount.setText(currentData.totalViews + "");
 
         //FFMpeg manager debuggin on
         FFmpegManager.getInstance().setContext(getBaseActivity());
@@ -239,55 +248,107 @@ public class WebViewFragment extends BaseFragment {
         fabRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log4a.e("Clicking check it","nothing happend Recording");
+                Log4a.e("Clicking check it", "nothing happend Recording");
                 if (recording) {
-                    Log4a.e("Click","Stop Recording");
+                    Log4a.e("Click", "Stop Recording");
                     recording = false;
                     timeSwapBuff += timeInMilliseconds;
                     customHandler.removeCallbacks(updateTimerThread);
 
-                    if (!vwPlayerView.isPlaying()) {
-                        vwPlayerView.resume();
-                        vwPlayerView.requestFocus();
-                    }
+//                    if (!vwPlayerView.isPlaying()) {
+//                        vwPlayerView.resume();
+//                        vwPlayerView.requestFocus();
+//                    }
 
                     //stop the recording
                     FFmpegManager.getInstance().stopLiveStreamRecording();
 
-//                    getBaseActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                            } catch (Exception e) {
-//                                Log4a.printException(e);
-//                            }
-//                        }
-//                    });
+                    fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_album_white_24dp));
 
                 } else if (recording == false) {
                     recording = true;
-                    Log4a.e("Click","Start Recording");
-                    MP4_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test/" + UUID.randomUUID() + ".mp4";
+                    Log4a.e("Click", "Start Recording");
+                    String folderPath = FileUtil.createFolder(getString(R.string.app_name));
+                    MP4_FILE_PATH = folderPath + "/" + UUID.randomUUID() + ".mp4";
+
+                    fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_stop_white_24dp));
 
                     startTime = SystemClock.uptimeMillis();
                     customHandler.postDelayed(updateTimerThread, 1000);
 
-                    if (vwPlayerView.canPause()) {
-                        vwPlayerView.pause();
-                    } else {
-                        vwPlayerView.stopPlayback();
-                    }
-                    FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, null);
+//                    if (vwPlayerView.canPause()) {
+//                        vwPlayerView.pause();
+//                    } else {
+//                        vwPlayerView.stopPlayback();
+//                    }
+                    FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, new IBufferStream() {
+                        @Override
+                        public void onStreamInit(String progress) {
 
-//                    getBaseActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                        }
-//                    });
+                        }
+
+                        @Override
+                        public void onStreamWorking(final String progress) {
+                            getBaseActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (progress.contains("frame=")) {
+//                                        frame=  138 fps= 25 q=-1.0 size=     307kB time=00:00:05.57 bitrate= 451.5kbits/s
+
+                                        String fpsString = progress.substring(progress.indexOf("fps")+4,progress.indexOf("q"));
+                                        String sizeString = progress.substring(progress.indexOf("size")+5,progress.indexOf("time"));
+                                        String timeString = progress.substring(progress.indexOf("time")+5,progress.indexOf("bitrate"));
+                                        String bitRateString = progress.substring(progress.indexOf("bitrate")+8);
+
+                                        tvBitRate.setText(bitRateString+"");
+                                        tvFileSize.setText(sizeString+"");
+                                        tvTime.setText(timeString+"");
+                                        tvFPS.setText(fpsString+"");
+
+//                                        String[] timeFrameList = progress.split(" ");
+//                                        if (timeFrameList.length > 0) {
+//
+//                                            String[] sizeArray = timeFrameList[6].split("=");
+//                                            String[] fpsArray = timeFrameList[4].split("=");
+//                                            String[] timeArray = timeFrameList[13].split("=");
+//                                            if (timeArray.length > 1) {
+//                                                tvTime.setText(timeArray[1]);
+//                                            }
+//                                            if (fpsArray.length > 1) {
+//                                                tvFPS.setText(timeArray[1]);
+//                                            }
+//
+//                                            if (sizeArray.length > 1) {
+//                                                tvFileSize.setText(sizeArray[1]);
+//                                            }
+//
+//                                            if (timeFrameList[15] != null) {
+//                                                tvBitRate.setText(timeFrameList[15]);
+//                                            }
+//
+//
+//                                        }
+//
+//                                        Log4a.e("array fetched = ", timeFrameList.toString());
+                                    }
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onStreamCompleted(String progress) {
+
+                        }
+
+                        @Override
+                        public void onStreamError(String error) {
+
+                        }
+                    });
+
                 }
             }
         });
-
 
 
     }
@@ -351,45 +412,42 @@ public class WebViewFragment extends BaseFragment {
     };
 
 
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Log4a.e("onConfigurationChanged", " called");
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = displaymetrics.heightPixels;
-            int width = displaymetrics.widthPixels;
-            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-            params.width = width;
-            params.height=height;
-            params.setMargins(0, 0, 0, 0);
-
-            vwPlayerView.setLayoutParams(params);
-
-            vwPlayerView.setDimensions(width, height);
-
-
-        } else {
-//            CGSize size = WindowUtil.getScreenResolution(getBaseActivity());
-//            vwPlayerView.setDimensions(size.WIDTH, size.HEIGHT);
-
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = displaymetrics.heightPixels;
-            int width = displaymetrics.widthPixels;
-            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-            params.width = width;
-            params.height=height / 3;
-            params.setMargins(0, 0, 0, 0);
-            vwPlayerView.setLayoutParams(params);
-
-            vwPlayerView.setDimensions(width, height);
-
-        }
-    }
+//
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        Log4a.e("onConfigurationChanged", " called");
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//
+//
+//            DisplayMetrics displaymetrics = new DisplayMetrics();
+//            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//            int height = displaymetrics.heightPixels;
+//            int width = displaymetrics.widthPixels;
+//            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+//            params.width = width;
+//            params.height=height - 40;
+//            params.setMargins(0, 0, 0, 0);
+//
+//            vwPlayerView.setLayoutParams(params);
+//
+//            vwPlayerView.setDimensions(width, height);
+//
+//
+//        } else {
+//            DisplayMetrics displaymetrics = new DisplayMetrics();
+//            getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//            int height = displaymetrics.heightPixels;
+//            int width = displaymetrics.widthPixels;
+//            android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+//            params.width = width;
+//            params.height=height / 3;
+//            params.setMargins(0, 0, 0, 0);
+//            vwPlayerView.setLayoutParams(params);
+//
+//            vwPlayerView.setDimensions(width, height);
+//
+//        }
+//    }
 
 }
