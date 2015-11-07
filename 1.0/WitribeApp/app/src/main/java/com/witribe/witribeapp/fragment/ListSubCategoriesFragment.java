@@ -2,6 +2,7 @@ package com.witribe.witribeapp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -103,9 +104,10 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<ListSubCategoryCell>(mContext, R.layout.row_list_subcategory, ListSubCategoryCell.class, this.getLocalDataSource());
 
-        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
-        rcSubCategories.setLayoutManager(gaggeredGridLayoutManager);
-        rcSubCategories.setHasFixedSize(false);
+//        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
+
+        rcSubCategories.setHasFixedSize(true);
+        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(),3));
         rcSubCategories.setAdapter(dataGeneralBaseAdapter);
 
         dataGeneralBaseAdapter.notifyDataSetChanged();

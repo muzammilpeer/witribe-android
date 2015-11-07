@@ -33,8 +33,8 @@
 
     <string name="menu_my_section">My Section</string>
     <string name="menu_my_favourite">My Favourite</string>
-    <string name="menu_recent_view">Recent Views</string>
-    <string name="menu_manage">Manage Account</string>
+    <string name="menu_recording_list">My Recorded Shows</string>
+    <string name="menu_schedule_list">Tv Shows Schedule</string>
     <string name="menu_about">About</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_login">Login</string>

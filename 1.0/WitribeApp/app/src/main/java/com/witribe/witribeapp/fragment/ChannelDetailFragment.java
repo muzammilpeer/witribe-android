@@ -1,22 +1,20 @@
 package com.witribe.witribeapp.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
@@ -30,6 +28,8 @@ import com.ranisaurus.newtorklayer.requests.TVScheduleRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.cell.RelatedChannelCell;
 import com.witribe.witribeapp.manager.UserManager;
@@ -117,6 +117,9 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         super.initViews();
 
         getBaseActivity().isFullScreenOptionEnable = false;
+        getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         WindowUtil.showSystemUi(getBaseActivity());
 
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
@@ -164,22 +167,33 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 
 
         final String imageUrl = ("http://pitelevision.com/" + selectedData.mobile_large_image).replaceAll(" ", "%20");
-        Ion.with(ivChannel.getContext()).load(imageUrl).withBitmap()
-                .placeholder(R.drawable.bg_placeholder)
-                .error(R.drawable.bg_placeholder)
-                .asBitmap()
-                .setCallback(new FutureCallback<Bitmap>() {
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int displayWidth = displaymetrics.widthPixels;
+        Picasso.with(ivChannel.getContext())
+                .load(imageUrl)
+                .resize(displayWidth, (int) getResources().getDimension(R.dimen.preview_image_height))
+                .centerInside()
+                .into(ivChannel, new Callback() {
                     @Override
-                    public void onCompleted(Exception e, Bitmap result) {
-                        Log4a.e("Image Url = ", imageUrl);
-                        if (ivChannel != null && ivChannel.getContext() != null) {
-                            ivChannel.setImageBitmap(result != null ? result : BitmapFactory.decodeResource(ivChannel.getContext().getResources(), R.drawable.bg_placeholder));
+                    public void onSuccess() {
+                        if (pbChannel != null)
+                        {
+                            pbChannel.setVisibility(View.GONE);
+                            ivChannel.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        if (pbChannel != null)
+                        {
                             pbChannel.setVisibility(View.GONE);
                             ivChannel.setVisibility(View.VISIBLE);
                         }
                     }
                 });
-
 
         if (selectedData.description != null && selectedData.description.length() > 0) {
             tvChannelsDescription.setText(selectedData.description);

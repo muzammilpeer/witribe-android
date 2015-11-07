@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.ranisaurus.utilitylayer.view.WindowUtil;
 import com.witribe.witribeapp.activity.LoginActivity;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 import com.witribe.witribeapp.manager.UserManager;
@@ -53,23 +52,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TextView tvCustomerID;
 
 
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus && isFullScreenOptionEnable) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-        }else if (isFullScreenOptionEnable == false){
-            WindowUtil.showSystemUi(this);
-        }
-    }
+//
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus && isFullScreenOptionEnable) {
+//            getWindow().getDecorView().setSystemUiVisibility(
+//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//
+//        }else if (isFullScreenOptionEnable == false){
+//            WindowUtil.showSystemUi(this);
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +86,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (savedInstanceState == null) {
             MainActivityFragment fragment = new MainActivityFragment();
             addFragment(fragment, R.id.container_main);
-
-//            if (UserManager.getInstance().isUserLoggedIn()) {
-//                MainActivityFragment fragment = new MainActivityFragment();
-//                addFragment(fragment, R.id.container_main);
-//            } else {
-//                LoginFragment fragment = new LoginFragment();
-//                addFragment(fragment, R.id.container_main);
-//            }
         }
 
         refreshNavigationViewData();
@@ -121,20 +112,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (UserManager.getInstance().isUserLoggedIn()) {
             //setup left navigation bar
             setupNavigationDrawer();
-
             tvFullName.setText(UserManager.getInstance().getUserProfile().getFirstName() + " " + UserManager.getInstance().getUserProfile().getLastName());
             tvCustomerID.setText(UserManager.getInstance().getUserProfile().getCustomerID());
-
-//            MenuItem mi = navigationView.getMenu().getItem(3).getSubMenu().getItem(4);
-//            mi.setTitle(getString(R.string.menu_logout));
-//            navigationView.getMenu().getItem(3).getSubMenu().removeItem(4);
         } else {
             tvFullName.setText("");
             tvCustomerID.setText("");
-//            navigationView.getMenu().getItem(3).getSubMenu().getItem(4).setTitle(getString(R.string.menu_login));
         }
-
-        this.invalidateOptionsMenu();
     }
 
 
@@ -269,11 +252,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.nav_my_favourite) {
 
-        } else if (id == R.id.nav_recent_view) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_recorded_list) {
 
         } else if (id == R.id.nav_logout)
         {
