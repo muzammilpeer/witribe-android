@@ -122,9 +122,6 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         WindowUtil.showSystemUi(getBaseActivity());
-
-
-
         getBaseActivity().showToolBar();
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
 
@@ -225,7 +222,8 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         showLoader();
         ChannelScheduleRequestModel requestModel = new ChannelScheduleRequestModel();
         requestModel.setUserid("0");
-        requestModel.setChannellist(selectedData.title.toLowerCase());
+//        requestModel.setChannellist(selectedData.title.toLowerCase());
+        requestModel.setChannellist("ten%20sports");
         requestModel.setFromdatetime("201511020000");
         requestModel.setTodatetime("201511030000");
         requestModel.setDeviceview("other");

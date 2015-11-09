@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_main_row_recorded_video_list"
-    android:background="@color/color_primary_blue_light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,42 +14,45 @@
 
         <com.witribe.witribeapp.view.SquareImageView
             android:id="@+id/iv_recorded_video_list"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:contentDescription="@string/action_settings"
             android:scaleType="fitXY"
             android:src="@drawable/bg_placeholder"
-            android:visibility="visible"
-            android:layout_marginLeft="5dp" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp">
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="File Name:"
-                    android:textColor="@android:color/black" />
+                    android:text="File Name:      "
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/row_normal_font_size" />
 
                 <TextView
                     android:id="@+id/tvFileName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
                     android:text="--"
-                    android:maxLines="2"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/row_normal_font_size"
+                    android:layout_marginLeft="5dp" />
 
 
             </LinearLayout>
@@ -58,21 +61,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="File Size:"
-                    android:textColor="@android:color/black" />
+                    android:text="File Size:          "
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/row_normal_font_size" />
 
                 <TextView
                     android:id="@+id/tvFileSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:text="--"
-                    android:maxLines="2"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/row_normal_font_size"
+                    android:layout_marginLeft="5dp" />
 
 
             </LinearLayout>
@@ -80,21 +86,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date Modified:"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/row_normal_font_size" />
 
                 <TextView
                     android:id="@+id/tvFileLastModified"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:text="--"
-                    android:maxLines="2"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/row_normal_font_size"
+                    android:layout_marginLeft="5dp" />
 
 
             </LinearLayout>
@@ -102,11 +111,18 @@
 
         </LinearLayout>
 
+
+        <ImageView
+            android:id="@+id/iv_context_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_more_vert_black_24dp" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/darker_gray"
-        />
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>

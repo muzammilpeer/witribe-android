@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:keepScreenOn="true"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <com.ranisaurus.utilitylayer.view.PlayerVideoView
+        android:id="@+id/vw_playerview"
+        android:layout_width="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_height="240dip"
+        android:visibility="visible"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>
