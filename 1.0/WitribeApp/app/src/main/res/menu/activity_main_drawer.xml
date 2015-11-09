@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_live_channels"
-            android:icon="@android:drawable/ic_menu_camera"
+            android:icon="@drawable/ic_live_tv_white_24dp"
             android:title="@string/menu_live_channels" />
         <item
             android:id="@+id/nav_video_on_demand"
-            android:icon="@android:drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_ondemand_video_white_24dp"
             android:title="@string/menu_video_on_demand" />
         <item
             android:id="@+id/nav_education"
-            android:icon="@android:drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_personal_video_white_24dp"
             android:title="@string/menu_education" />
     </group>
 
@@ -20,15 +20,15 @@
         <menu>
             <item
                 android:id="@+id/nav_my_favourite"
-                android:icon="@android:drawable/ic_input_get"
+                android:icon="@drawable/ic_list_white_24dp"
                 android:title="@string/menu_my_favourite" />
             <item
                 android:id="@+id/nav_recorded_list"
-                android:icon="@android:drawable/ic_media_play"
+                android:icon="@drawable/ic_video_library_white_24dp"
                 android:title="@string/menu_recording_list" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@android:drawable/ic_partial_secure"
+                android:icon="@drawable/ic_exit_to_app_white_24dp"
                 android:title="@string/menu_logout" />
 
         </menu>

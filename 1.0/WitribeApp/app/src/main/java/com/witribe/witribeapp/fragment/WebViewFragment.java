@@ -1,6 +1,5 @@
 package com.witribe.witribeapp.fragment;
 
-import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -146,6 +145,10 @@ public class WebViewFragment extends BaseFragment implements
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int displayHeight = displaymetrics.heightPixels;
         int displayWidth = displaymetrics.widthPixels;
+
+//        displayHeight = mView.getHeight();
+//        displayWidth = mView.getWidth();
+
         if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -168,6 +171,8 @@ public class WebViewFragment extends BaseFragment implements
     @Override
     public void initObjects() {
         super.initObjects();
+
+        VideoPlayerControls.releaseDialog();
 
         streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
         Log4a.e("Streaming URL = ", streamingUrl);
@@ -197,16 +202,12 @@ public class WebViewFragment extends BaseFragment implements
     }
 
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
         tvViewersCount.setText(currentData.totalViews + "");
 
-//        MediaController mediaController = new MediaController(getBaseActivity());
-//        mediaController.setAnchorView(vwPlayerView);
-//
         vwPlayerView.setMediaController(null);
         vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
         vwPlayerView.start();
@@ -226,14 +227,6 @@ public class WebViewFragment extends BaseFragment implements
                 Log4a.e("setOnCompletionListener", "came");
             }
         });
-
-//        vwPlayerView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-//            @Override
-//            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-//                Log4a.e("setOnInfoListener", "came");
-//                return false;
-//            }
-//        });
 
         vwPlayerView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -286,7 +279,7 @@ public class WebViewFragment extends BaseFragment implements
         FFmpegManager.getInstance().stopLiveStreamRecording();
 
         if (fabRecording != null)
-        fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_album_white_24dp));
+        fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_white_24dp));
 
     }
 
@@ -301,7 +294,7 @@ public class WebViewFragment extends BaseFragment implements
         FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, this);
 
         if (fabRecording != null)
-        fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_stop_white_24dp));
+        fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_off_white_24dp));
 
     }
 
@@ -388,6 +381,10 @@ public class WebViewFragment extends BaseFragment implements
             streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
         }else {
             streamingUrl = currentData.video_iosStreamUrlLow + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+            if (streamingUrl == null || streamingUrl.length() < 1)
+            {
+                streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+            }
         }
 
         if (vwPlayerView != null)
@@ -416,6 +413,10 @@ public class WebViewFragment extends BaseFragment implements
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int displayHeight = displaymetrics.heightPixels;
         int displayWidth = displaymetrics.widthPixels;
+
+        displayWidth = mView.getWidth();
+        displayHeight = mView.getHeight();
+
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -490,7 +491,7 @@ public class WebViewFragment extends BaseFragment implements
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseActivity());
         mBuilder.setContentTitle("Picture Download")
                 .setContentText("Download in progress")
-                .setSmallIcon(R.drawable.ic_album_white_24dp);
+                .setSmallIcon(R.drawable.ic_videocam_off_white_24dp);
 // Start a lengthy operation in a background thread
         new Thread(
                 new Runnable() {

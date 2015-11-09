@@ -61,7 +61,17 @@ public class VideoPlayerControls extends Dialog implements DialogInterface.OnCan
         }
     }
 
+    public static void releaseDialog()
+    {
+        if (mDialog != null)
+        {
+            mDialog.dismiss();
+            mDialog.mDelegate = null;
+            mDialog = null;
+        }
+    }
     public static void showControls(Context context, String title,IVideoPlayerControls delegate) {
+
         if (mDialog == null) {
             mDialog = new VideoPlayerControls(context,delegate);
             mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -79,11 +89,6 @@ public class VideoPlayerControls extends Dialog implements DialogInterface.OnCan
             mDialog.setContentView(R.layout.dialog_video_controls);
 
             ButterKnife.bind(mDialog);
-
-//            mDialog.fabStopRecording =  (FloatingActionButton)mDialog.findViewById(R.id.fab_stop_recording);
-//            mDialog.fabStartRecording =  (FloatingActionButton)mDialog.findViewById(R.id.fab_start_recording);
-//            mDialog.fabPlayVideo =  (FloatingActionButton)mDialog.findViewById(R.id.fab_play_video);
-//            mDialog.fabPauseVideo =  (FloatingActionButton)mDialog.findViewById(R.id.fab_pause_video);
 
             mDialog.fabStopVideo.setOnClickListener(mDialog);
             mDialog.fabPlayVideo.setOnClickListener(mDialog);

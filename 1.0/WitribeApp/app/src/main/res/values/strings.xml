@@ -7,7 +7,7 @@
     <string name="title_fps">FPS:</string>
     <string name="title_bitrate">Bit Rate:</string>
 
-    <string name="app_name">WitribeApp</string>
+    <string name="app_name">WitribeTvLite</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="no_content">No content available</string>
     <string name="live_stream">Live Stream</string>
