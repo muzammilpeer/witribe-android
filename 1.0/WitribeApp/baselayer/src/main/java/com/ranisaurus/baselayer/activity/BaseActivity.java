@@ -22,7 +22,7 @@ abstract public class BaseActivity extends AppCompatActivity {
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
     protected ActionBarDrawerToggle mToggle;
     protected DrawerLayout mDrawer;
-    protected Toolbar mToolbar;
+    protected Toolbar mainToolbar;
 
     private TabLayout tabLayoutView;
 
@@ -96,6 +96,10 @@ abstract public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public Toolbar getMainToolbar() {
+        return mainToolbar;
+    }
+
     public TabLayout getTabLayoutView() {
         return tabLayoutView;
     }
@@ -124,6 +128,7 @@ abstract public class BaseActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().show();
+            getSupportActionBar().setHideOffset(0);
         }
     }
 

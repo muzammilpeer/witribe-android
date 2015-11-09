@@ -1,5 +1,7 @@
 package com.ranisaurus.newtorklayer.models;
 
+import com.ranisaurus.utilitylayer.base.BaseModel;
+
 /**
  * Created by muzammilpeer on 9/27/15.
  */

@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.ranisaurus.utilitylayer.base.BaseModel;
 
 /**
  * Created by muzammilpeer on 9/27/15.

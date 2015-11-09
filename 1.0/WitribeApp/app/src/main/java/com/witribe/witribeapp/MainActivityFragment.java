@@ -79,20 +79,17 @@ public class MainActivityFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             channels = savedInstanceState.getParcelable("channels");
             channelsCategory = savedInstanceState.getParcelable("channelsCategory");
         }
-
 
 
         super.onCreateView(inflater, R.layout.fragment_main);
 
         getBaseActivity().getTabLayoutView().setVisibility(View.VISIBLE);
 
-        if (channels != null)
-        {
+        if (channels != null) {
             hideLoader(false);
         }
 
@@ -145,8 +142,7 @@ public class MainActivityFragment extends BaseFragment {
     public void initNetworkCalls() {
         super.initNetworkCalls();
 
-        if (channels != null)
-        {
+        if (channels != null) {
             Log4a.e("Network Call", "channels = " + channels.getData().size());
         }
         if (channelsCategory != null) {
@@ -154,8 +150,7 @@ public class MainActivityFragment extends BaseFragment {
         }
 
 
-        if (channelsCategory == null || channelsCategory.getData().size() == 0)
-        {
+        if (channelsCategory == null || channelsCategory.getData().size() == 0) {
             Log4a.e("Network Call", "GET_CHANNEL_CATEGORIES");
             showLoader();
             WitribeAMFRequest request = new WitribeAMFRequest(null, NetworkRequestEnum.GET_CHANNEL_CATEGORIES);
@@ -177,16 +172,17 @@ public class MainActivityFragment extends BaseFragment {
 
     @Override
     protected void hideLoader(boolean isError) {
-        pbViewPager.setVisibility(View.GONE);
+        if (pbViewPager != null) {
+            pbViewPager.setVisibility(View.GONE);
 
-        if (isError)
-        {
-            llViewPager.setVisibility(View.VISIBLE);
-            mViewPager.setVisibility(View.GONE);
-            getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
-        }else {
-            llViewPager.setVisibility(View.GONE);
-            mViewPager.setVisibility(View.VISIBLE);
+            if (isError) {
+                llViewPager.setVisibility(View.VISIBLE);
+                mViewPager.setVisibility(View.GONE);
+                getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
+            } else {
+                llViewPager.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -209,16 +205,14 @@ public class MainActivityFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (channels != null)
-        {
+        if (channels != null) {
             Log4a.e("onSaveInstanceState", "channels = " + channels.getData().size());
             outState.putParcelable("channels", channels);
         }
 
-        if (channelsCategory != null)
-        {
+        if (channelsCategory != null) {
             Log4a.e("onSaveInstanceState", "channelsCategory = " + channelsCategory.getData().size());
-            outState.putParcelable("channelsCategory",channelsCategory);
+            outState.putParcelable("channelsCategory", channelsCategory);
         }
 
         if (imageUri == null) {
@@ -283,7 +277,8 @@ public class MainActivityFragment extends BaseFragment {
                     case GET_CHANNELS: {
                         Log4a.e("Error ", "some error in network");
                         hideLoader(true);
-                    }break;
+                    }
+                    break;
                     case GET_CHANNEL_CATEGORIES: {
                         Log4a.e("Error ", "some error in network");
                         hideLoader(true);
@@ -339,7 +334,8 @@ public class MainActivityFragment extends BaseFragment {
                         this.getLocalDataSource().addAll(channels.getData());
 
                         mSectionsPagerAdapter.notifyDataSetChanged();
-                        getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
+                        if (mViewPager != null)
+                            getBaseActivity().getTabLayoutView().setupWithViewPager(mViewPager);
 
                         hideLoader(false);
                     }

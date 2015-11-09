@@ -5,9 +5,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ranisaurus.baselayer.cell.BaseCell;
-import com.ranisaurus.newtorklayer.models.BaseModel;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
+import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.witribe.witribeapp.R;

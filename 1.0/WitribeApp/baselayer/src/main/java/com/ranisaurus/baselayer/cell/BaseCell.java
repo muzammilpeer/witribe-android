@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
-import com.ranisaurus.newtorklayer.models.BaseModel;
+import com.ranisaurus.utilitylayer.base.BaseModel;
 
 import butterknife.ButterKnife;
 

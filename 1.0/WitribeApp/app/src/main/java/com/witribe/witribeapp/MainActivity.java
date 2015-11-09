@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.activity.LoginActivity;
+import com.witribe.witribeapp.fragment.RecordVideoListFragment;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 import com.witribe.witribeapp.manager.UserManager;
 
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         setSupportActionBar(mToolbar);
         setTabLayoutView(mTabLayout);
+        mainToolbar = mToolbar;
 
 
         //setup first screen
@@ -253,7 +255,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_my_favourite) {
 
         } else if (id == R.id.nav_recorded_list) {
-
+            replaceFragment(RecordVideoListFragment.newInstance(),R.id.container_main);
         } else if (id == R.id.nav_logout)
         {
             UserManager.getInstance().logoutUser();

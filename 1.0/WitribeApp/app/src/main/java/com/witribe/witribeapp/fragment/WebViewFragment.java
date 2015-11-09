@@ -273,6 +273,12 @@ public class WebViewFragment extends BaseFragment implements
         if (tvRecordingStatus != null)
         tvRecordingStatus.setText(" Stopped");
 
+        tvBitRate.setText("");
+        tvFileSize.setText("");
+        tvTime.setText("");
+        tvFPS.setText("");
+
+
         recording = false;
 
         //stop the recording
@@ -302,11 +308,13 @@ public class WebViewFragment extends BaseFragment implements
     //ShellManager Callback
     @Override
     public void onStreamInit(String progress) {
-
+        Log4a.e("onStreamInit",progress);
     }
 
     @Override
     public void onStreamWorking(final String progress) {
+        Log4a.e("onStreamWorking",progress);
+
         getBaseActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -328,11 +336,13 @@ public class WebViewFragment extends BaseFragment implements
 
     @Override
     public void onStreamCompleted(String progress) {
+        Log4a.e("onStreamCompleted",progress);
 
     }
 
     @Override
     public void onStreamError(String error) {
+        Log4a.e("onStreamCompleted",error);
 
     }
 

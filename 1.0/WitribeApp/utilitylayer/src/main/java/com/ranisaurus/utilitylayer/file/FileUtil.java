@@ -8,12 +8,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
+import com.ranisaurus.utilitylayer.file.model.FileInfoModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.ImageUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -108,6 +112,44 @@ public class FileUtil {
         }
 
         return filePath + "";
+    }
+
+
+    public static ArrayList<FileInfoModel> listFiles(String path) {
+        ArrayList<FileInfoModel> listDataItems = new ArrayList<FileInfoModel>();
+        ArrayList<String> paths;
+        try {
+            File file = new File(path);
+            paths = new ArrayList<String>(Arrays.asList(file.list()));
+            for (String _path : paths) {
+                Log.v("AllFiles", _path);
+                Log.v("AllFiles", path + File.separator + _path);
+                listDataItems.add(readFileDescription(path + File.separator + _path));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listDataItems;
+    }
+
+
+    public static FileInfoModel readFileDescription(String path) {
+
+        FileInfoModel stickyModel = new FileInfoModel();
+        try {
+            File file = new File(path);
+
+            stickyModel.setDateCreated(file.lastModified() +"");
+            stickyModel.setDateModifed(file.lastModified() + "");
+            stickyModel.setFileName(file.getName());
+            stickyModel.setFileSize(file.length() + "");
+            stickyModel.setFullPath(path);
+            Log4a.e("File Path =",path+"");
+
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+        return stickyModel;
     }
 
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ranisaurus.baselayer.cell.BaseCell;
-import com.ranisaurus.newtorklayer.models.BaseModel;
+import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.reflection.ReflectionUtil;
 
 import java.util.List;
