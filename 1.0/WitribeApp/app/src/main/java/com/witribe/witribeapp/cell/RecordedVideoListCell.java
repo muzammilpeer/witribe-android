@@ -57,9 +57,9 @@ public class RecordedVideoListCell extends BaseCell implements View.OnClickListe
             tvFileName.setText(dataSource.getFileName());
 
             long size = Long.parseLong(dataSource.getFileSize());
-            float fileSize = size/1024/1024;
+            float fileSize = size/1024;
 
-            tvFileSize.setText(fileSize + " Mb");
+            tvFileSize.setText(fileSize + " kB");
 
             long timeStamp =  Long.parseLong(dataSource.getDateModifed());
             Date fileTime = new Date(timeStamp);
