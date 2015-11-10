@@ -146,9 +146,6 @@ public class WebViewFragment extends BaseFragment implements
         int displayHeight = displaymetrics.heightPixels;
         int displayWidth = displaymetrics.widthPixels;
 
-//        displayHeight = mView.getHeight();
-//        displayWidth = mView.getWidth();
-
         if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

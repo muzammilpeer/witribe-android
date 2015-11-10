@@ -6,9 +6,10 @@ package com.ranisaurus.utilitylayer.file;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
+import android.provider.MediaStore;
 
 import com.ranisaurus.utilitylayer.file.model.FileInfoModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -115,22 +116,23 @@ public class FileUtil {
     }
 
 
-    public static ArrayList<FileInfoModel> listFiles(String path) {
-        ArrayList<FileInfoModel> listDataItems = new ArrayList<FileInfoModel>();
-        ArrayList<String> paths;
+
+
+
+
+    public static DirectoryEnum deleteFile(FileInfoModel selectedFile) {
         try {
-            File file = new File(path);
-            paths = new ArrayList<String>(Arrays.asList(file.list()));
-            for (String _path : paths) {
-                Log.v("AllFiles", _path);
-                Log.v("AllFiles", path + File.separator + _path);
-                listDataItems.add(readFileDescription(path + File.separator + _path));
-            }
+            File file = new File(selectedFile.getFullPath());
+            if (file.exists())
+                file.delete();
+            else
+                return DirectoryEnum.EXISTENCE_ISSUE;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log4a.printException(e);
         }
-        return listDataItems;
+        return DirectoryEnum.SUCCUESSFULLY_DONE;
     }
+
 
 
     public static FileInfoModel readFileDescription(String path) {
@@ -144,12 +146,29 @@ public class FileUtil {
             stickyModel.setFileName(file.getName());
             stickyModel.setFileSize(file.length() + "");
             stickyModel.setFullPath(path);
-            Log4a.e("File Path =",path+"");
+            stickyModel.setCacheThumbnail(ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MICRO_KIND));
 
         } catch (Exception e) {
             Log4a.printException(e);
         }
         return stickyModel;
     }
+
+
+    public static ArrayList<FileInfoModel> listFiles(final String path) {
+        ArrayList<FileInfoModel> listDataItems = new ArrayList<FileInfoModel>();
+        ArrayList<String> paths;
+        try {
+            File file = new File(path);
+            paths = new ArrayList<String>(Arrays.asList(file.list()));
+            for (String _path : paths) {
+                listDataItems.add(readFileDescription(path + File.separator + _path));
+            }
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+        return listDataItems;
+    }
+
 
 }
