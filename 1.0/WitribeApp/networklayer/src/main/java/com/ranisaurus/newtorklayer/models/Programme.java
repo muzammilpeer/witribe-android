@@ -1,9 +1,11 @@
 package com.ranisaurus.newtorklayer.models;
 
+import com.ranisaurus.utilitylayer.base.BaseModel;
+
 /**
  * Created by muzammilpeer on 11/4/15.
  */
-public class Programme
+public class Programme extends BaseModel
 {
     private String stop;
 

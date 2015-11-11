@@ -1,4 +1,5 @@
 <resources>
+    <string name="title_coming_soon">Coming Soon</string>
     <string name="title_recorded_list">Recorded List</string>
     <string name="title_views">Views:</string>
     <string name="title_recording">Recording:</string>
@@ -10,6 +11,7 @@
     <string name="app_name">WitribeTvLite</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="no_content">No content available</string>
+    <string name="no_schedule_available">No Schedule available</string>
     <string name="live_stream">Live Stream</string>
 
     <string name="tab_1">tab 1</string>

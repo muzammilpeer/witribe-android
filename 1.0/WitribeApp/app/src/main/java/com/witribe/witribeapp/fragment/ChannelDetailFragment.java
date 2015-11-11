@@ -3,6 +3,7 @@ package com.witribe.witribeapp.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,14 +19,10 @@ import android.widget.TextView;
 
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
-import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
-import com.ranisaurus.newtorklayer.manager.NetworkManager;
-import com.ranisaurus.newtorklayer.models.ChannelScheduleRequestModel;
 import com.ranisaurus.newtorklayer.models.ChannelScheduleResponseModel;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
-import com.ranisaurus.newtorklayer.requests.TVScheduleRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
@@ -66,6 +63,9 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 
     @Bind(R.id.tv_viewer_count)
     TextView tvViewersCount;
+
+    @Bind(R.id.fab_schedule)
+    FloatingActionButton fabSchedule;
 
     GeneralBaseAdapter<RelatedChannelCell> dataGeneralBaseAdapter;
 
@@ -159,6 +159,8 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
+        fabSchedule.setOnClickListener(this);
+
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<RelatedChannelCell>(mContext, R.layout.row_related_channel, RelatedChannelCell.class, this.getLocalDataSource());
         rcRelatedChannels.setHasFixedSize(true);
@@ -186,8 +188,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                 .into(ivChannel, new Callback() {
                     @Override
                     public void onSuccess() {
-                        if (pbChannel != null)
-                        {
+                        if (pbChannel != null) {
                             pbChannel.setVisibility(View.GONE);
                             ivChannel.setVisibility(View.VISIBLE);
                         }
@@ -195,8 +196,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 
                     @Override
                     public void onError() {
-                        if (pbChannel != null)
-                        {
+                        if (pbChannel != null) {
                             pbChannel.setVisibility(View.GONE);
                             ivChannel.setVisibility(View.VISIBLE);
                         }
@@ -218,25 +218,27 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         super.initNetworkCalls();
 
 
-        Log4a.e("Network Call", "GET_CHANNEL_SCHEDULE");
-        showLoader();
-        ChannelScheduleRequestModel requestModel = new ChannelScheduleRequestModel();
-        requestModel.setUserid("0");
-//        requestModel.setChannellist(selectedData.title.toLowerCase());
-        requestModel.setChannellist("ten%20sports");
-        requestModel.setFromdatetime("201511020000");
-        requestModel.setTodatetime("201511030000");
-        requestModel.setDeviceview("other");
-        requestModel.setChannellogo("0");
-
-        Log4a.e("Channel Name = ", requestModel.getChannellist());
-
-        TVScheduleRequest request = new TVScheduleRequest(requestModel, NetworkRequestEnum.GET_CHANNEL_SCHEDULE);
-        try {
-            NetworkManager.getInstance().executeRequest(request, this);
-        } catch (Exception e) {
-            Log4a.printException(e);
-        }
+//        Log4a.e("Network Call", "GET_CHANNEL_SCHEDULE");
+//        showLoader();
+//        ChannelScheduleRequestModel requestModel = new ChannelScheduleRequestModel();
+//        requestModel.setUserid("0");
+////        requestModel.setChannellist(selectedData.title.toLowerCase());
+//        requestModel.setChannellist(selectedData.title.toLowerCase().replaceAll(" ", "%20"));
+//
+//
+//        requestModel.setFromdatetime("201511090000");
+//        requestModel.setTodatetime("201511100000");
+//        requestModel.setDeviceview("other");
+//        requestModel.setChannellogo("0");
+//
+//        Log4a.e("Channel Name = ", requestModel.getChannellist());
+//
+//        TVScheduleRequest request = new TVScheduleRequest(requestModel, NetworkRequestEnum.GET_CHANNEL_SCHEDULE);
+//        try {
+//            NetworkManager.getInstance().executeRequest(request, this);
+//        } catch (Exception e) {
+//            Log4a.printException(e);
+//        }
 
     }
 
@@ -253,6 +255,11 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                 }
             }
             break;
+            case R.id.fab_schedule: {
+                getBaseActivity().replaceFragment(ScheduleListFragment.newInstance(selectedData.title), R.id.container_main);
+            }
+            break;
+
         }
     }
 
@@ -289,8 +296,6 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     }
 
 
-
-
     @Override
     public void responseWithError(Exception error, BaseNetworkRequest request) {
         super.responseWithError(error, request);
@@ -323,8 +328,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                     }
                 }
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             Log4a.printException(e);
         }
     }

@@ -3,7 +3,6 @@
     android:id="@+id/ll_main_row_recorded_video_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,8 +13,8 @@
 
         <com.witribe.witribeapp.view.SquareImageView
             android:id="@+id/iv_recorded_video_list"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/abc_action_bar_default_height_material"
+            android:layout_height="@dimen/abc_action_bar_default_height_material"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_margin="5dp"
@@ -40,19 +39,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="File Name:      "
+                    android:layout_gravity="center"
+                    android:text="File Name: "
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/row_normal_font_size" />
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:gravity="center|left" />
 
                 <TextView
                     android:id="@+id/tvFileName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:maxLines="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:text="--"
-                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textSize="@dimen/row_normal_font_size"
-                    android:layout_marginLeft="5dp" />
+                    android:maxLines="2"
+                    android:gravity="center|left"
+                    android:layout_weight="1" />
 
 
             </LinearLayout>
@@ -66,19 +72,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="File Size:          "
+                    android:layout_gravity="center"
+                    android:text="File Size: "
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/row_normal_font_size" />
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:gravity="center|left" />
 
                 <TextView
                     android:id="@+id/tvFileSize"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:text="--"
-                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textSize="@dimen/row_normal_font_size"
-                    android:layout_marginLeft="5dp" />
+                    android:maxLines="2"
+                    android:gravity="center|left"
+                    android:layout_weight="1" />
 
 
             </LinearLayout>
@@ -91,19 +104,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date Modified:"
+                    android:layout_gravity="center"
+                    android:text="Date Modified: "
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/row_normal_font_size" />
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:gravity="center|left" />
 
                 <TextView
                     android:id="@+id/tvFileLastModified"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:text="--"
-                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textSize="@dimen/row_normal_font_size"
-                    android:layout_marginLeft="5dp" />
+                    android:maxLines="2"
+                    android:gravity="center|left"
+                    android:layout_weight="1" />
 
 
             </LinearLayout>

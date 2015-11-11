@@ -77,21 +77,21 @@ public class RecordedVideoListCell extends BaseCell implements View.OnClickListe
             Date fileTime = new Date(timeStamp);
             tvFileLastModified.setText(fileTime.toString());
 
-
-            if (position % 2 == 0) {
-                llMainLayout.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
-
-                tvFileName.setTextColor(getBaseActivity().getResources().getColor(android.R.color.white));
-                tvFileSize.setTextColor(getBaseActivity().getResources().getColor(android.R.color.white));
-                tvFileLastModified.setTextColor(getBaseActivity().getResources().getColor(android.R.color.white));
-
-            } else {
-                llMainLayout.setBackgroundColor(getBaseActivity().getResources().getColor(android.R.color.white));
-
-                tvFileName.setTextColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
-                tvFileSize.setTextColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
-                tvFileLastModified.setTextColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
-            }
+//
+//            if (position % 2 == 0) {
+//                llMainLayout.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
+//
+//                tvFileName.setTextColor(getBaseActivity().getResources().getColor(android.R.color.white));
+//                tvFileSize.setTextColor(getBaseActivity().getResources().getColor(android.R.color.white));
+//                tvFileLastModified.setTextColor(getBaseActivity().getResources().getColor(android.R.color.white));
+//
+//            } else {
+//                llMainLayout.setBackgroundColor(getBaseActivity().getResources().getColor(android.R.color.white));
+//
+//                tvFileName.setTextColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
+//                tvFileSize.setTextColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
+//                tvFileLastModified.setTextColor(getBaseActivity().getResources().getColor(R.color.colorPrimary));
+//            }
 
         } else {
             ivRecordedVideoList.setImageBitmap(null);

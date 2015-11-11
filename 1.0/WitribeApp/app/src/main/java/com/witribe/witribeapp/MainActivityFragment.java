@@ -58,6 +58,13 @@ public class MainActivityFragment extends BaseFragment {
 
     }
 
+    public static MainActivityFragment newInstance() {
+        MainActivityFragment fragment = new MainActivityFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

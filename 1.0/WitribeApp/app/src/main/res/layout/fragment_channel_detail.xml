@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    >
+    android:paddingRight="10dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -16,57 +15,79 @@
             android:id="@+id/rl_channel"
             android:layout_width="match_parent"
             android:layout_height="@dimen/preview_image_height">
+
             <ImageView
                 android:id="@+id/iv_channel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:visibility="gone"
-                android:src="@drawable/bg_placeholder" />
+                android:src="@drawable/bg_placeholder"
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/pb_channel"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:indeterminate="true" />
         </RelativeLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_favourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/rl_channel"
-            android:layout_below="@+id/rl_channel"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_bookmark_border_black_24dp" />
 
         <LinearLayout
-            android:id="@+id/ll_viewers"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_top_viewers"
+            android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/fab_favourite"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/rl_channel"
-            android:layout_toLeftOf="@+id/fab_favourite"
-            android:layout_toStartOf="@+id/fab_favourite"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="Viewers :" />
 
-            <TextView
-                android:id="@+id/tv_viewer_count"
+            <LinearLayout
+                android:id="@+id/ll_viewers"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="43434" />
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:text="Viewers :"
+                    android:gravity="center|left"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_viewer_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:text="43434"
+                    android:gravity="center|left"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_schedule_white_24dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_bookmark_border_black_24dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center" />
+
 
         </LinearLayout>
 
@@ -75,10 +96,10 @@
             android:id="@+id/tv_channel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/fab_favourite"
+            android:layout_below="@id/ll_top_viewers"
             android:maxLines="4"
-            android:text="@string/large_text"
-            android:minLines="3" />
+            android:minLines="3"
+            android:text="@string/large_text" />
 
         <TextView
             android:id="@+id/tv_related_channels"

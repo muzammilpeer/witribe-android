@@ -146,14 +146,17 @@ public class RecordVideoListFragment extends BaseFragment {
 
     @Override
     protected void hideLoader(boolean isError) {
-        pbRecordVideoList.setVisibility(View.GONE);
+        if (pbRecordVideoList != null)
+        {
+            pbRecordVideoList.setVisibility(View.GONE);
 
-        if (isError) {
-            llRecordVideoList.setVisibility(View.VISIBLE);
-            rcRecordVideoList.setVisibility(View.GONE);
-        } else {
-            llRecordVideoList.setVisibility(View.GONE);
-            rcRecordVideoList.setVisibility(View.VISIBLE);
+            if (isError) {
+                llRecordVideoList.setVisibility(View.VISIBLE);
+                rcRecordVideoList.setVisibility(View.GONE);
+            } else {
+                llRecordVideoList.setVisibility(View.GONE);
+                rcRecordVideoList.setVisibility(View.VISIBLE);
+            }
         }
     }
 
