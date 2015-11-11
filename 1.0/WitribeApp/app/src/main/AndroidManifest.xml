@@ -49,6 +49,8 @@
 
 
         <service android:name=".service.MediaPlayerService" />
+
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd9d3495dc44bc3103cc09d6380e0160df3271c6" />
