@@ -47,7 +47,7 @@ public class WindowUtil {
     }
 
     /** Shows StatusBar and ActionBar */
-    public static void showSystemUi(AppCompatActivity appCompatActivity) {
+    public static void showSystemUi(AppCompatActivity  appCompatActivity) {
         appCompatActivity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

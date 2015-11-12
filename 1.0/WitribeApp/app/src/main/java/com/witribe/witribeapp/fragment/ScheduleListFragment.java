@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
@@ -36,7 +38,7 @@ import butterknife.Bind;
 /**
  * Created by muzammilpeer on 11/12/15.
  */
-public class ScheduleListFragment extends BaseFragment {
+public class ScheduleListFragment extends BaseFragment implements View.OnClickListener {
     // UI references.
     @Bind(R.id.rc_schedule_lis)
     RecyclerView rcRecordVideoList;
@@ -49,6 +51,20 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Bind(R.id.srl_schedule_list)
     SwipeRefreshLayout srlScheduleList;
+
+    @Bind(R.id.iv_next_date)
+    ImageButton ivNextDate;
+
+    @Bind(R.id.iv_previous_date)
+    ImageButton ivPreviousDate;
+
+    @Bind(R.id.tv_current_date)
+    TextView tvCurrentDate;
+
+    Date currentDate;
+    Calendar cal = Calendar.getInstance();
+
+
 
     String selectedChannelName;
 
@@ -113,12 +129,19 @@ public class ScheduleListFragment extends BaseFragment {
     public void initObjects() {
         super.initObjects();
 
+        currentDate = new Date();
+        cal.setTime(currentDate);
+        cal.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
+
     }
 
     @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
+
+        ivNextDate.setOnClickListener(this);
+        ivPreviousDate.setOnClickListener(this);
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<ScheduleListCell>(mContext, R.layout.row_schedule_list, ScheduleListCell.class, this.getLocalDataSource());
 
@@ -133,7 +156,7 @@ public class ScheduleListFragment extends BaseFragment {
         srlScheduleList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getScheduleData();
+                getScheduleData(-1);
 
             }
         });
@@ -149,10 +172,10 @@ public class ScheduleListFragment extends BaseFragment {
         super.initNetworkCalls();
 
 
-        getScheduleData();
+        getScheduleData(-1);
     }
 
-    private void getScheduleData() {
+    private void getScheduleData(int isAddDay) {
 
         if (selectedChannelName != null && selectedChannelName.length() > 0) {
             Log4a.e("Network Call", "GET_CHANNEL_SCHEDULE");
@@ -160,20 +183,61 @@ public class ScheduleListFragment extends BaseFragment {
             ChannelScheduleRequestModel requestModel = new ChannelScheduleRequestModel();
             requestModel.setUserid("0");
             requestModel.setChannellist(selectedChannelName.toLowerCase().replaceAll(" ", "%20"));
-            Date currentDate = new Date();
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(currentDate);
-            cal.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
 
-//            cal.add(Calendar.MINUTE,30);
+            if (isAddDay == 0) //next day
+            {
+                cal.add(Calendar.DAY_OF_MONTH,1);
+            }else if (isAddDay == 1) { //PREVIOUS DAY
+                cal.add(Calendar.DAY_OF_MONTH,-1);
+            } else {// -1 for current date
+                cal.setTime(currentDate);
+            }
 
             String day = cal.get(Calendar.DAY_OF_MONTH) + "";
             String month = cal.get(Calendar.MONTH) + 1 + "";
             String year = cal.get(Calendar.YEAR) + "";
             String hour = cal.get(Calendar.HOUR_OF_DAY) + "";
             String minute = cal.get(Calendar.MINUTE) + "";
-            String startFullDateTime = year + month + day + (cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" + hour : hour) + (cal.get(Calendar.MINUTE) < 10 ? "0" + minute : minute);
-            String endFullDateTime = year + month + day + "23" + "59";
+
+
+            String startFullDateTime = "";
+            String endFullDateTime = "";
+
+            if (isAddDay == 0) //next day
+            {
+                startFullDateTime = year
+                        + (cal.get(Calendar.MONTH) < 9 ? "0" + month : month)
+                        + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + day : day)
+                        + "00"
+                        + "00";
+
+            }else if (isAddDay == 1) { //PREVIOUS DAY
+                startFullDateTime = year
+                        + (cal.get(Calendar.MONTH) < 9 ? "0" + month : month)
+                        + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + day : day)
+                        + "00"
+                        + "00";
+            }else { // -1 for current date
+                startFullDateTime = year
+                        + (cal.get(Calendar.MONTH) < 9 ? "0" + month : month)
+                        + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + day : day)
+                        + (cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" + hour : hour)
+                        + (cal.get(Calendar.MINUTE) < 10 ? "0" + minute : minute);
+
+
+            }
+
+
+            endFullDateTime = year
+                    + (cal.get(Calendar.MONTH) < 9 ? "0" + month : month)
+                    + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + day : day)
+                    + "23"
+                    + "59";
+
+
+            tvCurrentDate.setText(year + "-"
+                    + (cal.get(Calendar.MONTH) < 9 ? "0" + month : month) + "-"
+                    + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + day : day));
 
             requestModel.setFromdatetime(startFullDateTime);
             requestModel.setTodatetime(endFullDateTime);
@@ -194,6 +258,22 @@ public class ScheduleListFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.iv_next_date: {
+                getScheduleData(0);
+
+            }break;
+            case R.id.iv_previous_date: {
+                getScheduleData(1);
+
+            }break;
+
+        }
+
+    }
 
     @Override
     protected void showLoader() {
