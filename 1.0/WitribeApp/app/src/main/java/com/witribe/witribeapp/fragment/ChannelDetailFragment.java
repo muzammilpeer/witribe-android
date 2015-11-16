@@ -71,6 +71,9 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     @Bind(R.id.fab_schedule)
     FloatingActionButton fabSchedule;
 
+    @Bind(R.id.fab_favourite_detail)
+    FloatingActionButton fabFavourite;
+
     @Bind(R.id.tv_label_viewers)
     TextView tvLabelViewers;
 
@@ -169,6 +172,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         super.initListenerOrAdapter();
 
         fabSchedule.setOnClickListener(this);
+        fabFavourite.setOnClickListener(this);
 
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<RelatedChannelCell>(mContext, R.layout.row_related_channel, RelatedChannelCell.class, this.getLocalDataSource());
@@ -275,7 +279,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                 getBaseActivity().replaceFragment(ScheduleListFragment.newInstance(selectedData.title), R.id.container_main);
             }
             break;
-            case R.id.fab_favourite: {
+            case R.id.fab_favourite_detail: {
                 addFavouritesData(currentVideoID);
             }
 

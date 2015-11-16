@@ -84,7 +84,7 @@
                 android:src="@drawable/ic_schedule_white_24dp" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_favourite"
+                android:id="@+id/fab_favourite_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
