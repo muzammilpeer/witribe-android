@@ -14,14 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.witribe.witribeapp.activity.LoginActivity;
-import com.witribe.witribeapp.fragment.ComingSoonFragment;
+import com.witribe.witribeapp.fragment.EducationListFragment;
+import com.witribe.witribeapp.fragment.FavouriteListFragment;
 import com.witribe.witribeapp.fragment.RecordVideoListFragment;
+import com.witribe.witribeapp.fragment.VODListFragment;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 import com.witribe.witribeapp.manager.UserManager;
 
@@ -43,34 +44,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-
-    @Bind(R.id.iv_profile_picture)
-    ImageView ivProfileImage;
-
-    @Bind(R.id.tv_full_name)
     TextView tvFullName;
-
-    @Bind(R.id.tv_email_address)
     TextView tvCustomerID;
 
-
-//
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus && isFullScreenOptionEnable) {
-//            getWindow().getDecorView().setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-//
-//        }else if (isFullScreenOptionEnable == false){
-//            WindowUtil.showSystemUi(this);
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +54,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        tvFullName = (TextView) navigationView.findViewById(R.id.tv_full_name);
+        tvCustomerID = (TextView) navigationView.findViewById(R.id.tv_email_address);
 
 
         setSupportActionBar(mToolbar);
@@ -115,11 +94,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (UserManager.getInstance().isUserLoggedIn()) {
             //setup left navigation bar
             setupNavigationDrawer();
-            tvFullName.setText(UserManager.getInstance().getUserProfile().getFirstName() + " " + UserManager.getInstance().getUserProfile().getLastName());
-            tvCustomerID.setText(UserManager.getInstance().getUserProfile().getCustomerID());
+            if (tvFullName != null) {
+                tvFullName.setText(UserManager.getInstance().getUserProfile().getFirstName() + " " + UserManager.getInstance().getUserProfile().getLastName());
+                tvCustomerID.setText(UserManager.getInstance().getUserProfile().getCustomerID());
+            }
         } else {
-            tvFullName.setText("");
-            tvCustomerID.setText("");
+            if (tvFullName != null) {
+                tvFullName.setText("");
+                tvCustomerID.setText("");
+            }
         }
     }
 
@@ -249,25 +232,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (id == R.id.nav_live_channels) {
             popAllFragment();
-            replaceFragment(MainActivityFragment.newInstance(), R.id.container_main);
+//            replaceFragment(MainActivityFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_video_on_demand) {
             popAllFragment();
-            replaceFragment(ComingSoonFragment.newInstance(),R.id.container_main);
+            replaceFragment(VODListFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_education) {
             popAllFragment();
-            replaceFragment(ComingSoonFragment.newInstance(),R.id.container_main);
+            replaceFragment(EducationListFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_my_favourite) {
             popAllFragment();
-            replaceFragment(ComingSoonFragment.newInstance(),R.id.container_main);
+            replaceFragment(FavouriteListFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_recorded_list) {
             popAllFragment();
-            replaceFragment(RecordVideoListFragment.newInstance(),R.id.container_main);
-        } else if (id == R.id.nav_logout)
-        {
+            replaceFragment(RecordVideoListFragment.newInstance(), R.id.container_main);
+        } else if (id == R.id.nav_logout) {
             UserManager.getInstance().logoutUser();
             popAllFragment();
             finish();
-            Intent intent = new Intent(this , LoginActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
 
         }

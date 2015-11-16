@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
+    android:id="@+id/cv_vod_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/cell_margin_bottom"
@@ -15,13 +15,13 @@
 
 
         <RelativeLayout
-            android:id="@+id/rl_category_photo"
+            android:id="@+id/rl_vod_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <com.witribe.witribeapp.view.SquareImageView
-                android:id="@+id/category_photo"
+                android:id="@+id/iv_vod_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -31,16 +31,15 @@
                 android:visibility="gone" />
 
             <ProgressBar
-                android:id="@+id/pb_category_photo"
+                android:id="@+id/pb_vod_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:indeterminate="true" />
         </RelativeLayout>
 
-
         <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/tv_vod_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1976D2"
@@ -50,6 +49,7 @@
             android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:ellipsize="end"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -37,7 +37,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':baselayer')
-    compile 'com.github.deano2390:MaterialShowcaseView:1.0.5'
+//    compile 'com.github.deano2390:MaterialShowcaseView:1.0.5'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }

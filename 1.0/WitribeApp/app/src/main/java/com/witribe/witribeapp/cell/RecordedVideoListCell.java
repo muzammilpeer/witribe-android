@@ -5,7 +5,6 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ranisaurus.baselayer.cell.BaseCell;
@@ -39,10 +38,6 @@ public class RecordedVideoListCell extends BaseCell implements View.OnClickListe
 
     @Bind(R.id.tvFileLastModified)
     TextView tvFileLastModified;
-
-    @Bind(R.id.ll_main_row_recorded_video_list)
-    LinearLayout llMainLayout;
-
 
     @Bind(R.id.iv_context_menu)
     ImageView ivContextMenu;

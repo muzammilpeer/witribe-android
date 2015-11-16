@@ -51,6 +51,8 @@ public class Data extends BaseModel implements Parcelable {
 
     public String favouriteType;
 
+    public String image;
+
     public String mobile_large_image;
 
     public String mobile_small_image;
@@ -336,6 +338,7 @@ public class Data extends BaseModel implements Parcelable {
         interactivity_timing = in.readString();
         is_3d = in.readString();
         ad_type = in.readString();
+        image = in.readString();
     }
 
     @Override
@@ -442,6 +445,7 @@ public class Data extends BaseModel implements Parcelable {
                 ", interactivity_timing='" + interactivity_timing + '\'' +
                 ", is_3d='" + is_3d + '\'' +
                 ", ad_type='" + ad_type + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 
@@ -553,5 +557,6 @@ public class Data extends BaseModel implements Parcelable {
         dest.writeString(interactivity_timing);
         dest.writeString(is_3d);
         dest.writeString(ad_type);
+        dest.writeString(image);
     }
 }

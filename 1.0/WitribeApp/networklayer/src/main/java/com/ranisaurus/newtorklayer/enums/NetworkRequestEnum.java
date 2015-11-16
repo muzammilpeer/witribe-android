@@ -34,7 +34,10 @@ public enum NetworkRequestEnum {
     ADD_FAVOURITE_LISTING(18, "NewWiTribeService", "addFavouritelisting"),
     DELETE_FAVOURITE_LISTING(19, "NewWiTribeService", "deleteFavouritelisting"),
     GET_COUNTRY_CODE(20, "NewWiTribeService", "getCountryCode"),
-    GET_CHANNEL_SCHEDULE(20, "http://timesofindia.indiatimes.com/", "tvschedulejson.cms"),
+    GET_CHANNEL_SCHEDULE(21, "http://timesofindia.indiatimes.com/", "tvschedulejson.cms"),
+     //3 parameters 1 userid, 1 2
+
+
 
     ;// semicolon needed when fields / methods follow
 

@@ -1,5 +1,6 @@
 package com.witribe.witribeapp.fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,6 +36,8 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
 
     @Bind(R.id.pb_subcategories)
     ProgressBar pbSubCategories;
+
+    public static int gridSize = 3;
 
     GeneralBaseAdapter<ListSubCategoryCell> dataGeneralBaseAdapter;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
@@ -73,7 +76,7 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
                     this.getLocalDataSource().addAll(modelData.getData());
                     dataGeneralBaseAdapter.notifyDataSetChanged();
                     hideLoader(false);
-                }else {
+                } else {
                     hideLoader(true);
                 }
             } catch (Exception e) {
@@ -98,16 +101,33 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log4a.e("onConfigurationChanged", " called");
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            gridSize = 5;
+        }else {
+            gridSize = 3;
+        }
+        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
+    }
+
+
+            @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<ListSubCategoryCell>(mContext, R.layout.row_list_subcategory, ListSubCategoryCell.class, this.getLocalDataSource());
 
-//        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
+        if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            gridSize = 5;
+        }else {
+            gridSize = 3;
+        }
 
         rcSubCategories.setHasFixedSize(true);
-        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(),3));
+        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
         rcSubCategories.setAdapter(dataGeneralBaseAdapter);
 
         dataGeneralBaseAdapter.notifyDataSetChanged();
@@ -138,11 +158,10 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     protected void hideLoader(boolean isError) {
         pbSubCategories.setVisibility(View.GONE);
 
-        if (isError)
-        {
+        if (isError) {
             llSubcategories.setVisibility(View.VISIBLE);
             rcSubCategories.setVisibility(View.GONE);
-        }else {
+        } else {
             llSubcategories.setVisibility(View.GONE);
             rcSubCategories.setVisibility(View.VISIBLE);
         }

@@ -72,7 +72,7 @@ public class ScheduleListCell extends BaseCell implements View.OnClickListener {
             String imageUrl = dataSource.getProgrammeurl().replaceAll(" ", "%20");
             Picasso.with(itemView.getContext())
                     .load(imageUrl)
-                    .resize(100, 100)
+                    .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
                     .centerInside()
                     .into(ivProgrammeImage, new Callback() {
                         @Override

@@ -10,7 +10,6 @@
 
     <dimen name="app_bar_height">120dp</dimen>
 
-    <dimen name="preview_image_height">120dp</dimen>
     <dimen name="related_cell_height">130dp</dimen>
     <dimen name="related_cell_image_height">100dp</dimen>
     <dimen name="related_cell_text_height">20dp</dimen>
@@ -22,4 +21,14 @@
     <dimen name="fab_margin">0dp</dimen>
 
     <dimen name="row_normal_font_size">8sp</dimen>
+
+    <dimen name="cell_corner_radius">2dp</dimen>
+    <dimen name="cell_margin_bottom">8dp</dimen>
+
+    <dimen name="videoplayer_potrait_height">240dp</dimen>
+
+    <dimen name="preview_image_height">120dp</dimen>
+    <dimen name="cardview_thumbnail_height">120dp</dimen>
+    <dimen name="cardview_height">140dp</dimen>
+
 </resources>

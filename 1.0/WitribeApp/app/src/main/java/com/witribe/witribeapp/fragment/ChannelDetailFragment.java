@@ -19,10 +19,14 @@ import android.widget.TextView;
 
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
+import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
+import com.ranisaurus.newtorklayer.manager.NetworkManager;
 import com.ranisaurus.newtorklayer.models.ChannelScheduleResponseModel;
 import com.ranisaurus.newtorklayer.models.Data;
+import com.ranisaurus.newtorklayer.models.DataBooleanResponseModel;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
+import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
@@ -67,9 +71,14 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     @Bind(R.id.fab_schedule)
     FloatingActionButton fabSchedule;
 
+    @Bind(R.id.tv_label_viewers)
+    TextView tvLabelViewers;
+
     GeneralBaseAdapter<RelatedChannelCell> dataGeneralBaseAdapter;
 
     private DataListResponseModel currentData;
+
+    private String currentVideoID = "";
     private Data selectedData;
 //    private StaggeredGridLayoutManager gaggeredGridLayoutManager;
 
@@ -175,8 +184,38 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 
         rlChannel.setOnClickListener(this);
 
+        if (selectedData.id != null && selectedData.id.length() > 0) {
+            currentVideoID = selectedData.id;
+        } else if (selectedData.vodId != null && selectedData.vodId.length() > 0) {
+            currentVideoID = selectedData.vodId;
+        } else if (selectedData.vodCategoryId != null && selectedData.vodCategoryId.length() > 0) {
+            currentVideoID = selectedData.vodCategoryId;
+        }
 
-        final String imageUrl = ("http://pitelevision.com/" + selectedData.mobile_large_image).replaceAll(" ", "%20");
+
+        String imageUrl = "";
+        if (selectedData.mob_large != null && selectedData.mob_large.length() > 0) {
+            imageUrl = (selectedData.mob_large).replaceAll(" ", "%20");
+            fabSchedule.setVisibility(View.GONE);
+            tvLabelViewers.setVisibility(View.GONE);
+            tvViewersCount.setVisibility(View.GONE);
+        } else if (selectedData.mob_small != null && selectedData.mob_small.length() > 0) {
+            if (selectedData.mob_small.contains("http")) {
+                imageUrl = (selectedData.mob_small).replaceAll(" ", "%20");
+            } else {
+                imageUrl = ("http://piteach.com/iptv/uploads/images/" + selectedData.img_poster).replaceAll(" ", "%20");
+            }
+            fabSchedule.setVisibility(View.GONE);
+            tvLabelViewers.setVisibility(View.GONE);
+            tvViewersCount.setVisibility(View.GONE);
+        } else {
+            imageUrl = ("http://pitelevision.com/" + selectedData.mobile_large_image).replaceAll(" ", "%20");
+            fabSchedule.setVisibility(View.VISIBLE);
+            tvLabelViewers.setVisibility(View.VISIBLE);
+            tvViewersCount.setVisibility(View.VISIBLE);
+
+        }
+
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -217,29 +256,6 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     public void initNetworkCalls() {
         super.initNetworkCalls();
 
-
-//        Log4a.e("Network Call", "GET_CHANNEL_SCHEDULE");
-//        showLoader();
-//        ChannelScheduleRequestModel requestModel = new ChannelScheduleRequestModel();
-//        requestModel.setUserid("0");
-////        requestModel.setChannellist(selectedData.title.toLowerCase());
-//        requestModel.setChannellist(selectedData.title.toLowerCase().replaceAll(" ", "%20"));
-//
-//
-//        requestModel.setFromdatetime("201511090000");
-//        requestModel.setTodatetime("201511100000");
-//        requestModel.setDeviceview("other");
-//        requestModel.setChannellogo("0");
-//
-//        Log4a.e("Channel Name = ", requestModel.getChannellist());
-//
-//        TVScheduleRequest request = new TVScheduleRequest(requestModel, NetworkRequestEnum.GET_CHANNEL_SCHEDULE);
-//        try {
-//            NetworkManager.getInstance().executeRequest(request, this);
-//        } catch (Exception e) {
-//            Log4a.printException(e);
-//        }
-
     }
 
     @Override
@@ -259,6 +275,9 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                 getBaseActivity().replaceFragment(ScheduleListFragment.newInstance(selectedData.title), R.id.container_main);
             }
             break;
+            case R.id.fab_favourite: {
+                addFavouritesData(currentVideoID);
+            }
 
         }
     }
@@ -295,6 +314,21 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         Log4a.e("onDestroy", "IN DETAIL FRAGMENT");
     }
 
+    private void addFavouritesData(String selectedID) {
+        String[] params = new String[3];
+        params[0] = UserManager.getInstance().getUserProfile().getUserId();
+        params[1] = selectedID;
+        params[2] = "1";
+
+        WitribeAMFRequest request = new WitribeAMFRequest(params, NetworkRequestEnum.ADD_FAVOURITE_LISTING);
+        try {
+            NetworkManager.getInstance().executeRequest(request, this);
+
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+
+    }
 
     @Override
     public void responseWithError(Exception error, BaseNetworkRequest request) {
@@ -305,6 +339,10 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                     case GET_CHANNEL_SCHEDULE: {
                         Log4a.e("Error ", "some error in network");
                         hideLoader(true);
+                    }
+                    break;
+                    case ADD_FAVOURITE_LISTING: {
+                        Snackbar.make(mView, "Error in favourite", Snackbar.LENGTH_SHORT).show();
                     }
                     break;
                 }
@@ -326,6 +364,17 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
                         Log4a.e("Response ", model.toString() + "");
                         hideLoader(false);
                     }
+                    break;
+                    case ADD_FAVOURITE_LISTING: {
+                        DataBooleanResponseModel model = (DataBooleanResponseModel) GsonUtil.getObjectFromJsonObject(data, DataBooleanResponseModel.class);
+                        Log4a.e("Response ", model.toString() + "");
+                        if (model.getData().equalsIgnoreCase("true")) {
+                            Snackbar.make(mView, "Successfully Favourite added", Snackbar.LENGTH_SHORT).show();
+                        } else {
+                            Snackbar.make(mView, "Error in favourite", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                    break;
                 }
             }
         } catch (Exception e) {

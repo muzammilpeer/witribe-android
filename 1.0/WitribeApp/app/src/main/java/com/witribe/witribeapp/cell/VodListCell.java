@@ -14,7 +14,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.ChannelDetailFragment;
-import com.witribe.witribeapp.fragment.ListSubCategoriesFragment;
+import com.witribe.witribeapp.fragment.VODListFragment;
 import com.witribe.witribeapp.view.SquareImageView;
 
 import java.util.ArrayList;
@@ -22,20 +22,20 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 /**
- * Created by muzammilpeer on 10/13/15.
+ * Created by muzammilpeer on 11/14/15.
  */
-public class ListSubCategoryCell extends BaseCell implements View.OnClickListener {
+public class VodListCell extends BaseCell implements View.OnClickListener {
 
-    @Bind(R.id.category_photo)
+    @Bind(R.id.iv_vod_list)
     SquareImageView ivCategoryPhoto;
 
-    @Bind(R.id.pb_category_photo)
+    @Bind(R.id.pb_vod_list)
     ProgressBar pbCategoryPhoto;
 
-    @Bind(R.id.category_name)
+    @Bind(R.id.tv_vod_list)
     TextView tvCategoryName;
 
-    public ListSubCategoryCell(View itemView) {
+    public VodListCell(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
 
@@ -45,9 +45,10 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     public void updateCell(BaseModel model) {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int viewSize = displaymetrics.widthPixels / ListSubCategoriesFragment.gridSize;
+        int viewSize = displaymetrics.widthPixels / VODListFragment.gridSize;
         itemView.setLayoutParams(new RelativeLayout.LayoutParams(viewSize, viewSize));
-//        .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
+
+        itemView.setLayoutParams(new RelativeLayout.LayoutParams(viewSize, viewSize));
 
         position = this.getAdapterPosition();
 
@@ -57,8 +58,19 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
         if (model instanceof Data) {
             Data dataSource = (Data) model;
 
-            tvCategoryName.setText(dataSource.title.toUpperCase());
-            String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image).replaceAll(" ", "%20");
+            String imageUrl = "";
+            if (dataSource.vodId != null && dataSource.vodId.length() > 0) {
+                tvCategoryName.setText(dataSource.title.toUpperCase());
+                imageUrl = (dataSource.mob_small).replaceAll(" ", "%20");
+            } else if (dataSource.id != null && dataSource.id.length() > 0) {
+                tvCategoryName.setText(dataSource.name.toUpperCase());
+                imageUrl = (dataSource.mob_small).replaceAll(" ", "%20");
+            } else {
+                tvCategoryName.setText(dataSource.name.toUpperCase());
+                imageUrl = (dataSource.image).replaceAll(" ", "%20");
+            }
+
+
             //image loading using picaso
             Picasso.with(itemView.getContext())
                     .load(imageUrl)
@@ -91,6 +103,16 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
 
         Data dataSource = (Data) mDataSource;
 
-        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+        if (dataSource.vodId != null && dataSource.vodId.length() > 0 && dataSource.vodCategoryId != null && dataSource.vodCategoryId.length() > 0) {
+            getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+        } else if (dataSource.vodId != null && dataSource.vodId.length() > 0) {
+            getBaseActivity().replaceFragment(VODListFragment.newInstance(dataSource), R.id.container_main);
+        } else if (dataSource.id != null && dataSource.id.length() > 0) {
+            getBaseActivity().replaceFragment(VODListFragment.newInstance(dataSource), R.id.container_main);
+        } else if (dataSource.vodCategoryId != null && dataSource.vodCategoryId.length() > 0) {
+            getBaseActivity().replaceFragment(VODListFragment.newInstance(dataSource), R.id.container_main);
+        } else {
+            getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+        }
     }
 }

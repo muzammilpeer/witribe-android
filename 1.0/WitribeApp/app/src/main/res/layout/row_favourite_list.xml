@@ -42,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -54,8 +55,8 @@
                     android:layout_height="match_parent"
                     android:clickable="false"
                     android:gravity="center|left"
-                    android:maxLines="2"
-                    android:text="Show Name : "
+                    android:maxLines="1"
+                    android:text="Name : "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
@@ -66,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:text="WWE RAW 2015"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
             </LinearLayout>
@@ -80,45 +81,59 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center|left"
-                    android:maxLines="2"
-                    android:text="Time : "
+                    android:maxLines="1"
+                    android:text="Category : "
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_programme_duration"
+                    android:id="@+id/tv_programme_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:maxLines="1"
+                    android:text="02:18 AM - 03:00 AM "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center|left"
                     android:maxLines="2"
-                    android:text="02:18 AM - 03:00 AM "
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center|right"
-                    android:maxLines="2"
-                    android:text="Duration: "
+                    android:text="Description: "
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:layout_weight="1" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_programme_duration_left"
+                    android:id="@+id/tv_programme_description"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center|right"
+                    android:gravity="center|left"
                     android:maxLines="2"
                     android:text="118/180 Min"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_context_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_more_vert_black_24dp" />
 
     </LinearLayout>
 

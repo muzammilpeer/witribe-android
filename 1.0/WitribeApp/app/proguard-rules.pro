@@ -17,3 +17,4 @@
 #}
 
 -dontwarn com.squareup.okhttp.**
+-keep class !android.support.v7.internal.view.menu.*MenuBuilder*, android.support.v7.** { *; }

@@ -1,10 +1,5 @@
 package com.witribe.witribeapp.fragment;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -14,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -22,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.muzammilpeer.ffmpeglayer.helpers.CpuArchHelper;
@@ -34,7 +30,6 @@ import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.PlayerVideoView;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
-import com.witribe.witribeapp.MainActivity;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.controls.IVideoPlayerControls;
 import com.witribe.witribeapp.controls.VideoPlayerControls;
@@ -48,7 +43,7 @@ import butterknife.Bind;
  * Created by muzammilpeer on 10/18/15.
  */
 public class WebViewFragment extends BaseFragment implements
-        View.OnClickListener, IVideoPlayerControls,IBufferStream,View.OnTouchListener {
+        View.OnClickListener, IVideoPlayerControls, IBufferStream, View.OnTouchListener {
 
     private static final String ARG_CATEGORY_NAME = "category_name";
     //UI references.
@@ -127,10 +122,8 @@ public class WebViewFragment extends BaseFragment implements
     public void initViews() {
         super.initViews();
         getBaseActivity().isFullScreenOptionEnable = false;
-
         //FFMpeg manager debuggin on
         FFmpegManager.getInstance().setContext(getBaseActivity().getApplicationContext());
-
         getBaseActivity().getSupportActionBar().setTitle(R.string.live_stream);
 //        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -138,29 +131,37 @@ public class WebViewFragment extends BaseFragment implements
             getBaseActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
             getBaseActivity().getWindow().setFormat(PixelFormat.TRANSLUCENT);
         }
+
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
         getBaseActivity().hideToolBar();
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int displayHeight = displaymetrics.heightPixels;
-        int displayWidth = displaymetrics.widthPixels;
 
-        if (getBaseActivity().getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+        if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             WindowUtil.hideSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displayHeight, displayWidth);
-            vwPlayerView.getHolder().setFixedSize(displayHeight, displayWidth);
+            vwPlayerView.setDimensions(displaymetrics.widthPixels, displaymetrics.heightPixels);
+            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, displaymetrics.heightPixels);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            vwPlayerView.setLayoutParams(params); //causes layout update
         } else {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             WindowUtil.showSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displayWidth, displayHeight / 2);
-            vwPlayerView.getHolder().setFixedSize(displayWidth, displayHeight / 2);
+            vwPlayerView.setDimensions(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+            vwPlayerView.setLayoutParams(params); //causes layout update
         }
+        vwPlayerView.invalidate();
 
 
     }
@@ -171,7 +172,15 @@ public class WebViewFragment extends BaseFragment implements
 
         VideoPlayerControls.releaseDialog();
 
-        streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+        if (currentData.videoURL != null && currentData.videoURL.length() > 0) {
+            streamingUrl = currentData.videoURL + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+        } else if (currentData.vod_flash != null && currentData.vod_flash.length() > 0) {
+            streamingUrl = currentData.vod_flash.replaceAll(" ", "%20");
+        } else if (currentData.video != null && currentData.video.length() > 0) {
+            streamingUrl = currentData.video.replaceAll(" ", "%20");
+        } else {
+            streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+        }
         Log4a.e("Streaming URL = ", streamingUrl);
 
 
@@ -205,7 +214,11 @@ public class WebViewFragment extends BaseFragment implements
 
         tvViewersCount.setText(currentData.totalViews + "");
 
-        vwPlayerView.setMediaController(null);
+        if (currentData.video != null && currentData.video.length() > 0) {
+            vwPlayerView.setMediaController(new MediaController(getBaseActivity()));
+        } else {
+            vwPlayerView.setMediaController(null);
+        }
         vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
         vwPlayerView.start();
         vwPlayerView.requestFocus();
@@ -254,12 +267,15 @@ public class WebViewFragment extends BaseFragment implements
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (vwPlayerView != null) {
-                if (VideoPlayerControls.isShowingDialog()) {
-                    VideoPlayerControls.hideControls();
-                } else {
-                    VideoPlayerControls.showControls(getBaseActivity(), "test",this);
+                if (currentData.video == null || currentData.video.length() < 1) {
+                    if (VideoPlayerControls.isShowingDialog()) {
+                        VideoPlayerControls.hideControls();
+                    } else {
+                        VideoPlayerControls.showControls(getBaseActivity(), "test", this);
 
+                    }
                 }
+
             }
         }
         return false;
@@ -268,7 +284,7 @@ public class WebViewFragment extends BaseFragment implements
     private void stopRecording() {
         Log4a.e("Click", "Stop Recording");
         if (tvRecordingStatus != null)
-        tvRecordingStatus.setText(" Stopped");
+            tvRecordingStatus.setText(" Stopped");
 
         tvBitRate.setText("");
         tvFileSize.setText("");
@@ -282,13 +298,13 @@ public class WebViewFragment extends BaseFragment implements
         FFmpegManager.getInstance().stopLiveStreamRecording();
 
         if (fabRecording != null)
-        fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_white_24dp));
+            fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_white_24dp));
 
     }
 
     private void startRecording() {
         if (tvRecordingStatus != null)
-        tvRecordingStatus.setText(" Started");
+            tvRecordingStatus.setText(" Started");
 
         recording = true;
         Log4a.e("Click", "Start Recording");
@@ -297,7 +313,7 @@ public class WebViewFragment extends BaseFragment implements
         FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, this);
 
         if (fabRecording != null)
-        fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_off_white_24dp));
+            fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_off_white_24dp));
 
     }
 
@@ -305,12 +321,12 @@ public class WebViewFragment extends BaseFragment implements
     //ShellManager Callback
     @Override
     public void onStreamInit(String progress) {
-        Log4a.e("onStreamInit",progress);
+//        Log4a.e("onStreamInit", progress);
     }
 
     @Override
     public void onStreamWorking(final String progress) {
-        Log4a.e("onStreamWorking",progress);
+        Log4a.e("onStreamWorking", progress);
 
         getBaseActivity().runOnUiThread(new Runnable() {
             @Override
@@ -333,13 +349,13 @@ public class WebViewFragment extends BaseFragment implements
 
     @Override
     public void onStreamCompleted(String progress) {
-        Log4a.e("onStreamCompleted",progress);
+//        Log4a.e("onStreamCompleted", progress);
 
     }
 
     @Override
     public void onStreamError(String error) {
-        Log4a.e("onStreamCompleted",error);
+//        Log4a.e("onStreamCompleted", error);
 
     }
 
@@ -375,27 +391,40 @@ public class WebViewFragment extends BaseFragment implements
 
     @Override
     public void onStopRecording() {
-        if (recording)
-        {
+        if (recording) {
             stopRecording();
         }
     }
 
     @Override
     public void onVideoQualitySelected(boolean HQ) {
-        if (HQ)
-        {
-            streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
-        }else {
-            streamingUrl = currentData.video_iosStreamUrlLow + "&token=" + UserManager.getInstance().getUserProfile().getToken();
-            if (streamingUrl == null || streamingUrl.length() < 1)
-            {
+        if (HQ) {
+            if (currentData.videoURL != null && currentData.videoURL.length() > 0) {
+                streamingUrl = currentData.videoURL + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+            } else if (currentData.vod_flash != null && currentData.vod_flash.length() > 0) {
+                streamingUrl = currentData.vod_flash.replaceAll(" ", "%20");
+            } else if (currentData.video != null && currentData.video.length() > 0) {
+                streamingUrl = currentData.video.replaceAll(" ", "%20");
+            } else {
                 streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
             }
+        } else {
+            if (currentData.videoURL != null && currentData.videoURL.length() > 0) {
+                streamingUrl = currentData.videoURL + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+            } else if (currentData.vod_flash != null && currentData.vod_flash.length() > 0) {
+                streamingUrl = currentData.vod_flash.replaceAll(" ", "%20");
+            } else if (currentData.sdvideo != null && currentData.sdvideo.length() > 0) {
+                streamingUrl = currentData.sdvideo.replaceAll(" ", "%20");
+            } else {
+                streamingUrl = currentData.video_iosStreamUrlLow + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+            }
+
+//            if (streamingUrl == null || streamingUrl.length() < 1) {
+//                streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
+//            }
         }
 
-        if (vwPlayerView != null)
-        {
+        if (vwPlayerView != null) {
             vwPlayerView.stopPlayback();
             vwPlayerView.setMediaController(null);
             vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
@@ -421,116 +450,29 @@ public class WebViewFragment extends BaseFragment implements
         int displayHeight = displaymetrics.heightPixels;
         int displayWidth = displaymetrics.widthPixels;
 
-        displayWidth = mView.getWidth();
-        displayHeight = mView.getHeight();
-
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             WindowUtil.hideSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displayHeight, displayWidth);
-            vwPlayerView.getHolder().setFixedSize(displayHeight, displayWidth);
+            vwPlayerView.setDimensions(displaymetrics.widthPixels, displaymetrics.heightPixels);
+            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, displaymetrics.heightPixels);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            vwPlayerView.setLayoutParams(params); //causes layout update
         } else {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             WindowUtil.showSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displayWidth, displayHeight / 2);
-            vwPlayerView.getHolder().setFixedSize(displayWidth, displayHeight / 2);
+            vwPlayerView.setDimensions(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+            vwPlayerView.setLayoutParams(params); //causes layout update
         }
-
     }
-
-
-    private void showNotificationLollipop(int id) {
-        // Instantiate a Builder object.
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseActivity());
-// Creates an Intent for the Activity
-        Intent notifyIntent =
-                new Intent(getBaseActivity(), MainActivity.class);
-// Sets the Activity to start in a new, empty task
-        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-// Creates the PendingIntent
-        PendingIntent notifyPendingIntent =
-                PendingIntent.getActivity(
-                        getBaseActivity(),
-                        0,
-                        notifyIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-// Puts the PendingIntent into the notification builder
-        builder.setContentIntent(notifyPendingIntent);
-// Notifications are issued by sending them to the
-// NotificationManager system service.
-        NotificationManager mNotificationManager =
-                (NotificationManager) getBaseActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-// Builds an anonymous Notification object from the builder, and
-// passes it to the NotificationManager
-        mNotificationManager.notify(id, builder.build());
-    }
-
-
-    private void showNotificationWithPlaybackLockScreen() {
-//        Notification notification = new Notification.Builder(getBaseActivity())
-//                // Show controls on lock screen even when user hides sensitive content.
-//                .setVisibility(Notification.VISIBILITY_PUBLIC)
-//                .setSmallIcon(R.drawable.ic_play_arrow_white_24dp)
-//                        // Add media control buttons that invoke intents in your media service
-//                .addAction(R.drawable.ic_skip_previous_white_24dp, "Previous", prevPendingIntent) // #0
-//                .addAction(R.drawable.ic_pause_white_24dp, "Pause", pausePendingIntent)  // #1
-//                .addAction(R.drawable.ic_skip_next_white_24dp, "Next", nextPendingIntent)     // #2
-//                        // Apply the media style template
-//                .setStyle(new Notification.MediaStyle()
-//                        .setShowActionsInCompactView(1 /* #1: pause button */)
-//                        .setMediaSession(mMediaSession.getSessionToken())
-//                        .setContentTitle("Wonderful music")
-//                        .setContentText("My Awesome Band")
-//                        .setLargeIcon(albumArtBitmap)
-//                        .build();
-    }
-
-    private void downloadNotification(final int ID) {
-        final NotificationManager mNotifyManager =
-                (NotificationManager) getBaseActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseActivity());
-        mBuilder.setContentTitle("Picture Download")
-                .setContentText("Download in progress")
-                .setSmallIcon(R.drawable.ic_videocam_off_white_24dp);
-// Start a lengthy operation in a background thread
-        new Thread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        int incr;
-                        // Do the "lengthy" operation 20 times
-                        for (incr = 0; incr <= 100; incr += 5) {
-                            // Sets the progress indicator to a max value, the
-                            // current completion percentage, and "determinate"
-                            // state
-                            mBuilder.setProgress(100, incr, false);
-                            // Displays the progress bar for the first time.
-                            mNotifyManager.notify(0, mBuilder.build());
-                            // Sleeps the thread, simulating an operation
-                            // that takes time
-                            try {
-                                // Sleep for 5 seconds
-                                Thread.sleep(5 * 1000);
-                            } catch (InterruptedException e) {
-                            }
-                        }
-                        // When the loop is finished, updates the notification
-                        mBuilder.setContentText("Download complete")
-                                // Removes the progress bar
-                                .setProgress(0, 0, false);
-                        mNotifyManager.notify(ID, mBuilder.build());
-                    }
-                }
-// Starts the thread by calling the run() method in its Runnable
-        ).start();
-    }
-
 
 }

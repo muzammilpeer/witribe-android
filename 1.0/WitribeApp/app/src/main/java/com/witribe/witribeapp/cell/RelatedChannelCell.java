@@ -1,7 +1,6 @@
 package com.witribe.witribeapp.cell;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,6 +12,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.ChannelDetailFragment;
+import com.witribe.witribeapp.view.SquareImageView;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import butterknife.Bind;
 public class RelatedChannelCell extends BaseCell implements View.OnClickListener {
 
     @Bind(R.id.category_photo)
-    ImageView ivCategoryPhoto;
+    SquareImageView ivCategoryPhoto;
 
     @Bind(R.id.pb_category_photo)
     ProgressBar pbCategoryPhoto;
@@ -49,11 +49,26 @@ public class RelatedChannelCell extends BaseCell implements View.OnClickListener
             Data dataSource = (Data) model;
 
             tvCategoryName.setText(dataSource.title);
-            String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image).replaceAll(" ", "%20");
+
+            String imageUrl = "";
+
+
+            if (dataSource.mob_large != null && dataSource.mob_large.length() > 0) {
+                imageUrl = (dataSource.mob_large).replaceAll(" ", "%20");
+            } else if (dataSource.img_poster != null && dataSource.img_poster.length() > 0) {
+                if (dataSource.img_poster.contains("http")) {
+                    imageUrl = (dataSource.img_poster).replaceAll(" ", "%20");
+                } else {
+                    imageUrl = ("http://piteach.com/iptv/uploads/images/" + dataSource.img_poster).replaceAll(" ", "%20");
+                }
+            } else {
+
+                imageUrl = ("http://pitelevision.com/" + dataSource.mobile_large_image).replaceAll(" ", "%20");
+            }
 
             Picasso.with(itemView.getContext())
                     .load(imageUrl)
-                    .resize(100, 100)
+                    .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
                     .centerInside()
                     .into(ivCategoryPhoto, new Callback() {
                         @Override
@@ -68,7 +83,7 @@ public class RelatedChannelCell extends BaseCell implements View.OnClickListener
                             ivCategoryPhoto.setVisibility(View.VISIBLE);
                         }
                     });
-        }else {
+        } else {
             ivCategoryPhoto.setImageBitmap(null);
         }
 
@@ -80,7 +95,7 @@ public class RelatedChannelCell extends BaseCell implements View.OnClickListener
         sharedData.setData((ArrayList) mAdapter.getmObjects());
         Data dataSource = (Data) mDataSource;
 
-        ChannelDetailFragment detailFragment =  (ChannelDetailFragment)getBaseActivity().getLastFragment();
+        ChannelDetailFragment detailFragment = (ChannelDetailFragment) getBaseActivity().getLastFragment();
         getBaseActivity().popFragment(detailFragment);
         getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
     }
