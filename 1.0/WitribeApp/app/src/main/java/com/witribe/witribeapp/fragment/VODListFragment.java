@@ -257,17 +257,19 @@ public class VODListFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void hideLoader(boolean isError) {
-        pbVodList.setVisibility(View.GONE);
-        srlVodList.setRefreshing(false);
+        if (pbVodList != null) {
+            pbVodList.setVisibility(View.GONE);
+            srlVodList.setRefreshing(false);
 
-        if (isError) {
-            llVodList.setVisibility(View.VISIBLE);
-            rcVodList.setVisibility(View.GONE);
-            srlVodList.setVisibility(View.GONE);
-        } else {
-            llVodList.setVisibility(View.GONE);
-            rcVodList.setVisibility(View.VISIBLE);
-            srlVodList.setVisibility(View.VISIBLE);
+            if (isError) {
+                llVodList.setVisibility(View.VISIBLE);
+                rcVodList.setVisibility(View.GONE);
+                srlVodList.setVisibility(View.GONE);
+            } else {
+                llVodList.setVisibility(View.GONE);
+                rcVodList.setVisibility(View.VISIBLE);
+                srlVodList.setVisibility(View.VISIBLE);
+            }
         }
     }
 

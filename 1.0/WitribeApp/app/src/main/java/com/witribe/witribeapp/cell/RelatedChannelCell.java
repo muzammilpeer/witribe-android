@@ -8,8 +8,8 @@ import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.base.BaseModel;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.ChannelDetailFragment;
 import com.witribe.witribeapp.view.SquareImageView;
@@ -54,35 +54,23 @@ public class RelatedChannelCell extends BaseCell implements View.OnClickListener
 
 
             if (dataSource.mob_large != null && dataSource.mob_large.length() > 0) {
-                imageUrl = (dataSource.mob_large).replaceAll(" ", "%20");
+                imageUrl = (dataSource.mob_large);
             } else if (dataSource.img_poster != null && dataSource.img_poster.length() > 0) {
                 if (dataSource.img_poster.contains("http")) {
-                    imageUrl = (dataSource.img_poster).replaceAll(" ", "%20");
+                    imageUrl = (dataSource.img_poster);
                 } else {
-                    imageUrl = ("http://piteach.com/iptv/uploads/images/" + dataSource.img_poster).replaceAll(" ", "%20");
+                    imageUrl = ("http://piteach.com/iptv/uploads/images/" + dataSource.img_poster);
                 }
             } else {
 
-                imageUrl = ("http://pitelevision.com/" + dataSource.mobile_large_image).replaceAll(" ", "%20");
+                imageUrl = ("http://pitelevision.com/" + dataSource.mobile_large_image);
             }
 
-            Picasso.with(itemView.getContext())
-                    .load(imageUrl)
-                    .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
-                    .centerInside()
-                    .into(ivCategoryPhoto, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            pbCategoryPhoto.setVisibility(View.GONE);
-                            ivCategoryPhoto.setVisibility(View.VISIBLE);
-                        }
+            ImageUtil.getImageFromUrl(CGSize.make((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height)),
+                    ivCategoryPhoto, pbCategoryPhoto, imageUrl
+            );
 
-                        @Override
-                        public void onError() {
-                            pbCategoryPhoto.setVisibility(View.GONE);
-                            ivCategoryPhoto.setVisibility(View.VISIBLE);
-                        }
-                    });
+
         } else {
             ivCategoryPhoto.setImageBitmap(null);
         }

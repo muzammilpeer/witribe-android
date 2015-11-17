@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,9 @@ import com.ranisaurus.newtorklayer.requests.BaseNetworkRequest;
 import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.cell.RelatedChannelCell;
 import com.witribe.witribeapp.manager.UserManager;
@@ -221,30 +220,11 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         }
 
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int displayWidth = displaymetrics.widthPixels;
-        Picasso.with(ivChannel.getContext())
-                .load(imageUrl)
-                .resize(displayWidth, (int) getResources().getDimension(R.dimen.preview_image_height))
-                .centerInside()
-                .into(ivChannel, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        if (pbChannel != null) {
-                            pbChannel.setVisibility(View.GONE);
-                            ivChannel.setVisibility(View.VISIBLE);
-                        }
-                    }
+        CGSize displaySize = WindowUtil.getScreenSizeInPixel(getBaseActivity());
 
-                    @Override
-                    public void onError() {
-                        if (pbChannel != null) {
-                            pbChannel.setVisibility(View.GONE);
-                            ivChannel.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
+        ImageUtil.getImageFromUrl(CGSize.make(displaySize.WIDTH, (int) getResources().getDimension(R.dimen.preview_image_height)),
+                ivChannel, pbChannel, imageUrl
+        );
 
         if (selectedData.description != null && selectedData.description.length() > 0) {
             tvChannelsDescription.setText(selectedData.description);
@@ -306,15 +286,6 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-//        NetworkManager.setConfiguration(new NetworkConfig(null));
-//        getLocalDataSource().clear();
-//        if (dataGeneralBaseAdapter != null)
-//        {
-//            dataGeneralBaseAdapter.notifyDataSetChanged();
-//        }
-//        setLocalDataSource(null);
-//        System.gc();
         Log4a.e("onDestroy", "IN DETAIL FRAGMENT");
     }
 
@@ -322,7 +293,12 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         String[] params = new String[3];
         params[0] = UserManager.getInstance().getUserProfile().getUserId();
         params[1] = selectedID;
-        params[2] = "1";
+
+        if (selectedData.vodId != null && selectedData.vodId.length() > 0) {
+            params[2] = "2";
+        } else {
+            params[2] = "1";
+        }
 
         WitribeAMFRequest request = new WitribeAMFRequest(params, NetworkRequestEnum.ADD_FAVOURITE_LISTING);
         try {

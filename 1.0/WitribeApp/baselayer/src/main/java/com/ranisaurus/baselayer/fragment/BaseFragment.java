@@ -123,7 +123,8 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     public void initViews() {
         //Injection Views
         ButterKnife.bind(this, mView);
-        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+//        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getBaseActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         //set current base activity context
         mContext = getBaseActivity();

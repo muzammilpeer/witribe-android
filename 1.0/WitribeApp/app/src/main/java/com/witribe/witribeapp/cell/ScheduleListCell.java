@@ -8,8 +8,8 @@ import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Programme;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.view.SquareImageView;
 
@@ -69,25 +69,11 @@ public class ScheduleListCell extends BaseCell implements View.OnClickListener {
             tvProgrammeDuration.setText(startTime + " - " + endTime);
             tvProgrammeName.setText(dataSource.getTitle());
 
-            String imageUrl = dataSource.getProgrammeurl().replaceAll(" ", "%20");
-            Picasso.with(itemView.getContext())
-                    .load(imageUrl)
-                    .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
-                    .centerInside()
-                    .into(ivProgrammeImage, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            pbProgrammeImage.setVisibility(View.GONE);
-                            ivProgrammeImage.setVisibility(View.VISIBLE);
-                        }
+            String imageUrl = dataSource.getProgrammeurl();
 
-                        @Override
-                        public void onError() {
-                            pbProgrammeImage.setVisibility(View.GONE);
-                            ivProgrammeImage.setVisibility(View.VISIBLE);
-                        }
-                    });
-
+            ImageUtil.getImageFromUrl(CGSize.make((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height)),
+                    ivProgrammeImage, pbProgrammeImage, imageUrl
+            );
 
             //highlight only current time row
             Date currentDate = new Date();
@@ -121,7 +107,7 @@ public class ScheduleListCell extends BaseCell implements View.OnClickListener {
 
             if (currentDate.getTime() >= startedDate.getTime() && currentDate.getTime() <= endedDate.getTime()) {
                 itemView.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.colorAccent));
-            }else {
+            } else {
                 itemView.setBackgroundColor(getBaseActivity().getResources().getColor(android.R.color.transparent));
             }
 

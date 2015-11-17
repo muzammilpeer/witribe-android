@@ -14,8 +14,13 @@ import android.view.WindowManager;
  */
 public class WindowUtil {
 
-    public static CGSize getScreenResolution(Context context)
-    {
+    public static CGSize getScreenSizeInPixel(AppCompatActivity appCompatActivity) {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        appCompatActivity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        return CGSize.make(displaymetrics.widthPixels, displaymetrics.heightPixels);
+    }
+
+    public static CGSize getScreenResolution(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -23,15 +28,16 @@ public class WindowUtil {
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        return new CGSize(width,height);
+        return new CGSize(width, height);
     }
-
 
 
     private int mSystemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
 
-    /** Hides StatusBar and ActionBar */
+    /**
+     * Hides StatusBar and ActionBar
+     */
     public static void hideSystemUi(AppCompatActivity appCompatActivity) {
         appCompatActivity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -46,8 +52,10 @@ public class WindowUtil {
         }
     }
 
-    /** Shows StatusBar and ActionBar */
-    public static void showSystemUi(AppCompatActivity  appCompatActivity) {
+    /**
+     * Shows StatusBar and ActionBar
+     */
+    public static void showSystemUi(AppCompatActivity appCompatActivity) {
         appCompatActivity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

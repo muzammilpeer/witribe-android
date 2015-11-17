@@ -19,8 +19,8 @@ import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.WebViewFragment;
 import com.witribe.witribeapp.manager.UserManager;
@@ -78,28 +78,16 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
 
             String imageUrl = "";
             if (dataSource.mobile_small_image.contains("http")) {
-                imageUrl = dataSource.mobile_small_image.replaceAll(" ", "%20");
+                imageUrl = dataSource.mobile_small_image;
             } else {
-                imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image).replaceAll(" ", "%20");
+                imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image);
             }
             Log4a.e("Favourite Image = ", imageUrl);
-            Picasso.with(itemView.getContext())
-                    .load(imageUrl)
-                    .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
-                    .centerInside()
-                    .into(ivProgrammeImage, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            pbProgrammeImage.setVisibility(View.GONE);
-                            ivProgrammeImage.setVisibility(View.VISIBLE);
-                        }
 
-                        @Override
-                        public void onError() {
-                            pbProgrammeImage.setVisibility(View.GONE);
-                            ivProgrammeImage.setVisibility(View.VISIBLE);
-                        }
-                    });
+            ImageUtil.getImageFromUrl(CGSize.make((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height)),
+                    ivProgrammeImage, pbProgrammeImage, imageUrl
+            );
+
         } else {
             ivProgrammeImage.setImageBitmap(null);
         }
@@ -132,11 +120,11 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
         }
     }
 
-    private void deleteFavouritesData(String selectedID) {
+    private void deleteFavouritesData(Data selectedData) {
         String[] params = new String[3];
         params[0] = UserManager.getInstance().getUserProfile().getUserId();
-        params[1] = selectedID;
-        params[2] = "1";
+        params[1] = selectedData.favouriteId;
+        params[2] = selectedData.favouriteType;
 
         WitribeAMFRequest request = new WitribeAMFRequest(params, NetworkRequestEnum.DELETE_FAVOURITE_LISTING);
         try {
@@ -201,7 +189,7 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
         switch (item.getItemId()) {
             case R.id.menu_delete_file: {
                 Data dataSource = (Data) mDataSource;
-                deleteFavouritesData(dataSource.favouriteId);
+                deleteFavouritesData(dataSource);
             }
             break;
             case R.id.menu_share_file: {

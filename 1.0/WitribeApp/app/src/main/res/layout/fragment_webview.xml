@@ -70,7 +70,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:id="@+id/ll_recording_view">
 
 
         <LinearLayout

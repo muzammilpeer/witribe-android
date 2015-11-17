@@ -10,12 +10,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +28,7 @@ import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
+import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.PlayerVideoView;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
 import com.witribe.witribeapp.R;
@@ -70,6 +71,13 @@ public class WebViewFragment extends BaseFragment implements
 
     @Bind(R.id.tvRecordingStatus)
     TextView tvRecordingStatus;
+
+    @Bind(R.id.ll_bottom_view)
+    LinearLayout llViewsCount;
+
+    @Bind(R.id.ll_recording_view)
+    LinearLayout llRecordingView;
+
 
     private Data currentData;
 
@@ -135,16 +143,15 @@ public class WebViewFragment extends BaseFragment implements
         getBaseActivity().getTabLayoutView().setVisibility(View.GONE);
         getBaseActivity().hideToolBar();
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        CGSize displaySize = WindowUtil.getScreenSizeInPixel(getBaseActivity());
 
         if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             WindowUtil.hideSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displaymetrics.widthPixels, displaymetrics.heightPixels);
-            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, displaymetrics.heightPixels);
+            vwPlayerView.setDimensions(displaySize.WIDTH, displaySize.HEIGHT);
+            vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, displaySize.HEIGHT);
 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -154,8 +161,8 @@ public class WebViewFragment extends BaseFragment implements
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             WindowUtil.showSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
-            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+            vwPlayerView.setDimensions(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+            vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
@@ -444,34 +451,38 @@ public class WebViewFragment extends BaseFragment implements
         super.onConfigurationChanged(newConfig);
         Log4a.e("onConfigurationChanged", " called");
 
+        CGSize displaySize = WindowUtil.getScreenSizeInPixel(getBaseActivity());
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int displayHeight = displaymetrics.heightPixels;
-        int displayWidth = displaymetrics.widthPixels;
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             WindowUtil.hideSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displaymetrics.widthPixels, displaymetrics.heightPixels);
-            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, displaymetrics.heightPixels);
+            vwPlayerView.setDimensions(displaySize.WIDTH, displaySize.HEIGHT);
+            vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, displaySize.HEIGHT);
 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             vwPlayerView.setLayoutParams(params); //causes layout update
+
+            llViewsCount.setVisibility(View.GONE);
+            llRecordingView.setVisibility(View.GONE);
+
         } else {
             getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             WindowUtil.showSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
-            vwPlayerView.getHolder().setFixedSize(displaymetrics.widthPixels, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+            vwPlayerView.setDimensions(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+            vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
             vwPlayerView.setLayoutParams(params); //causes layout update
+
+            llViewsCount.setVisibility(View.VISIBLE);
+            llRecordingView.setVisibility(View.VISIBLE);
         }
     }
 

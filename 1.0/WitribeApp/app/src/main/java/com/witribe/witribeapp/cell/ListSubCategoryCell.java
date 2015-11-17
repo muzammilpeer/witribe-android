@@ -10,6 +10,8 @@ import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.base.BaseModel;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.witribe.witribeapp.R;
@@ -58,7 +60,13 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
             Data dataSource = (Data) model;
 
             tvCategoryName.setText(dataSource.title.toUpperCase());
-            String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image).replaceAll(" ", "%20");
+            String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image);
+
+            ImageUtil.getImageFromUrl(CGSize.make(viewSize, viewSize - tvCategoryName.getHeight()),
+                    ivCategoryPhoto, pbCategoryPhoto, imageUrl
+            );
+
+
             //image loading using picaso
             Picasso.with(itemView.getContext())
                     .load(imageUrl)

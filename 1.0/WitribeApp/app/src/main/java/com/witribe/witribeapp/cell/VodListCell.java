@@ -10,8 +10,8 @@ import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.base.BaseModel;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.ranisaurus.utilitylayer.view.CGSize;
+import com.ranisaurus.utilitylayer.view.ImageUtil;
 import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.fragment.ChannelDetailFragment;
 import com.witribe.witribeapp.fragment.VODListFragment;
@@ -61,34 +61,19 @@ public class VodListCell extends BaseCell implements View.OnClickListener {
             String imageUrl = "";
             if (dataSource.vodId != null && dataSource.vodId.length() > 0) {
                 tvCategoryName.setText(dataSource.title.toUpperCase());
-                imageUrl = (dataSource.mob_small).replaceAll(" ", "%20");
+                imageUrl = (dataSource.mob_small);
             } else if (dataSource.id != null && dataSource.id.length() > 0) {
                 tvCategoryName.setText(dataSource.name.toUpperCase());
-                imageUrl = (dataSource.mob_small).replaceAll(" ", "%20");
+                imageUrl = (dataSource.mob_small);
             } else {
                 tvCategoryName.setText(dataSource.name.toUpperCase());
-                imageUrl = (dataSource.image).replaceAll(" ", "%20");
+                imageUrl = (dataSource.image);
             }
 
 
-            //image loading using picaso
-            Picasso.with(itemView.getContext())
-                    .load(imageUrl)
-                    .resize(viewSize, viewSize - tvCategoryName.getHeight())
-                    .centerInside()
-                    .into(ivCategoryPhoto, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            pbCategoryPhoto.setVisibility(View.GONE);
-                            ivCategoryPhoto.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onError() {
-                            pbCategoryPhoto.setVisibility(View.GONE);
-                            ivCategoryPhoto.setVisibility(View.VISIBLE);
-                        }
-                    });
+            ImageUtil.getImageFromUrl(CGSize.make(viewSize, viewSize - tvCategoryName.getHeight()),
+                    ivCategoryPhoto, pbCategoryPhoto, imageUrl
+            );
 
         } else {
             ivCategoryPhoto.setImageBitmap(null);
