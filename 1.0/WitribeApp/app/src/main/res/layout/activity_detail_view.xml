@@ -36,5 +36,5 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_bookmark_border_black_24dp"
         app:borderWidth="0dp"
-        app:layout_behavior="com.witribe.witribeapp.behavior.ScrollingFABBehavior"/>
+        app:layout_behavior="com.muzammilpeer.livetv.behavior.ScrollingFABBehavior"/>
 </android.support.design.widget.CoordinatorLayout>

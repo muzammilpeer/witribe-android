@@ -1,4 +1,9 @@
 <resources>
+    <string name="invalid_credentials">Invalid Username/Password, Please try again</string>
+    <string name="valid_credentials">You have successfully logged in.</string>
+    <string name="message_copyright">Redesign By Muzammilpeer.me</string>
+    <string name="message_disclaimer">Login using Pi-tv or Witribe credentials to enjoy the live streaming and more using native experience.\n Visit http://tv.wi-tribe.pk/ or http://pitelevision.com/newsite/ for User registeration. \n Redesign by Muzammilpeer.me</string>
+
     <string name="title_coming_soon">Coming Soon</string>
     <string name="title_recorded_list">Recorded List</string>
     <string name="title_views">Views:</string>
@@ -44,9 +49,9 @@
 
     <!-- Strings related to login -->
     <string name="unauthorized_access">Please login first to watch</string>
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>

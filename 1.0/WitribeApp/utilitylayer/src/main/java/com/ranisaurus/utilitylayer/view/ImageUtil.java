@@ -93,15 +93,15 @@ public class ImageUtil {
                                       FileOutputStream ostream = new FileOutputStream(file);
                                       bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
                                       ostream.close();
-                                      if (bitmap != null) {
-                                          if (progressBar != null) {
-                                              progressBar.setVisibility(GONE);
-                                          }
-                                          if (imageView != null) {
-                                              imageView.setVisibility(VISIBLE);
-                                              imageView.setImageBitmap(bitmap);
-                                          }
-                                      }
+//                                      if (bitmap != null) {
+//                                          if (progressBar != null) {
+//                                              progressBar.setVisibility(GONE);
+//                                          }
+//                                          if (imageView != null) {
+//                                              imageView.setVisibility(VISIBLE);
+//                                              imageView.setImageBitmap(bitmap);
+//                                          }
+//                                      }
                                   } catch (Exception e) {
                                       Log4a.printException(e);
                                   }
@@ -109,13 +109,13 @@ public class ImageUtil {
 
                               @Override
                               public void onBitmapFailed(Drawable errorDrawable) {
-                                  if (progressBar != null) {
-                                      progressBar.setVisibility(GONE);
-                                  }
-                                  if (imageView != null) {
-                                      imageView.setVisibility(VISIBLE);
-
-                                  }
+//                                  if (progressBar != null) {
+//                                      progressBar.setVisibility(GONE);
+//                                  }
+//                                  if (imageView != null) {
+//                                      imageView.setVisibility(VISIBLE);
+//
+//                                  }
                               }
 
                               @Override

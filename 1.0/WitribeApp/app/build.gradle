@@ -20,7 +20,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.witribe.witribeapp"
+        applicationId "com.muzammilpeer.livetv"
         minSdkVersion 9
         targetSdkVersion 22
         versionCode 1
@@ -37,8 +37,15 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':baselayer')
-//    compile 'com.github.deano2390:MaterialShowcaseView:1.0.5'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.3@aar') {
         transitive = true;
     }
+//    compile('com.crashlytics.sdk.android:crashlytics-ndk:1.1.2@aar') {
+//        transitive = true;
+//    }
+}
+crashlytics {
+//    enableNdk true
+//    androidNdkOut 'src/main/obj'
+//    androidNdkLibsOut 'src/main/libs'
 }

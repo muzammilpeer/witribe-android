@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:background="?attr/colorPrimary"
             android:gravity="center"
-            android:theme="@style/Theme.WitribeLite.AppBarOverlay"
+            android:theme="@style/Theme.LiveTv.AppBarOverlay"
             android:title="@string/app_name"
             android:titleTextColor="@android:color/white"
             app:layout_scrollFlags="scroll|enterAlways" />

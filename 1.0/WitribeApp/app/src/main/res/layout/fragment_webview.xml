@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_fiber_smart_record_white_48dp" />
+            android:src="@drawable/ic_videocam_white_24dp" />
 
     </LinearLayout>
 

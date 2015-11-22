@@ -1,21 +1,21 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="Theme.WitribeLite" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.LiveTv" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
 
-    <style name="Theme.WitribeLite.NoActionBar">
+    <style name="Theme.LiveTv.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.WitribeLite.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="Theme.LiveTv.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
     </style>
 
-    <style name="Theme.WitribeLite.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.LiveTv.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

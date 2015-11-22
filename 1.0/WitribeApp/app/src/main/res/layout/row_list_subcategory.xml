@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <com.witribe.witribeapp.view.SquareImageView
+            <com.muzammilpeer.livetv.view.SquareImageView
                 android:id="@+id/category_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
