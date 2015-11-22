@@ -8,7 +8,7 @@
     <string name="title_fps">FPS:</string>
     <string name="title_bitrate">Bit Rate:</string>
 
-    <string name="app_name">WitribeTvLite</string>
+    <string name="app_name">LiveTv</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="no_content">No content available</string>
     <string name="no_schedule_available">No Schedule available</string>

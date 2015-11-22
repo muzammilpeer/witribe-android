@@ -71,6 +71,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         refreshNavigationViewData();
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            String action = (String) getIntent().getExtras().get("intent_notification");
+//            if (action.equals("start")) {
+//                startService(new Intent(this, MyService.class));
+//                MyNotification.getInstance(getApplicationContext()).setOnGoing(true);
+//            } else if (action.equals("stop")) {
+//                stopService(new Intent(this, MyService.class));
+//                MyNotification.getInstance(getApplicationContext()).setOnGoing(false);
+//            } else if (action.equals("app")) {
+//                //Your code
+//            }
+        }
     }
 
     @Override
@@ -245,6 +258,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_recorded_list) {
             popAllFragment();
             replaceFragment(RecordVideoListFragment.newInstance(), R.id.container_main);
+//            replaceFragment(MyServiceFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_logout) {
             UserManager.getInstance().logoutUser();
             popAllFragment();
@@ -257,4 +271,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onDestroy() {
+        Log4a.e("onDestroy","MainActivity");
+        super.onDestroy();
+    }
+
+
 }

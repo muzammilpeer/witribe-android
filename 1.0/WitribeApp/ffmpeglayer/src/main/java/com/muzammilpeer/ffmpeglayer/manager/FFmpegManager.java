@@ -45,6 +45,7 @@ public class FFmpegManager {
     public void stopLiveStreamRecording()
     {
         ShellManager.getInstance().writeToShell("q");
+
     }
 
     public boolean isLiveStreamRecording()

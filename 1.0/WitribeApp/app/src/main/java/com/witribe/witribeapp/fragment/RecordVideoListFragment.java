@@ -1,6 +1,7 @@
 package com.witribe.witribeapp.fragment;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -116,13 +117,17 @@ public class RecordVideoListFragment extends BaseFragment {
 
         if (this.getLocalDataSource().size() < 1)
         {
-            String folderPath = FileUtil.createFolder(getString(R.string.app_name));
+            String folderPath = FileUtil.createFolder(getString(R.string.app_name) +"/video/");
             showLoader();
             getLocalDataSource().clear();
 
 
             ListFilesAsync listFilesAsync = new ListFilesAsync();
-            listFilesAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, folderPath);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                listFilesAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, folderPath);
+            }else {
+                listFilesAsync.execute(folderPath);
+            }
         }else {
             hideLoader(false);
             dataGeneralBaseAdapter.notifyDataSetChanged();

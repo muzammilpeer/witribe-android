@@ -58,11 +58,19 @@ public class ShellManager {
             isTaskRunning = true;
             setupOutputStream(delegate);
 
-            inputStreamAsync = new InputStreamAsync(delegate);
-            inputStreamAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"");
+//            inputStreamAsync = new InputStreamAsync(delegate);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//                inputStreamAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"");
+//            }else {
+//                inputStreamAsync.execute("");
+//            }
 
-            errorStreamAsync = new ErrorStreamAsync(delegate);
-            errorStreamAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+//            errorStreamAsync = new ErrorStreamAsync(delegate);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//                errorStreamAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+//            }else {
+//                errorStreamAsync.execute("");
+//            }
 
         } catch (IOException e) {
             if (delegate != null) {
@@ -83,6 +91,7 @@ public class ShellManager {
             try {
                 mWriterBuffer.write(input);
                 mWriterBuffer.close();
+                isTaskRunning = false;
                 //close other buffers after testing
             } catch (IOException e) {
                 isTaskRunning = false;

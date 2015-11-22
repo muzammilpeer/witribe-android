@@ -1,5 +1,6 @@
 package com.witribe.witribeapp.cell;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
@@ -65,7 +66,7 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
 
     @Override
     public void updateCell(BaseModel model) {
-        position = this.getAdapterPosition();
+        position = this.getLayoutPosition();
 
         mDataSource = model;
 
@@ -168,7 +169,7 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
                             Snackbar.make(itemView, "Successfully deleted", Snackbar.LENGTH_SHORT).show();
                             Data selectedModel = (Data) mDataSource;
                             mAdapter.getmObjects().remove(selectedModel);
-                            mAdapter.notifyItemRemoved((int) position);
+                            mAdapter.notifyItemRemoved((int) getLayoutPosition());
                         } else {
                             Snackbar.make(itemView, "Error in delete", Snackbar.LENGTH_SHORT).show();
                         }
@@ -194,7 +195,13 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
             break;
             case R.id.menu_share_file: {
                 Data dataSource = (Data) mDataSource;
-                Snackbar.make(itemView, "Share feature add here", Snackbar.LENGTH_SHORT).show();
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                String appSharingText = "Enjoy " + dataSource.title + " on " + "https://play.google.com/store/apps/details?id=" + getBaseActivity().getPackageName();
+                shareIntent.putExtra(Intent.EXTRA_TEXT, appSharingText);
+                shareIntent.setType("text/plain");
+
+                getBaseActivity().startActivity(Intent.createChooser(shareIntent, "Share"));
             }
             break;
         }

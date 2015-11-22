@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -14,32 +14,23 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height_legacy"
+
+            android:layout_height="?android:actionBarSize"
+            android:layout_gravity="center"
             android:background="?attr/colorPrimary"
+            android:gravity="center"
             android:theme="@style/Theme.WitribeLite.AppBarOverlay"
-             />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/container_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabIndicatorHeight="3dp"
-            app:tabMode="scrollable"
-            android:fitsSystemWindows="true"
-            android:visibility="gone"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@android:color/white" />
-
+            android:title="@string/app_name"
+            android:titleTextColor="@android:color/white"
+            app:layout_scrollFlags="scroll|enterAlways" />
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/container_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_primary_blue"
+        android:background="@android:color/holo_blue_light"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
     </FrameLayout>
 

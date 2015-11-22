@@ -1,5 +1,6 @@
 package com.witribe.witribeapp.fragment;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -26,7 +27,6 @@ import com.muzammilpeer.ffmpeglayer.manager.FFmpegManager;
 import com.muzammilpeer.ffmpeglayer.manager.InstallationManager;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.Data;
-import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.PlayerVideoView;
@@ -35,8 +35,7 @@ import com.witribe.witribeapp.R;
 import com.witribe.witribeapp.controls.IVideoPlayerControls;
 import com.witribe.witribeapp.controls.VideoPlayerControls;
 import com.witribe.witribeapp.manager.UserManager;
-
-import java.util.UUID;
+import com.witribe.witribeapp.service.LiveRecordIntentService;
 
 import butterknife.Bind;
 
@@ -45,6 +44,7 @@ import butterknife.Bind;
  */
 public class WebViewFragment extends BaseFragment implements
         View.OnClickListener, IVideoPlayerControls, IBufferStream, View.OnTouchListener {
+
 
     private static final String ARG_CATEGORY_NAME = "category_name";
     //UI references.
@@ -188,7 +188,9 @@ public class WebViewFragment extends BaseFragment implements
         } else {
             streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
         }
-        Log4a.e("Streaming URL = ", streamingUrl);
+
+        UserManager.getInstance().setVideoStreamingUrl(streamingUrl);
+        Log4a.e("Streaming URL = ", UserManager.getInstance().getVideoStreamingUrl());
 
 
         getBaseActivity().runOnUiThread(new Runnable() {
@@ -223,10 +225,12 @@ public class WebViewFragment extends BaseFragment implements
 
         if (currentData.video != null && currentData.video.length() > 0) {
             vwPlayerView.setMediaController(new MediaController(getBaseActivity()));
+//            vwPlayerView.setOnTouchListener(this);
         } else {
             vwPlayerView.setMediaController(null);
+            vwPlayerView.setOnTouchListener(this);
         }
-        vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
+        vwPlayerView.setVideoURI(Uri.parse(UserManager.getInstance().getVideoStreamingUrl()));
         vwPlayerView.start();
         vwPlayerView.requestFocus();
 
@@ -249,10 +253,20 @@ public class WebViewFragment extends BaseFragment implements
             @Override
             public void onPrepared(MediaPlayer mp) {
                 Log4a.e("setOnPreparedListener", "came");
+                Log4a.e("Live Sttream Duration =  ", mp.getDuration() + "");
+
+                if (mp.getDuration() == -1) {
+                    //live stream channel
+                } else {
+                    //live movie
+                    vwPlayerView.setMediaController(new MediaController(getBaseActivity()));
+                    vwPlayerView.setOnTouchListener(null);
+
+                }
+
             }
         });
 
-        vwPlayerView.setOnTouchListener(this);
 
         fabRecording.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,7 +316,13 @@ public class WebViewFragment extends BaseFragment implements
         recording = false;
 
         //stop the recording
-        FFmpegManager.getInstance().stopLiveStreamRecording();
+//        FFmpegManager.getInstance().stopLiveStreamRecording();
+        Intent intent = new Intent(getBaseActivity(), LiveRecordIntentService.class);
+        intent.putExtra(LiveRecordIntentService.LIVE_VIDEO_STOP_KEY, "true");
+
+        getBaseActivity().startService(intent);
+//        LiveRecordNotification.getInstance(getBaseActivity()).setOnGoing(false);
+//        LiveRecordNotification.getInstance(getBaseActivity()).hideNotification();
 
         if (fabRecording != null)
             fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_white_24dp));
@@ -315,9 +335,14 @@ public class WebViewFragment extends BaseFragment implements
 
         recording = true;
         Log4a.e("Click", "Start Recording");
-        String folderPath = FileUtil.createFolder(getString(R.string.app_name));
-        MP4_FILE_PATH = folderPath + "/" + UUID.randomUUID() + ".mp4";
-        FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, this);
+//        String folderPath = FileUtil.createFolder(getString(R.string.app_name));
+//        MP4_FILE_PATH = folderPath + "/" + UUID.randomUUID() + ".mp4";
+//        FFmpegManager.getInstance().startLiveStreamRecording(streamingUrl, MP4_FILE_PATH, this);
+
+        Intent intent = new Intent(getBaseActivity(), LiveRecordIntentService.class);
+        intent.putExtra(LiveRecordIntentService.LIVE_VIDEO_URL_KEY, UserManager.getInstance().getVideoStreamingUrl());
+        getBaseActivity().startService(intent);
+//        LiveRecordNotification.getInstance(getBaseActivity());
 
         if (fabRecording != null)
             fabRecording.setImageDrawable(getBaseActivity().getResources().getDrawable(R.drawable.ic_videocam_off_white_24dp));
@@ -426,15 +451,13 @@ public class WebViewFragment extends BaseFragment implements
                 streamingUrl = currentData.video_iosStreamUrlLow + "&token=" + UserManager.getInstance().getUserProfile().getToken();
             }
 
-//            if (streamingUrl == null || streamingUrl.length() < 1) {
-//                streamingUrl = currentData.video_iosStreamUrl + "&token=" + UserManager.getInstance().getUserProfile().getToken();
-//            }
         }
+        UserManager.getInstance().setVideoStreamingUrl(streamingUrl);
 
         if (vwPlayerView != null) {
             vwPlayerView.stopPlayback();
             vwPlayerView.setMediaController(null);
-            vwPlayerView.setVideoURI(Uri.parse(streamingUrl));
+            vwPlayerView.setVideoURI(Uri.parse(UserManager.getInstance().getVideoStreamingUrl()));
             vwPlayerView.start();
             vwPlayerView.requestFocus();
         }
@@ -451,38 +474,40 @@ public class WebViewFragment extends BaseFragment implements
         super.onConfigurationChanged(newConfig);
         Log4a.e("onConfigurationChanged", " called");
 
-        CGSize displaySize = WindowUtil.getScreenSizeInPixel(getBaseActivity());
+        if (llViewsCount != null) {
+            CGSize displaySize = WindowUtil.getScreenSizeInPixel(getBaseActivity());
 
 
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            WindowUtil.hideSystemUi(getBaseActivity());
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowUtil.hideSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displaySize.WIDTH, displaySize.HEIGHT);
-            vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, displaySize.HEIGHT);
+                vwPlayerView.setDimensions(displaySize.WIDTH, displaySize.HEIGHT);
+                vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, displaySize.HEIGHT);
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            vwPlayerView.setLayoutParams(params); //causes layout update
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                vwPlayerView.setLayoutParams(params); //causes layout update
 
-            llViewsCount.setVisibility(View.GONE);
-            llRecordingView.setVisibility(View.GONE);
+                llViewsCount.setVisibility(View.GONE);
+                llRecordingView.setVisibility(View.GONE);
 
-        } else {
-            getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            WindowUtil.showSystemUi(getBaseActivity());
+            } else {
+                getBaseActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                getBaseActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                WindowUtil.showSystemUi(getBaseActivity());
 
-            vwPlayerView.setDimensions(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
-            vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+                vwPlayerView.setDimensions(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
+                vwPlayerView.getHolder().setFixedSize(displaySize.WIDTH, getResources().getDimensionPixelSize(R.dimen.videoplayer_potrait_height));
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
-            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-            vwPlayerView.setLayoutParams(params); //causes layout update
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vwPlayerView.getLayoutParams();
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+                vwPlayerView.setLayoutParams(params); //causes layout update
 
-            llViewsCount.setVisibility(View.VISIBLE);
-            llRecordingView.setVisibility(View.VISIBLE);
+                llViewsCount.setVisibility(View.VISIBLE);
+                llRecordingView.setVisibility(View.GONE);
+            }
         }
     }
 

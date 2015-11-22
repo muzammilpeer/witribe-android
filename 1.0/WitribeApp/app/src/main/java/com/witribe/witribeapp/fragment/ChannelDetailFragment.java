@@ -219,12 +219,18 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
 
         }
 
-
         CGSize displaySize = WindowUtil.getScreenSizeInPixel(getBaseActivity());
 
-        ImageUtil.getImageFromUrl(CGSize.make(displaySize.WIDTH, (int) getResources().getDimension(R.dimen.preview_image_height)),
+//        ImageUtil.getImageFromUrl(CGSize.make(displaySize.WIDTH, (int) getResources().getDimension(R.dimen.preview_image_height)),
+//                ivChannel, pbChannel, imageUrl
+//        );
+//
+        String localSaveImageUrl = ImageUtil.saveImageFromUrl(CGSize.make(displaySize.WIDTH, (int) getResources().getDimension(R.dimen.preview_image_height)),
                 ivChannel, pbChannel, imageUrl
         );
+
+        UserManager.getInstance().setThumbnailImageUrl(localSaveImageUrl);
+
 
         if (selectedData.description != null && selectedData.description.length() > 0) {
             tvChannelsDescription.setText(selectedData.description);
@@ -234,6 +240,7 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
         tvViewersCount.setText(selectedData.totalViews);
 
         getBaseActivity().getSupportActionBar().setTitle(selectedData.title);
+        UserManager.getInstance().setStreamingTitle(selectedData.title);
     }
 
     @Override

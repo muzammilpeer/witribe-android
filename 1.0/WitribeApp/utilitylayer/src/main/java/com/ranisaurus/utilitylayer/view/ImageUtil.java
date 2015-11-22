@@ -5,16 +5,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.ranisaurus.utilitylayer.R;
 import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static android.view.View.GONE;
@@ -61,6 +66,68 @@ public class ImageUtil {
         }
 
     }
+
+    public static String saveImageFromUrl(CGSize resizeImage, final ImageView imageView, final ProgressBar progressBar, String imageURL) {
+        String folderPath = FileUtil.createFolder(imageView.getResources().getString(R.string.app_name));
+        String cachefolderPath = FileUtil.createFolder(imageView.getResources().getString(R.string.app_name) + "/cache/");
+        final String notification_image = cachefolderPath + "/" + "notification_large_icon.png";
+
+        if (imageView != null && imageURL != null && imageURL.contains("http")) {
+
+            //make html encode the white spaces for network operation
+            imageURL = imageURL.replaceAll(" ", "%20");
+
+
+            Picasso.with(imageView.getContext())
+                    .load(imageURL)
+                    .resize(resizeImage.WIDTH, resizeImage.HEIGHT)
+                    .centerInside()
+                    .into(new Target() {
+                              @Override
+                              public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+
+                                  File file = new File(notification_image);
+                                  try {
+                                      file.createNewFile();
+                                      FileOutputStream ostream = new FileOutputStream(file);
+                                      bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+                                      ostream.close();
+                                      if (bitmap != null) {
+                                          if (progressBar != null) {
+                                              progressBar.setVisibility(GONE);
+                                          }
+                                          if (imageView != null) {
+                                              imageView.setVisibility(VISIBLE);
+                                              imageView.setImageBitmap(bitmap);
+                                          }
+                                      }
+                                  } catch (Exception e) {
+                                      Log4a.printException(e);
+                                  }
+                              }
+
+                              @Override
+                              public void onBitmapFailed(Drawable errorDrawable) {
+                                  if (progressBar != null) {
+                                      progressBar.setVisibility(GONE);
+                                  }
+                                  if (imageView != null) {
+                                      imageView.setVisibility(VISIBLE);
+
+                                  }
+                              }
+
+                              @Override
+                              public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                              }
+                          }
+                    );
+        }
+        return notification_image;
+    }
+
 
     //camera testing
     public static void captureCameraImage(Activity activity, int requestCode) {
