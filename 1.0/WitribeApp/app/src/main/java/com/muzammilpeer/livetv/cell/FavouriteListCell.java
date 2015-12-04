@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.MainActivityFragment;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
@@ -116,7 +117,7 @@ public class FavouriteListCell extends BaseCell implements View.OnClickListener,
                 Snackbar.make(itemView, "Cannot play live stream", Snackbar.LENGTH_SHORT).show();
             } else {
                 WebViewFragment fragment = WebViewFragment.newInstance(selectedModel);
-                getBaseActivity().replaceFragment(fragment, R.id.container_main);
+                getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),fragment,R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_video_play_list");
             }
         }
     }

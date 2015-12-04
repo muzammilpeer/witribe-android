@@ -3,6 +3,7 @@
     android:id="@+id/svMainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_primary_blue_light"
     android:fillViewport="true">
 
     <LinearLayout
@@ -22,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
+                android:transitionName="shared_element_transition"
                 android:src="@drawable/ic_personal_video_white_24dp"
                 android:visibility="gone" />
 
@@ -81,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
+                android:transitionName="shared_element_transition"
                 android:src="@drawable/ic_schedule_white_24dp" />
 
             <android.support.design.widget.FloatingActionButton

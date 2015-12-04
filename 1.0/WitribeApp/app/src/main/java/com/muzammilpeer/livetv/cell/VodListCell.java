@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.MainActivityFragment;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
@@ -89,15 +90,15 @@ public class VodListCell extends BaseCell implements View.OnClickListener {
         Data dataSource = (Data) mDataSource;
 
         if (dataSource.vodId != null && dataSource.vodId.length() > 0 && dataSource.vodCategoryId != null && dataSource.vodCategoryId.length() > 0) {
-            getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+            getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_detail_list");
         } else if (dataSource.vodId != null && dataSource.vodId.length() > 0) {
-            getBaseActivity().replaceFragment(VODListFragment.newInstance(dataSource), R.id.container_main);
+            getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),VODListFragment.newInstance(dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_vod_list");
         } else if (dataSource.id != null && dataSource.id.length() > 0) {
-            getBaseActivity().replaceFragment(VODListFragment.newInstance(dataSource), R.id.container_main);
+            getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),VODListFragment.newInstance(dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_vod_list");
         } else if (dataSource.vodCategoryId != null && dataSource.vodCategoryId.length() > 0) {
-            getBaseActivity().replaceFragment(VODListFragment.newInstance(dataSource), R.id.container_main);
+            getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),VODListFragment.newInstance(dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_vod_list");
         } else {
-            getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+            getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_detail_list");
         }
     }
 }

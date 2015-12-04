@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.MainActivityFragment;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.file.DirectoryEnum;
@@ -103,7 +104,7 @@ public class RecordedVideoListCell extends BaseCell implements View.OnClickListe
             }
         } else if (v == itemView) {
             FileInfoModel selectedModel = (FileInfoModel) mDataSource;
-            getBaseActivity().replaceFragment(RecordedVideoDetailPlayScreenFragment.newInstance(selectedModel), R.id.container_main);
+            getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),RecordedVideoDetailPlayScreenFragment.newInstance(selectedModel), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_recorded_detail_list");
         }
     }
 

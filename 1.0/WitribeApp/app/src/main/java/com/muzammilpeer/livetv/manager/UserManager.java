@@ -3,6 +3,7 @@ package com.muzammilpeer.livetv.manager;
 import com.muzammilpeer.livetv.constant.PreferencesKeys;
 import com.muzammilpeer.livetv.service.LiveRecordIntentService;
 import com.ranisaurus.newtorklayer.models.Response;
+import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.preferences.PreferencesUtil;
 
@@ -62,10 +63,13 @@ public class UserManager {
     }
 
     public boolean isUserLoggedIn() {
-        if (getUserProfile() != null && getUserProfile().getToken().length() > 0)
-            return true;
-        else
-            return false;
+        try {
+            if (getUserProfile() != null && getUserProfile().getToken().length() > 0)
+                return true;
+        } catch (Exception e) {
+            Log4a.printException(e);
+        }
+        return false;
     }
 
     public void logoutUser() {

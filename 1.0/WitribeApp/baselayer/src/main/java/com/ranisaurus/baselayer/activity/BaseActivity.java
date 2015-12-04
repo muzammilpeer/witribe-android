@@ -1,5 +1,6 @@
 package com.ranisaurus.baselayer.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.webkit.WebViewFragment;
+import android.widget.ImageView;
 
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -151,9 +163,46 @@ abstract public class BaseActivity extends AppCompatActivity {
 //        }
     }
 
-    public void replaceFragment(Fragment frag, int containerID) {
+    public void replaceFragment(Fragment sourceFragment,Fragment destinationFragment, int containerID,int transitionElementID,int transitionID,String shared_element_key,String add_to_back_stack_key) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(containerID, frag).addToBackStack(null).commit();
+        // Check that the device is running lollipop
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+//             Inflate transitions to apply
+            Transition changeTransform = TransitionInflater.from(this).
+                    inflateTransition(android.R.transition.explode);
+            Transition explodeTransform = TransitionInflater.from(this).
+                    inflateTransition(android.R.transition.explode);
+
+            // Setup exit transition on first fragment
+            sourceFragment.setSharedElementReturnTransition(changeTransform);
+            sourceFragment.setExitTransition(explodeTransform);
+
+            // Setup enter transition on second fragment
+            destinationFragment.setSharedElementEnterTransition(changeTransform);
+            destinationFragment.setEnterTransition(explodeTransform);
+
+            // Find the shared element (in Fragment A)
+            View ivProfile = (View) findViewById(transitionElementID);
+
+            // Add second fragment by replacing first
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+                    .replace(containerID, destinationFragment)
+                    .addToBackStack(add_to_back_stack_key)
+                    .addSharedElement(ivProfile, shared_element_key);
+            // Apply the transaction
+            ft.commit();
+        }
+        else {
+            // Code to run on older devices
+            fragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(containerID, destinationFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
 
     }
 

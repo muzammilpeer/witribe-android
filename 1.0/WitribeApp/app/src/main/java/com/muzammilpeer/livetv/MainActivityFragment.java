@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.muzammilpeer.livetv.transitions.DepthPageTransformer;
+import com.muzammilpeer.livetv.transitions.ZoomOutPageTransformer;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
@@ -112,6 +114,8 @@ public class MainActivityFragment extends BaseFragment {
         WindowUtil.showSystemUi(getBaseActivity());
 
         mSectionsPagerAdapter = new ChannelsCategoryViewPagaerAdapter(getChildFragmentManager(), subCategoriesDataSource, getLocalDataSource());
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 

@@ -1,8 +1,12 @@
 package com.muzammilpeer.livetv.fragment;
 
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -37,7 +41,7 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     @Bind(R.id.pb_subcategories)
     ProgressBar pbSubCategories;
 
-    public static int gridSize = 3;
+    public static int gridSize = 2;
 
     GeneralBaseAdapter<ListSubCategoryCell> dataGeneralBaseAdapter;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
@@ -106,14 +110,14 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
         Log4a.e("onConfigurationChanged", " called");
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridSize = 5;
-        }else {
-            gridSize = 3;
+        } else {
+            gridSize = 2;
         }
         rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
     }
 
 
-            @Override
+    @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
@@ -122,12 +126,19 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
 
         if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridSize = 5;
-        }else {
-            gridSize = 3;
+        } else {
+            gridSize = 2;
         }
 
         rcSubCategories.setHasFixedSize(true);
         rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            StateListAnimator stateListAnimator = AnimatorInflater.loadStateListAnimator(getBaseActivity(),
+                    R.anim.lift_on_touch);
+            rcSubCategories.setStateListAnimator(stateListAnimator);
+        }
+
         rcSubCategories.setAdapter(dataGeneralBaseAdapter);
 
         dataGeneralBaseAdapter.notifyDataSetChanged();

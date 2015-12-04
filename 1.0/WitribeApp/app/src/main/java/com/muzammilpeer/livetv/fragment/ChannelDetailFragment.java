@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.MainActivityFragment;
 import com.muzammilpeer.livetv.R;
 import com.muzammilpeer.livetv.cell.RelatedChannelCell;
 import com.muzammilpeer.livetv.manager.UserManager;
@@ -257,14 +258,14 @@ public class ChannelDetailFragment extends BaseFragment implements View.OnClickL
             case R.id.rl_channel: {
                 if (UserManager.getInstance().isUserLoggedIn()) {
                     WebViewFragment fragment = WebViewFragment.newInstance(selectedData);
-                    getBaseActivity().replaceFragment(fragment, R.id.container_main);
+                    getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),fragment, R.id.container_main,R.id.iv_channel,R.transition.change_image_transform,"shared_element_transition_1","transaction_1");
                 } else {
                     Snackbar.make(v, R.string.unauthorized_access, Snackbar.LENGTH_SHORT).show();
                 }
             }
             break;
             case R.id.fab_schedule: {
-                getBaseActivity().replaceFragment(ScheduleListFragment.newInstance(selectedData.title), R.id.container_main);
+                getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),ScheduleListFragment.newInstance(selectedData.title), R.id.container_main,R.id.fab_schedule,R.transition.change_image_transform,"shared_element_transition","transition_schedule_list");
             }
             break;
             case R.id.fab_favourite_detail: {

@@ -48,7 +48,7 @@ public class EducationListFragment extends BaseFragment implements View.OnClickL
     @Bind(R.id.srl_vod_list)
     SwipeRefreshLayout srlVodList;
 
-    public static int gridSize = 3;
+    public static int gridSize = 2;
 
     GeneralBaseAdapter<EducationListCell> dataGeneralBaseAdapter;
 
@@ -134,7 +134,7 @@ public class EducationListFragment extends BaseFragment implements View.OnClickL
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridSize = 5;
         } else {
-            gridSize = 3;
+            gridSize = 2;
         }
         rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
     }
@@ -147,7 +147,7 @@ public class EducationListFragment extends BaseFragment implements View.OnClickL
         if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridSize = 5;
         } else {
-            gridSize = 3;
+            gridSize = 2;
         }
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<EducationListCell>(mContext, R.layout.row_vod_list, EducationListCell.class, this.getLocalDataSource());

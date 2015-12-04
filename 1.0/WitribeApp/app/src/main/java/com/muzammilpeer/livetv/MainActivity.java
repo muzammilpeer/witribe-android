@@ -177,12 +177,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         }).setNegativeButton(R.string.no, null).show();
     }
 
-
     @Override
-    public void replaceFragment(Fragment frag, int containerID) {
-        super.replaceFragment(frag, containerID);
-
-        if (frag instanceof MainActivityFragment) {
+    public void replaceFragment(Fragment sourceFragment, Fragment destinationFragment, int containerID, int transitionElementID, int transitionID, String shared_element_key, String add_to_back_stack_key) {
+        super.replaceFragment(sourceFragment, destinationFragment, containerID, transitionElementID, transitionID, shared_element_key, add_to_back_stack_key);
+        if (destinationFragment instanceof MainActivityFragment) {
             mToggle.setDrawerIndicatorEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         } else {
@@ -192,6 +190,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         mToggle.syncState();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -243,16 +242,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //            replaceFragment(MainActivityFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_video_on_demand) {
             popAllFragment();
-            replaceFragment(VODListFragment.newInstance(), R.id.container_main);
+            replaceFragment(MainActivityFragment.newInstance(),VODListFragment.newInstance(), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_vod_list");
         } else if (id == R.id.nav_education) {
             popAllFragment();
-            replaceFragment(EducationListFragment.newInstance(), R.id.container_main);
+            replaceFragment(MainActivityFragment.newInstance(),EducationListFragment.newInstance(), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_education_list");
         } else if (id == R.id.nav_my_favourite) {
             popAllFragment();
-            replaceFragment(FavouriteListFragment.newInstance(), R.id.container_main);
+            replaceFragment(MainActivityFragment.newInstance(),FavouriteListFragment.newInstance(), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_favourite_list");
         } else if (id == R.id.nav_recorded_list) {
             popAllFragment();
-            replaceFragment(RecordVideoListFragment.newInstance(), R.id.container_main);
+            replaceFragment(MainActivityFragment.newInstance(),RecordVideoListFragment.newInstance(), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_recorded_list");
 //            replaceFragment(MyServiceFragment.newInstance(), R.id.container_main);
         } else if (id == R.id.nav_logout) {
             UserManager.getInstance().logoutUser();

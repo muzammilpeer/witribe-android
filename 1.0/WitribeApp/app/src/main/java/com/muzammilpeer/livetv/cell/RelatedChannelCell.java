@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.MainActivityFragment;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
@@ -85,6 +86,6 @@ public class RelatedChannelCell extends BaseCell implements View.OnClickListener
 
         ChannelDetailFragment detailFragment = (ChannelDetailFragment) getBaseActivity().getLastFragment();
         getBaseActivity().popFragment(detailFragment);
-        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+        getBaseActivity().replaceFragment(MainActivityFragment.newInstance(),ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_detail_list");
     }
 }

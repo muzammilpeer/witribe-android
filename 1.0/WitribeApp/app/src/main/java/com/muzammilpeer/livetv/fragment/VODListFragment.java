@@ -48,7 +48,7 @@ public class VODListFragment extends BaseFragment implements View.OnClickListene
     @Bind(R.id.srl_vod_list)
     SwipeRefreshLayout srlVodList;
 
-    public static int gridSize = 3;
+    public static int gridSize = 2;
 
     GeneralBaseAdapter<VodListCell> dataGeneralBaseAdapter;
 
@@ -134,7 +134,7 @@ public class VODListFragment extends BaseFragment implements View.OnClickListene
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridSize = 5;
         } else {
-            gridSize = 3;
+            gridSize = 2;
         }
         rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
     }
@@ -149,7 +149,7 @@ public class VODListFragment extends BaseFragment implements View.OnClickListene
         if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             gridSize = 5;
         } else {
-            gridSize = 3;
+            gridSize = 2;
         }
         rcVodList.setHasFixedSize(true);
         rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));

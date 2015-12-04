@@ -96,9 +96,8 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     public void onClick(View v) {
         DataListResponseModel sharedData = new DataListResponseModel();
         sharedData.setData((ArrayList) mAdapter.getmObjects());
-
         Data dataSource = (Data) mDataSource;
 
-        getBaseActivity().replaceFragment(ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main);
+        getBaseActivity().replaceFragment(getBaseActivity().getLastFragment(),ChannelDetailFragment.newInstance(sharedData, dataSource), R.id.container_main,R.id.card_view,R.transition.change_image_transform,"shared_element_transition","transition_detail_list");
     }
 }
