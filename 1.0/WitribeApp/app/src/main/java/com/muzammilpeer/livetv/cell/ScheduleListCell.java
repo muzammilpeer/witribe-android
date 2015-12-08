@@ -1,17 +1,18 @@
 package com.muzammilpeer.livetv.cell;
 
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.livetv.view.SquareImageView;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Programme;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.ImageUtil;
-import com.muzammilpeer.livetv.R;
-import com.muzammilpeer.livetv.view.SquareImageView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,9 @@ public class ScheduleListCell extends BaseCell implements View.OnClickListener {
 
     @Bind(R.id.pb_programme_image)
     ProgressBar pbProgrammeImage;
+
+    @Bind(R.id.card_view)
+    CardView cardView;
 
     public ScheduleListCell(View itemView) {
         super(itemView);
@@ -106,9 +110,9 @@ public class ScheduleListCell extends BaseCell implements View.OnClickListener {
             }
 
             if (currentDate.getTime() >= startedDate.getTime() && currentDate.getTime() <= endedDate.getTime()) {
-                itemView.setBackgroundColor(getBaseActivity().getResources().getColor(R.color.colorAccent));
+                cardView.setCardBackgroundColor(getBaseActivity().getResources().getColor(R.color.colorAccent));
             } else {
-                itemView.setBackgroundColor(getBaseActivity().getResources().getColor(android.R.color.transparent));
+                cardView.setCardBackgroundColor(getBaseActivity().getResources().getColor(android.R.color.transparent));
             }
 
         } else {

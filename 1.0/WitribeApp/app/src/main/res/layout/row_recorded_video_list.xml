@@ -24,6 +24,7 @@
             android:layout_margin="5dp"
             android:contentDescription="@string/action_settings"
             android:scaleType="fitXY"
+            android:background="@color/colorPrimary"
             android:src="@drawable/bg_placeholder"
             android:visibility="visible" />
 
@@ -46,7 +47,7 @@
                     android:layout_gravity="center"
                     android:text="File Name: "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorTextTitle"
                     android:textStyle="bold"
                     android:maxLines="2"
                     android:gravity="center|left" />
@@ -79,7 +80,7 @@
                     android:layout_gravity="center"
                     android:text="File Size: "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorTextTitle"
                     android:textStyle="bold"
                     android:maxLines="2"
                     android:gravity="center|left" />
@@ -111,7 +112,7 @@
                     android:layout_gravity="center"
                     android:text="Date Modified: "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorTextTitle"
                     android:textStyle="bold"
                     android:maxLines="2"
                     android:gravity="center|left" />
@@ -144,9 +145,5 @@
             android:src="@drawable/ic_more_vert_black_24dp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
 
 </android.support.v7.widget.CardView>

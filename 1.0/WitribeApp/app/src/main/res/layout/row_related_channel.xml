@@ -2,10 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    android:transitionName="shared_element_transition"
     android:layout_width="@dimen/cardview_thumbnail_height"
     android:layout_height="@dimen/cardview_thumbnail_height"
     android:layout_marginBottom="@dimen/cell_margin_bottom"
+    android:transitionName="shared_element_transition"
     card_view:cardCornerRadius="@dimen/cell_corner_radius"
     card_view:cardUseCompatPadding="true">
 
@@ -16,10 +16,10 @@
 
         <RelativeLayout
             android:id="@+id/rl_category_photo"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/darker_gray">
+            android:layout_weight="1">
 
             <com.muzammilpeer.livetv.view.SquareImageView
                 android:id="@+id/category_photo"
@@ -43,13 +43,13 @@
             android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1976D2"
+            android:background="@color/colorCardBottom"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="2"
             android:text="@string/hello_world"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextTitle"
             android:textStyle="bold" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

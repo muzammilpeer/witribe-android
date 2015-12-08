@@ -9,18 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.transition.ChangeBounds;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.webkit.WebViewFragment;
-import android.widget.ImageView;
 
 import com.koushikdutta.ion.Ion;
 import com.ranisaurus.utilitylayer.logger.Log4a;
@@ -170,18 +161,22 @@ abstract public class BaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
 //             Inflate transitions to apply
-            Transition changeTransform = TransitionInflater.from(this).
-                    inflateTransition(android.R.transition.explode);
-            Transition explodeTransform = TransitionInflater.from(this).
-                    inflateTransition(android.R.transition.explode);
+//            Transition changeTransform = TransitionInflater.from(this).
+//                    inflateTransition(android.R.transition.slide_left);
+//            Transition explodeTransform = TransitionInflater.from(this).
+//                    inflateTransition(android.R.transition.no_transition);
 
             // Setup exit transition on first fragment
-            sourceFragment.setSharedElementReturnTransition(changeTransform);
-            sourceFragment.setExitTransition(explodeTransform);
+            sourceFragment.setSharedElementReturnTransition(TransitionInflater.from(this).
+                    inflateTransition(android.R.transition.explode));
+            sourceFragment.setExitTransition(TransitionInflater.from(this).
+                    inflateTransition(android.R.transition.no_transition));
 
             // Setup enter transition on second fragment
-            destinationFragment.setSharedElementEnterTransition(changeTransform);
-            destinationFragment.setEnterTransition(explodeTransform);
+            destinationFragment.setSharedElementEnterTransition(TransitionInflater.from(this).
+                    inflateTransition(android.R.transition.no_transition));
+            destinationFragment.setEnterTransition(TransitionInflater.from(this).
+                    inflateTransition(android.R.transition.explode));
 
             // Find the shared element (in Fragment A)
             View ivProfile = (View) findViewById(transitionElementID);

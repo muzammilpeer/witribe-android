@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.muzammilpeer.livetv.constant.PreferencesKeys;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
@@ -47,8 +48,6 @@ public class EducationListFragment extends BaseFragment implements View.OnClickL
 
     @Bind(R.id.srl_vod_list)
     SwipeRefreshLayout srlVodList;
-
-    public static int gridSize = 2;
 
     GeneralBaseAdapter<EducationListCell> dataGeneralBaseAdapter;
 
@@ -131,29 +130,17 @@ public class EducationListFragment extends BaseFragment implements View.OnClickL
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         Log4a.e("onConfigurationChanged", " called");
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridSize = 5;
-        } else {
-            gridSize = 2;
-        }
-        rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
+        rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), PreferencesKeys.getGridColumnCount(getBaseActivity())));
     }
 
     @Override
     public void initListenerOrAdapter() {
         super.initListenerOrAdapter();
 
-
-        if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridSize = 5;
-        } else {
-            gridSize = 2;
-        }
-
         dataGeneralBaseAdapter = new GeneralBaseAdapter<EducationListCell>(mContext, R.layout.row_vod_list, EducationListCell.class, this.getLocalDataSource());
 
         rcVodList.setHasFixedSize(true);
-        rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
+        rcVodList.setLayoutManager(new GridLayoutManager(getBaseActivity(), PreferencesKeys.getGridColumnCount(getBaseActivity())));
         rcVodList.setAdapter(dataGeneralBaseAdapter);
         dataGeneralBaseAdapter.notifyDataSetChanged();
 

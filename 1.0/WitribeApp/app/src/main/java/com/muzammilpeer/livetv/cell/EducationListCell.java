@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.muzammilpeer.livetv.MainActivityFragment;
+import com.muzammilpeer.livetv.constant.PreferencesKeys;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
@@ -46,8 +47,10 @@ public class EducationListCell extends BaseCell implements View.OnClickListener 
     public void updateCell(BaseModel model) {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int viewSize = displaymetrics.widthPixels / EducationListFragment.gridSize;
-        itemView.setLayoutParams(new RelativeLayout.LayoutParams(viewSize, viewSize));
+        int viewSize = displaymetrics.widthPixels / PreferencesKeys.getGridColumnCount(getBaseActivity());
+        int additionalHeight = (int)getBaseActivity().getResources().getDimension(R.dimen.cardview_bottom_view_height);
+
+        itemView.setLayoutParams(new RelativeLayout.LayoutParams(viewSize, viewSize + additionalHeight));
 
         position = this.getAdapterPosition();
         mDataSource = model;
@@ -71,7 +74,7 @@ public class EducationListCell extends BaseCell implements View.OnClickListener 
                 imageUrl = ("http://piteach.com/iptv/uploads/images/" + dataSource.img_poster);
             }
 
-            ImageUtil.getImageFromUrl(CGSize.make(viewSize, viewSize - tvCategoryName.getHeight()),
+            ImageUtil.getImageFromUrl(CGSize.make(viewSize, viewSize + additionalHeight),
                     ivCategoryPhoto, pbCategoryPhoto, imageUrl
             );
 

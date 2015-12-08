@@ -3,7 +3,7 @@
     android:id="@+id/ll_notification_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary_blue"
+    android:background="@color/colorNotificationPrimary"
     android:orientation="vertical">
 
     <TextView

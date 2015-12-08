@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#1B5E20</color>
+    <color name="colorAccent">#00E676</color>
 
 
-    <color name="color_primary_red">#f44336</color>
-    <color name="color_primary_red_dark">#d32f2f</color>
-    <color name="color_primary_green"> #4caf50</color>
-    <color name="color_primary_green_dark">#388e3c</color>
-    <color name="color_primary_blue_light">#802196f3</color>
-    <color name="color_primary_blue">#2196f3</color>
-    <color name="color_primary_blue_dark">#1976d2</color>
-    <color name="color_accent_pink">#ff4081</color>
-    <color name="color_shadow">#44000000</color>
+    <color name="colorBackgroundPrimary">#F5F5F5</color>
+    <color name="colorBackgroundPrimaryDark">#FFFFFF</color>
+    <color name="colorCardBottom">#FFFFFF</color>
+    <color name="colorNotificationPrimary">#7CB342</color>
+    <color name="colorTextTitle">#000000</color>
+    <color name="colorTextSubTitle">#BDBDBD</color>
+    <color name="colorBackgroundLight">#BDBDBD</color>
+    <!--<color name="color_primary_red_dark">#d32f2f</color>-->
+    <!--<color name="color_primary_green"> #4caf50</color>-->
+    <!--<color name="color_primary_green_dark">#388e3c</color>-->
+    <!--<color name="color_primary_blue_light">#802196f3</color>-->
+    <!--<color name="color_primary_blue">#2196f3</color>-->
+    <!--<color name="color_primary_blue_dark">#1976d2</color>-->
+    <!--<color name="color_accent_pink">#ff4081</color>-->
+    <!--<color name="color_shadow">#44000000</color>-->
 </resources>

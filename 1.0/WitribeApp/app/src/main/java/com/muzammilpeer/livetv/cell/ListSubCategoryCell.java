@@ -1,23 +1,22 @@
 package com.muzammilpeer.livetv.cell;
 
+import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.livetv.constant.PreferencesKeys;
+import com.muzammilpeer.livetv.fragment.ChannelDetailFragment;
+import com.muzammilpeer.livetv.view.SquareImageView;
 import com.ranisaurus.baselayer.cell.BaseCell;
 import com.ranisaurus.newtorklayer.models.Data;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.ImageUtil;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.muzammilpeer.livetv.R;
-import com.muzammilpeer.livetv.fragment.ChannelDetailFragment;
-import com.muzammilpeer.livetv.fragment.ListSubCategoriesFragment;
-import com.muzammilpeer.livetv.view.SquareImageView;
 
 import java.util.ArrayList;
 
@@ -37,19 +36,21 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
     @Bind(R.id.category_name)
     TextView tvCategoryName;
 
+    @Bind(R.id.card_view)
+    CardView cardView;
+
     public ListSubCategoryCell(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
-
     }
 
     @Override
     public void updateCell(BaseModel model) {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int viewSize = displaymetrics.widthPixels / ListSubCategoriesFragment.gridSize;
-        itemView.setLayoutParams(new RelativeLayout.LayoutParams(viewSize, viewSize));
-//        .resize((int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height), (int) itemView.getResources().getDimension(R.dimen.cardview_thumbnail_height))
+        int viewSize = displaymetrics.widthPixels / PreferencesKeys.getGridColumnCount(getBaseActivity());
+        int additionalHeight = (int)getBaseActivity().getResources().getDimension(R.dimen.cardview_bottom_view_height);
+        itemView.setLayoutParams(new RelativeLayout.LayoutParams(viewSize, viewSize + additionalHeight));
 
         position = this.getAdapterPosition();
 
@@ -62,29 +63,29 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
             tvCategoryName.setText(dataSource.title.toUpperCase());
             String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image);
 
-            ImageUtil.getImageFromUrl(CGSize.make(viewSize, viewSize - tvCategoryName.getHeight()),
+            ImageUtil.getImageFromUrl(CGSize.make(viewSize, viewSize + additionalHeight),
                     ivCategoryPhoto, pbCategoryPhoto, imageUrl
             );
 
 
             //image loading using picaso
-            Picasso.with(itemView.getContext())
-                    .load(imageUrl)
-                    .resize(viewSize, viewSize - tvCategoryName.getHeight())
-                    .centerInside()
-                    .into(ivCategoryPhoto, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            pbCategoryPhoto.setVisibility(View.GONE);
-                            ivCategoryPhoto.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onError() {
-                            pbCategoryPhoto.setVisibility(View.GONE);
-                            ivCategoryPhoto.setVisibility(View.VISIBLE);
-                        }
-                    });
+//            Picasso.with(itemView.getContext())
+//                    .load(imageUrl)
+//                    .resize(viewSize, viewSize  + 2*additionalHeight)
+//                    .centerInside()
+//                    .into(ivCategoryPhoto, new Callback() {
+//                        @Override
+//                        public void onSuccess() {
+//                            pbCategoryPhoto.setVisibility(View.GONE);
+//                            ivCategoryPhoto.setVisibility(View.VISIBLE);
+//                        }
+//
+//                        @Override
+//                        public void onError() {
+//                            pbCategoryPhoto.setVisibility(View.GONE);
+//                            ivCategoryPhoto.setVisibility(View.VISIBLE);
+//                        }
+//                    });
 
         } else {
             ivCategoryPhoto.setImageBitmap(null);

@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,12 +15,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.livetv.cell.ListSubCategoryCell;
+import com.muzammilpeer.livetv.constant.PreferencesKeys;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.muzammilpeer.livetv.R;
-import com.muzammilpeer.livetv.cell.ListSubCategoryCell;
 
 import butterknife.Bind;
 
@@ -41,7 +41,6 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     @Bind(R.id.pb_subcategories)
     ProgressBar pbSubCategories;
 
-    public static int gridSize = 2;
 
     GeneralBaseAdapter<ListSubCategoryCell> dataGeneralBaseAdapter;
     private StaggeredGridLayoutManager gaggeredGridLayoutManager;
@@ -108,12 +107,7 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         Log4a.e("onConfigurationChanged", " called");
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridSize = 5;
-        } else {
-            gridSize = 2;
-        }
-        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
+        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), PreferencesKeys.getGridColumnCount(getBaseActivity())));
     }
 
 
@@ -124,14 +118,9 @@ public class ListSubCategoriesFragment extends BaseFragment implements View.OnCl
 
         dataGeneralBaseAdapter = new GeneralBaseAdapter<ListSubCategoryCell>(mContext, R.layout.row_list_subcategory, ListSubCategoryCell.class, this.getLocalDataSource());
 
-        if (getBaseActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridSize = 5;
-        } else {
-            gridSize = 2;
-        }
 
-        rcSubCategories.setHasFixedSize(true);
-        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), gridSize));
+        rcSubCategories.setHasFixedSize(false);
+        rcSubCategories.setLayoutManager(new GridLayoutManager(getBaseActivity(), PreferencesKeys.getGridColumnCount(getBaseActivity())));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StateListAnimator stateListAnimator = AnimatorInflater.loadStateListAnimator(getBaseActivity(),

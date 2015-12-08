@@ -16,6 +16,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_vod_list"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
@@ -42,13 +43,13 @@
             android:id="@+id/tv_vod_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1976D2"
+            android:background="@color/colorCardBottom"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="2"
             android:text="@string/hello_world"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextTitle"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -21,4 +21,6 @@ public class ToolbarUtility {
     public static int getTabsHeight(Context context) {
         return (int) context.getResources().getDimension(R.dimen.tabsHeight);
     }
+
+
 }
