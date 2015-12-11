@@ -1,0 +1,796 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F5B72671C1AE1C400C0ACE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B72661C1AE1C400C0ACE2 /* main.m */; };
+		7F5B726A1C1AE1C400C0ACE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B72691C1AE1C400C0ACE2 /* AppDelegate.m */; };
+		7F5B726D1C1AE1C400C0ACE2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B726C1C1AE1C400C0ACE2 /* ViewController.m */; };
+		7F5B72701C1AE1C400C0ACE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B726E1C1AE1C400C0ACE2 /* Main.storyboard */; };
+		7F5B72731C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B72711C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodeld */; };
+		7F5B72751C1AE1C400C0ACE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72741C1AE1C400C0ACE2 /* Assets.xcassets */; };
+		7F5B72781C1AE1C400C0ACE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72761C1AE1C400C0ACE2 /* LaunchScreen.storyboard */; };
+		7F5B72831C1AE1C400C0ACE2 /* SmartTvPakistanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B72821C1AE1C400C0ACE2 /* SmartTvPakistanTests.m */; };
+		7F5B728E1C1AE1C400C0ACE2 /* SmartTvPakistanUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B728D1C1AE1C400C0ACE2 /* SmartTvPakistanUITests.m */; };
+		7F5B72B91C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72B81C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard */; };
+		7F5B72BA1C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72B81C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard */; };
+		7F5B72BB1C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72B81C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard */; };
+		7F5B72BD1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72BC1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard */; };
+		7F5B72BE1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72BC1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard */; };
+		7F5B72BF1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72BC1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard */; };
+		7F5B72C11C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72C01C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard */; };
+		7F5B72C21C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72C01C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard */; };
+		7F5B72C31C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5B72C01C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F5B727F1C1AE1C400C0ACE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F5B725A1C1AE1C300C0ACE2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F5B72611C1AE1C300C0ACE2;
+			remoteInfo = SmartTvPakistan;
+		};
+		7F5B728A1C1AE1C400C0ACE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F5B725A1C1AE1C300C0ACE2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F5B72611C1AE1C300C0ACE2;
+			remoteInfo = SmartTvPakistan;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7F5B72621C1AE1C400C0ACE2 /* SmartTvPakistan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTvPakistan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F5B72661C1AE1C400C0ACE2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7F5B72681C1AE1C400C0ACE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7F5B72691C1AE1C400C0ACE2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7F5B726B1C1AE1C400C0ACE2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7F5B726C1C1AE1C400C0ACE2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7F5B726F1C1AE1C400C0ACE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7F5B72721C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SmartTvPakistan.xcdatamodel; sourceTree = "<group>"; };
+		7F5B72741C1AE1C400C0ACE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7F5B72771C1AE1C400C0ACE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7F5B72791C1AE1C400C0ACE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F5B727E1C1AE1C400C0ACE2 /* SmartTvPakistanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartTvPakistanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F5B72821C1AE1C400C0ACE2 /* SmartTvPakistanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartTvPakistanTests.m; sourceTree = "<group>"; };
+		7F5B72841C1AE1C400C0ACE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F5B72891C1AE1C400C0ACE2 /* SmartTvPakistanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartTvPakistanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F5B728D1C1AE1C400C0ACE2 /* SmartTvPakistanUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartTvPakistanUITests.m; sourceTree = "<group>"; };
+		7F5B728F1C1AE1C400C0ACE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F5B72B81C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LiveTv_StoryBoard_Normal.storyboard; sourceTree = "<group>"; };
+		7F5B72BC1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LiveTv_StoryBoard_Watch.storyboard; sourceTree = "<group>"; };
+		7F5B72C01C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LiveTv_StoryBoard_TV.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F5B725F1C1AE1C300C0ACE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F5B727B1C1AE1C400C0ACE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F5B72861C1AE1C400C0ACE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7F5B72591C1AE1C300C0ACE2 = {
+			isa = PBXGroup;
+			children = (
+				7F5B72641C1AE1C400C0ACE2 /* SmartTvPakistan */,
+				7F5B72811C1AE1C400C0ACE2 /* SmartTvPakistanTests */,
+				7F5B728C1C1AE1C400C0ACE2 /* SmartTvPakistanUITests */,
+				7F5B72631C1AE1C400C0ACE2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F5B72631C1AE1C400C0ACE2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72621C1AE1C400C0ACE2 /* SmartTvPakistan.app */,
+				7F5B727E1C1AE1C400C0ACE2 /* SmartTvPakistanTests.xctest */,
+				7F5B72891C1AE1C400C0ACE2 /* SmartTvPakistanUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F5B72641C1AE1C400C0ACE2 /* SmartTvPakistan */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B729B1C1AE88300C0ACE2 /* BaseLayer */,
+				7F5B729F1C1AE88300C0ACE2 /* DatabaseLayer */,
+				7F5B72A41C1AE88300C0ACE2 /* NetworkLayer */,
+				7F5B72AB1C1AE88300C0ACE2 /* ProjectLayer */,
+				7F5B72B01C1AE88300C0ACE2 /* UtilityLayer */,
+				7F5B72681C1AE1C400C0ACE2 /* AppDelegate.h */,
+				7F5B72691C1AE1C400C0ACE2 /* AppDelegate.m */,
+				7F5B726B1C1AE1C400C0ACE2 /* ViewController.h */,
+				7F5B726C1C1AE1C400C0ACE2 /* ViewController.m */,
+				7F5B726E1C1AE1C400C0ACE2 /* Main.storyboard */,
+				7F5B72741C1AE1C400C0ACE2 /* Assets.xcassets */,
+				7F5B72761C1AE1C400C0ACE2 /* LaunchScreen.storyboard */,
+				7F5B72791C1AE1C400C0ACE2 /* Info.plist */,
+				7F5B72711C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodeld */,
+				7F5B72651C1AE1C400C0ACE2 /* Supporting Files */,
+			);
+			path = SmartTvPakistan;
+			sourceTree = "<group>";
+		};
+		7F5B72651C1AE1C400C0ACE2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72661C1AE1C400C0ACE2 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7F5B72811C1AE1C400C0ACE2 /* SmartTvPakistanTests */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72821C1AE1C400C0ACE2 /* SmartTvPakistanTests.m */,
+				7F5B72841C1AE1C400C0ACE2 /* Info.plist */,
+			);
+			path = SmartTvPakistanTests;
+			sourceTree = "<group>";
+		};
+		7F5B728C1C1AE1C400C0ACE2 /* SmartTvPakistanUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B728D1C1AE1C400C0ACE2 /* SmartTvPakistanUITests.m */,
+				7F5B728F1C1AE1C400C0ACE2 /* Info.plist */,
+			);
+			path = SmartTvPakistanUITests;
+			sourceTree = "<group>";
+		};
+		7F5B729B1C1AE88300C0ACE2 /* BaseLayer */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B729C1C1AE88300C0ACE2 /* Cell */,
+				7F5B729D1C1AE88300C0ACE2 /* View */,
+				7F5B729E1C1AE88300C0ACE2 /* ViewController */,
+			);
+			path = BaseLayer;
+			sourceTree = "<group>";
+		};
+		7F5B729C1C1AE88300C0ACE2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		7F5B729D1C1AE88300C0ACE2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7F5B729E1C1AE88300C0ACE2 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7F5B729F1C1AE88300C0ACE2 /* DatabaseLayer */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72A01C1AE88300C0ACE2 /* Exception */,
+				7F5B72A11C1AE88300C0ACE2 /* Factory */,
+				7F5B72A21C1AE88300C0ACE2 /* Model */,
+				7F5B72A31C1AE88300C0ACE2 /* Service */,
+			);
+			path = DatabaseLayer;
+			sourceTree = "<group>";
+		};
+		7F5B72A01C1AE88300C0ACE2 /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Exception;
+			sourceTree = "<group>";
+		};
+		7F5B72A11C1AE88300C0ACE2 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		7F5B72A21C1AE88300C0ACE2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F5B72A31C1AE88300C0ACE2 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		7F5B72A41C1AE88300C0ACE2 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72A51C1AE88300C0ACE2 /* Enums */,
+				7F5B72A61C1AE88300C0ACE2 /* Exception */,
+				7F5B72A71C1AE88300C0ACE2 /* Manager */,
+				7F5B72A81C1AE88300C0ACE2 /* Model */,
+				7F5B72A91C1AE88300C0ACE2 /* Protocols */,
+				7F5B72AA1C1AE88300C0ACE2 /* Request */,
+			);
+			path = NetworkLayer;
+			sourceTree = "<group>";
+		};
+		7F5B72A51C1AE88300C0ACE2 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		7F5B72A61C1AE88300C0ACE2 /* Exception */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Exception;
+			sourceTree = "<group>";
+		};
+		7F5B72A71C1AE88300C0ACE2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		7F5B72A81C1AE88300C0ACE2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F5B72A91C1AE88300C0ACE2 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		7F5B72AA1C1AE88300C0ACE2 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		7F5B72AB1C1AE88300C0ACE2 /* ProjectLayer */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72AC1C1AE88300C0ACE2 /* Manager */,
+				7F5B72AD1C1AE88300C0ACE2 /* StoryBoard */,
+				7F5B72AE1C1AE88300C0ACE2 /* ViewControllers */,
+				7F5B72AF1C1AE88300C0ACE2 /* Views */,
+			);
+			path = ProjectLayer;
+			sourceTree = "<group>";
+		};
+		7F5B72AC1C1AE88300C0ACE2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		7F5B72AD1C1AE88300C0ACE2 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72B81C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard */,
+				7F5B72BC1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard */,
+				7F5B72C01C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		7F5B72AE1C1AE88300C0ACE2 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7F5B72AF1C1AE88300C0ACE2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7F5B72B01C1AE88300C0ACE2 /* UtilityLayer */ = {
+			isa = PBXGroup;
+			children = (
+				7F5B72B11C1AE88300C0ACE2 /* FileSystem */,
+				7F5B72B21C1AE88300C0ACE2 /* Keyboard */,
+				7F5B72B31C1AE88300C0ACE2 /* Logger */,
+				7F5B72B41C1AE88300C0ACE2 /* Network */,
+				7F5B72B51C1AE88300C0ACE2 /* Preferences */,
+				7F5B72B61C1AE88300C0ACE2 /* String */,
+				7F5B72B71C1AE88300C0ACE2 /* View */,
+			);
+			path = UtilityLayer;
+			sourceTree = "<group>";
+		};
+		7F5B72B11C1AE88300C0ACE2 /* FileSystem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FileSystem;
+			sourceTree = "<group>";
+		};
+		7F5B72B21C1AE88300C0ACE2 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		7F5B72B31C1AE88300C0ACE2 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		7F5B72B41C1AE88300C0ACE2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		7F5B72B51C1AE88300C0ACE2 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		7F5B72B61C1AE88300C0ACE2 /* String */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
+		7F5B72B71C1AE88300C0ACE2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7F5B72611C1AE1C300C0ACE2 /* SmartTvPakistan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F5B72921C1AE1C400C0ACE2 /* Build configuration list for PBXNativeTarget "SmartTvPakistan" */;
+			buildPhases = (
+				7F5B725E1C1AE1C300C0ACE2 /* Sources */,
+				7F5B725F1C1AE1C300C0ACE2 /* Frameworks */,
+				7F5B72601C1AE1C300C0ACE2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartTvPakistan;
+			productName = SmartTvPakistan;
+			productReference = 7F5B72621C1AE1C400C0ACE2 /* SmartTvPakistan.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7F5B727D1C1AE1C400C0ACE2 /* SmartTvPakistanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F5B72951C1AE1C400C0ACE2 /* Build configuration list for PBXNativeTarget "SmartTvPakistanTests" */;
+			buildPhases = (
+				7F5B727A1C1AE1C400C0ACE2 /* Sources */,
+				7F5B727B1C1AE1C400C0ACE2 /* Frameworks */,
+				7F5B727C1C1AE1C400C0ACE2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F5B72801C1AE1C400C0ACE2 /* PBXTargetDependency */,
+			);
+			name = SmartTvPakistanTests;
+			productName = SmartTvPakistanTests;
+			productReference = 7F5B727E1C1AE1C400C0ACE2 /* SmartTvPakistanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7F5B72881C1AE1C400C0ACE2 /* SmartTvPakistanUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F5B72981C1AE1C400C0ACE2 /* Build configuration list for PBXNativeTarget "SmartTvPakistanUITests" */;
+			buildPhases = (
+				7F5B72851C1AE1C400C0ACE2 /* Sources */,
+				7F5B72861C1AE1C400C0ACE2 /* Frameworks */,
+				7F5B72871C1AE1C400C0ACE2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F5B728B1C1AE1C400C0ACE2 /* PBXTargetDependency */,
+			);
+			name = SmartTvPakistanUITests;
+			productName = SmartTvPakistanUITests;
+			productReference = 7F5B72891C1AE1C400C0ACE2 /* SmartTvPakistanUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F5B725A1C1AE1C300C0ACE2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Muzammil Peer";
+				TargetAttributes = {
+					7F5B72611C1AE1C300C0ACE2 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					7F5B727D1C1AE1C400C0ACE2 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = 7F5B72611C1AE1C300C0ACE2;
+					};
+					7F5B72881C1AE1C400C0ACE2 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = 7F5B72611C1AE1C300C0ACE2;
+					};
+				};
+			};
+			buildConfigurationList = 7F5B725D1C1AE1C300C0ACE2 /* Build configuration list for PBXProject "SmartTvPakistan" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7F5B72591C1AE1C300C0ACE2;
+			productRefGroup = 7F5B72631C1AE1C400C0ACE2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7F5B72611C1AE1C300C0ACE2 /* SmartTvPakistan */,
+				7F5B727D1C1AE1C400C0ACE2 /* SmartTvPakistanTests */,
+				7F5B72881C1AE1C400C0ACE2 /* SmartTvPakistanUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F5B72601C1AE1C300C0ACE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F5B72B91C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard in Resources */,
+				7F5B72781C1AE1C400C0ACE2 /* LaunchScreen.storyboard in Resources */,
+				7F5B72BD1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard in Resources */,
+				7F5B72751C1AE1C400C0ACE2 /* Assets.xcassets in Resources */,
+				7F5B72701C1AE1C400C0ACE2 /* Main.storyboard in Resources */,
+				7F5B72C11C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F5B727C1C1AE1C400C0ACE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F5B72BA1C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard in Resources */,
+				7F5B72BE1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard in Resources */,
+				7F5B72C21C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F5B72871C1AE1C400C0ACE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F5B72BB1C1AE94100C0ACE2 /* LiveTv_StoryBoard_Normal.storyboard in Resources */,
+				7F5B72BF1C1AE96600C0ACE2 /* LiveTv_StoryBoard_Watch.storyboard in Resources */,
+				7F5B72C31C1AE97700C0ACE2 /* LiveTv_StoryBoard_TV.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F5B725E1C1AE1C300C0ACE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F5B72731C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodeld in Sources */,
+				7F5B726D1C1AE1C400C0ACE2 /* ViewController.m in Sources */,
+				7F5B726A1C1AE1C400C0ACE2 /* AppDelegate.m in Sources */,
+				7F5B72671C1AE1C400C0ACE2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F5B727A1C1AE1C400C0ACE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F5B72831C1AE1C400C0ACE2 /* SmartTvPakistanTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F5B72851C1AE1C400C0ACE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F5B728E1C1AE1C400C0ACE2 /* SmartTvPakistanUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F5B72801C1AE1C400C0ACE2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F5B72611C1AE1C300C0ACE2 /* SmartTvPakistan */;
+			targetProxy = 7F5B727F1C1AE1C400C0ACE2 /* PBXContainerItemProxy */;
+		};
+		7F5B728B1C1AE1C400C0ACE2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7F5B72611C1AE1C300C0ACE2 /* SmartTvPakistan */;
+			targetProxy = 7F5B728A1C1AE1C400C0ACE2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7F5B726E1C1AE1C400C0ACE2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F5B726F1C1AE1C400C0ACE2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7F5B72761C1AE1C400C0ACE2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F5B72771C1AE1C400C0ACE2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7F5B72901C1AE1C400C0ACE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7F5B72911C1AE1C400C0ACE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7F5B72931C1AE1C400C0ACE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SmartTvPakistan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.muzammilpeer.SmartTvPakistan;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7F5B72941C1AE1C400C0ACE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SmartTvPakistan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.muzammilpeer.SmartTvPakistan;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7F5B72961C1AE1C400C0ACE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SmartTvPakistanTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.muzammilpeer.SmartTvPakistanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartTvPakistan.app/SmartTvPakistan";
+			};
+			name = Debug;
+		};
+		7F5B72971C1AE1C400C0ACE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SmartTvPakistanTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.muzammilpeer.SmartTvPakistanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartTvPakistan.app/SmartTvPakistan";
+			};
+			name = Release;
+		};
+		7F5B72991C1AE1C400C0ACE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SmartTvPakistanUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.muzammilpeer.SmartTvPakistanUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SmartTvPakistan;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		7F5B729A1C1AE1C400C0ACE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SmartTvPakistanUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.muzammilpeer.SmartTvPakistanUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SmartTvPakistan;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F5B725D1C1AE1C300C0ACE2 /* Build configuration list for PBXProject "SmartTvPakistan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F5B72901C1AE1C400C0ACE2 /* Debug */,
+				7F5B72911C1AE1C400C0ACE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F5B72921C1AE1C400C0ACE2 /* Build configuration list for PBXNativeTarget "SmartTvPakistan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F5B72931C1AE1C400C0ACE2 /* Debug */,
+				7F5B72941C1AE1C400C0ACE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7F5B72951C1AE1C400C0ACE2 /* Build configuration list for PBXNativeTarget "SmartTvPakistanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F5B72961C1AE1C400C0ACE2 /* Debug */,
+				7F5B72971C1AE1C400C0ACE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7F5B72981C1AE1C400C0ACE2 /* Build configuration list for PBXNativeTarget "SmartTvPakistanUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F5B72991C1AE1C400C0ACE2 /* Debug */,
+				7F5B729A1C1AE1C400C0ACE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7F5B72711C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7F5B72721C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodel */,
+			);
+			currentVersion = 7F5B72721C1AE1C400C0ACE2 /* SmartTvPakistan.xcdatamodel */;
+			path = SmartTvPakistan.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 7F5B725A1C1AE1C300C0ACE2 /* Project object */;
+}
