@@ -15,7 +15,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 /**
  * Created by muzammilpeer on 11/7/15.

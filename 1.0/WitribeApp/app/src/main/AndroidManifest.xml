@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.muzammilpeer.livetv">
+    package="com.muzammilpeer.smarttvapp">
 
     <application
-        android:name=".app.LiveTvApplication"
+        android:name="com.muzammilpeer.smarttvapp.app.LiveTvApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name">
@@ -28,7 +28,7 @@
 
         <!--android:theme="@style/AppTheme"-->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.muzammilpeer.smarttvapp.activity.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/Theme.LiveTv.NoActionBar">
@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.muzammilpeer.smarttvapp.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/Theme.LiveTv.NoActionBar">
@@ -50,9 +50,9 @@
 
 
         <service
-            android:name=".service.LiveRecordIntentService"
+            android:name="com.muzammilpeer.smarttvapp.service.LiveRecordIntentService"
             android:enabled="true" />
-        <receiver android:name=".receiver.LiveRecordReceiver" />
+        <receiver android:name="com.muzammilpeer.smarttvapp.receiver.LiveRecordReceiver" />
 
     </application>
 

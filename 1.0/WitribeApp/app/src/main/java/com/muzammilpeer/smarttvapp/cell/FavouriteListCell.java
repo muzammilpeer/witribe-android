@@ -25,7 +25,7 @@ import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.ImageUtil;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.fragment.WebViewFragment;
 
 import butterknife.Bind;

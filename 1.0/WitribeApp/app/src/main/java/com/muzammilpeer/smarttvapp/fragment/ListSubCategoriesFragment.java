@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.cell.ListSubCategoryCell;
 import com.muzammilpeer.smarttvapp.constant.PreferencesKeys;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;

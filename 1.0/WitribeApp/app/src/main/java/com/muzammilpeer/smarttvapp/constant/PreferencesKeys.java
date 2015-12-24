@@ -2,7 +2,7 @@ package com.muzammilpeer.smarttvapp.constant;
 
 import android.content.Context;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 /**
  * Created by muzammilpeer on 10/25/15.

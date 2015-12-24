@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.muzammilpeer.smarttvapp.fragment.TestFragment;
 import com.ranisaurus.baselayer.activity.BaseActivity;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 /**
  * Created by muzammilpeer on 10/25/15.

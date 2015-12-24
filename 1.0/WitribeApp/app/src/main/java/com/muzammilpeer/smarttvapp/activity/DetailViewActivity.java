@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.fragment.PartThreeFragment;
 
 import java.util.ArrayList;

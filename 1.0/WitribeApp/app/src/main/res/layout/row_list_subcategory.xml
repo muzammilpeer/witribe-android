@@ -22,7 +22,7 @@
             android:background="@color/colorPrimary"
             android:layout_weight="1">
 
-            <com.muzammilpeer.livetv.view.SquareImageView
+            <com.muzammilpeer.smarttvapp.view.SquareImageView
                 android:id="@+id/category_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -26,7 +26,7 @@ import com.ranisaurus.newtorklayer.requests.TVScheduleRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.cell.ScheduleListCell;
 
 import java.util.Calendar;

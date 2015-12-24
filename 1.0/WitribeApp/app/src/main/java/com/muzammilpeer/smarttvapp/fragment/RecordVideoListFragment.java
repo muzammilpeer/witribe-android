@@ -19,7 +19,7 @@ import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.file.model.FileInfoModel;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.cell.RecordedVideoListCell;
 
 import java.util.ArrayList;

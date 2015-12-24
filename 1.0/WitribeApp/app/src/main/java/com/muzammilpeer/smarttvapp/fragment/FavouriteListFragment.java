@@ -25,7 +25,7 @@ import com.ranisaurus.newtorklayer.requests.WitribeAMFRequest;
 import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.network.GsonUtil;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 import butterknife.Bind;
 

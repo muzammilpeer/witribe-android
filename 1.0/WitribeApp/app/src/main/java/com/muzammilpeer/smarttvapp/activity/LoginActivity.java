@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.muzammilpeer.smarttvapp.MainActivity;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.fragment.LoginFragment;
 import com.muzammilpeer.smarttvapp.manager.UserManager;
 import com.ranisaurus.baselayer.activity.BaseActivity;

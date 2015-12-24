@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 /**
  * Created by muzammilpeer on 10/25/15.

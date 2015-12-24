@@ -3,7 +3,7 @@ package com.muzammilpeer.smarttvapp.util;
 import android.content.Context;
 import android.content.res.TypedArray;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 /**
  * Created by muzammilpeer on 10/25/15.

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ToggleButton;
 
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

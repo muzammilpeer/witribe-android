@@ -12,7 +12,7 @@ import com.ranisaurus.newtorklayer.models.DataListResponseModel;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.ImageUtil;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.fragment.ChannelDetailFragment;
 
 import java.util.ArrayList;

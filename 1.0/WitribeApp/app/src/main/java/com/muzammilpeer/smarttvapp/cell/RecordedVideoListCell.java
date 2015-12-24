@@ -17,7 +17,7 @@ import com.ranisaurus.utilitylayer.base.BaseModel;
 import com.ranisaurus.utilitylayer.file.DirectoryEnum;
 import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.file.model.FileInfoModel;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 import java.io.File;
 import java.util.Date;

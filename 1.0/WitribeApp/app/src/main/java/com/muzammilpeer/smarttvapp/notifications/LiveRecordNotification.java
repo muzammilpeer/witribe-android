@@ -13,7 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.NotificationCompat;
 
 import com.muzammilpeer.smarttvapp.MainActivity;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.manager.UserManager;
 import com.muzammilpeer.smarttvapp.receiver.LiveRecordReceiver;
 

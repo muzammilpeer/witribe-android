@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
 
-        <com.muzammilpeer.livetv.view.SquareImageView
+        <com.muzammilpeer.smarttvapp.view.SquareImageView
             android:id="@+id/iv_recorded_video_list"
             android:layout_width="@dimen/abc_action_bar_default_height_material"
             android:layout_height="@dimen/abc_action_bar_default_height_material"

@@ -32,7 +32,7 @@ import com.ranisaurus.utilitylayer.logger.Log4a;
 import com.ranisaurus.utilitylayer.view.CGSize;
 import com.ranisaurus.utilitylayer.view.PlayerVideoView;
 import com.ranisaurus.utilitylayer.view.WindowUtil;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.controls.IVideoPlayerControls;
 import com.muzammilpeer.smarttvapp.controls.VideoPlayerControls;
 import com.muzammilpeer.smarttvapp.service.LiveRecordIntentService;

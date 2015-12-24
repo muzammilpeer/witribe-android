@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:layout_margin="5dp">
 
-            <com.muzammilpeer.livetv.view.SquareImageView
+            <com.muzammilpeer.smarttvapp.view.SquareImageView
                 android:id="@+id/iv_programme_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

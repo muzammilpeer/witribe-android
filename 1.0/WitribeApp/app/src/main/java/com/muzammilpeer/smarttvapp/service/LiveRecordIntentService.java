@@ -11,7 +11,7 @@ import com.muzammilpeer.smarttvapp.manager.UserManager;
 import com.muzammilpeer.smarttvapp.notifications.LiveRecordNotification;
 import com.ranisaurus.utilitylayer.file.FileUtil;
 import com.ranisaurus.utilitylayer.logger.Log4a;
-import com.muzammilpeer.livetv.R;
+import com.muzammilpeer.smarttvapp.R;
 
 import java.util.UUID;
 
