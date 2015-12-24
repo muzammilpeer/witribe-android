@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/svMainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundPrimary"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_channel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/preview_image_height"
+            android:background="@android:color/darker_gray">
+
+            <ImageView
+                android:id="@+id/iv_channel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:transitionName="shared_element_transition"
+                android:src="@drawable/ic_personal_video_white_24dp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/pb_channel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_top_viewers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+
+            <LinearLayout
+                android:id="@+id/ll_viewers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_label_viewers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
+                    android:maxLines="1"
+                    android:text="Viewers :"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_viewer_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
+                    android:maxLines="1"
+                    android:text="43434"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:transitionName="shared_element_transition"
+                android:src="@drawable/ic_schedule_white_24dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_favourite_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_bookmark_white_24dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_top_viewers"
+                android:maxLines="15"
+                android:text="@string/large_text"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/tv_related_channels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_channel"
+                android:maxLines="1"
+                android:text="@string/related_channels"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textStyle="bold|italic" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_related_channels"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cardview_height"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="false"
+                android:layout_below="@id/tv_related_channels"
+                android:scrollbars="horizontal|vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

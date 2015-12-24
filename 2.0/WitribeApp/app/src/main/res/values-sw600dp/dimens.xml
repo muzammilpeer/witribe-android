@@ -1,0 +1,9 @@
+<resources>
+    <!-- 7 inch mdpi -->
+    <dimen name="cardview_thumbnail_height">200dp</dimen>
+    <dimen name="cardview_height">220dp</dimen>
+    <dimen name="preview_image_height">250dp</dimen>
+
+    <dimen name="videoplayer_potrait_height">440dp</dimen>
+
+</resources>
