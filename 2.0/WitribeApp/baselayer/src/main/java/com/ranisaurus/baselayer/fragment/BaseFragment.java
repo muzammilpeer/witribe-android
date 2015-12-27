@@ -6,9 +6,11 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.ranisaurus.baselayer.R;
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.baselayer.view.CircularLoader;
 import com.ranisaurus.newtorklayer.manager.NetworkConfig;
@@ -36,9 +38,15 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
     //        outState.putString("file-uri", "");
     private String captureImageURIKey = "captureImageURI";
 
+    public int getRowWidthAtRunTime() {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getBaseActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        return displaymetrics.widthPixels / getResources().getInteger(R.integer.gridColumns);
+    }
 
     public BaseFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

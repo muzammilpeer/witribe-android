@@ -13,7 +13,7 @@
     <string name="title_fps">FPS:</string>
     <string name="title_bitrate">Bit Rate:</string>
 
-    <string name="app_name">LiveTv</string>
+    <string name="app_name">SmartTv</string>
     <string name="no_internet">Internet connection not available</string>
     <string name="no_content">No content available</string>
     <string name="no_schedule_available">No Schedule available</string>
@@ -155,5 +155,32 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+
+    <string name="casting_to_device">Casting to %1$s</string>
+    <string name="currently_playing_song">Song currently playing</string>
+    <string name="currently_playing_artist">Artist of currently playing song</string>
+    <string name="currently_playing_extra_info">Extra info for currently playing song</string>
+    <string name="play_item">Play item</string>
+    <string name="play_pause">play or pause</string>
+    <string name="skip_next">skip to next</string>
+    <string name="skip_prev">skip to previous</string>
+    <string name="touch_to_cast">Touch to Cast</string>
+
+
+    <!--view pager titles-->
+    <string name="view_pager_title_0">Home</string>
+    <string name="view_pager_title_1">Live Channels</string>
+    <string name="view_pager_title_2">Video On Demand</string>
+    <string name="view_pager_title_3">Education</string>
+    <string name="view_pager_title_4">Favourites</string>
+    <string name="view_pager_title_5">Recorded Video</string>
+    <string name="view_pager_title_6">Settings</string>
+
+    <string name="section_continuoue_watching">Continuoue watching</string>
+    <string name="section_top_watched_shows">Top watched shows</string>
+    <string name="section_shows_you_watch">Shows you watch</string>
+
+    <string name="section_more">MORE</string>
 
 </resources>

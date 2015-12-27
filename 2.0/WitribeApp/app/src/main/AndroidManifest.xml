@@ -26,6 +26,18 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.ranisaurus.databaselayer.model" />
 
+        <activity
+            android:name="com.muzammilpeer.smarttvapp.activity.DashboardActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.LiveTv.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Old code -->
+
         <!--android:theme="@style/AppTheme"-->
         <activity
             android:name="com.muzammilpeer.smarttvapp.activity.LoginActivity"
@@ -39,7 +51,7 @@
         </activity>
 
         <activity
-            android:name="com.muzammilpeer.smarttvapp.MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/Theme.LiveTv.NoActionBar">

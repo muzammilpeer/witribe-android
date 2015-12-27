@@ -1,4 +1,4 @@
-package com.muzammilpeer.smarttvapp;
+package com.muzammilpeer.smarttvapp.fragment;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,8 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.muzammilpeer.smarttvapp.transitions.DepthPageTransformer;
+import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.adapter.ChannelsCategoryViewPagaerAdapter;
+import com.muzammilpeer.smarttvapp.transitions.DepthPageTransformer;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;

@@ -1,6 +1,8 @@
 package com.ranisaurus.utilitylayer.reflection;
 
 
+import android.view.View;
+
 import com.ranisaurus.utilitylayer.logger.Log4a;
 
 import java.lang.reflect.Field;
@@ -47,6 +49,21 @@ public class ReflectionUtil {
     public static Object instantiate(Class clazz, Class parmClasss, Object parmValue) {
         try {
             return clazz.getConstructor(parmClasss).newInstance(parmValue);
+        } catch (InstantiationException e) {
+            Log4a.e("InstantiationException", e.getLocalizedMessage());
+        } catch (IllegalAccessException e) {
+            Log4a.e("IllegalAccessException", e.getLocalizedMessage());
+        } catch (NoSuchMethodException e) {
+            Log4a.printException(e);
+        } catch (InvocationTargetException e) {
+            Log4a.printException(e);
+        }
+        return null;
+    }
+
+    public static Object instantiate(Class clazz, Object parmValue) {
+        try {
+            return clazz.getConstructor(View.class).newInstance(parmValue);
         } catch (InstantiationException e) {
             Log4a.e("InstantiationException", e.getLocalizedMessage());
         } catch (IllegalAccessException e) {

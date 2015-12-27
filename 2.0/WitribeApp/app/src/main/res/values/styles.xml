@@ -5,17 +5,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
 
     </style>
 
     <style name="Theme.LiveTv.NoActionBar">
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.LiveTv.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
+    <style name="Theme.LiveTv.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
 
     <style name="Theme.LiveTv.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme.LiveTv.ActionButton" parent="Widget.AppCompat.ActionButton">
+        <item name="android:background">@color/colorPrimary</item>
+        <!-- Your custom styles here -->
+    </style>
 </resources>

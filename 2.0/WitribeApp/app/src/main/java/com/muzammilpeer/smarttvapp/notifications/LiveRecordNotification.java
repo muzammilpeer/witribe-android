@@ -12,8 +12,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.NotificationCompat;
 
-import com.muzammilpeer.smarttvapp.MainActivity;
 import com.muzammilpeer.smarttvapp.R;
+import com.muzammilpeer.smarttvapp.activity.DashboardActivity;
 import com.muzammilpeer.smarttvapp.manager.UserManager;
 import com.muzammilpeer.smarttvapp.receiver.LiveRecordReceiver;
 
@@ -71,7 +71,7 @@ public class LiveRecordNotification extends Notification {
             PendingIntent stopPendingIntent = PendingIntent.getBroadcast(mContext, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             //top listener
-            Intent app = new Intent(mContext, MainActivity.class);
+            Intent app = new Intent(mContext, DashboardActivity.class);
             app.putExtra(INTENT_NOTIFICATION_KEY, INTENT_NOTIFICATION_OPEN_APP);
             PendingIntent appPendingIntent = PendingIntent.getActivity(mContext, 2, app, 0);
 

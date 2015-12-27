@@ -22,6 +22,8 @@ public class GeneralBaseAdapter<VH extends BaseCell>
     int mResourceID;
     private Context mContext;
     private List<? extends BaseModel> mObjects;
+    private int currentColumnWidth;
+
 
     public GeneralBaseAdapter(Context context, int resourceId, Class<VH> vhClass, List<? extends BaseModel> dataSource) {
         mContext = context;
@@ -58,4 +60,11 @@ public class GeneralBaseAdapter<VH extends BaseCell>
         return mObjects.get(position);
     }
 
+    public int getCurrentColumnWidth() {
+        return currentColumnWidth;
+    }
+
+    public void setCurrentColumnWidth(int currentColumnWidth) {
+        this.currentColumnWidth = currentColumnWidth;
+    }
 }

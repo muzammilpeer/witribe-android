@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.ranisaurus.baselayer.activity.BaseActivity;
 import com.ranisaurus.baselayer.adapter.GeneralBaseAdapter;
+import com.ranisaurus.baselayer.adapter.SimpleBaseAdapter;
 import com.ranisaurus.utilitylayer.base.BaseModel;
 
 import butterknife.ButterKnife;
@@ -18,6 +19,7 @@ abstract public class BaseCell<T extends BaseModel> extends RecyclerView.ViewHol
     protected long position;
 
     protected GeneralBaseAdapter mAdapter;
+    protected SimpleBaseAdapter mSimpleAdapter;
 
     public BaseCell(View itemView) {
         super(itemView);
@@ -33,4 +35,9 @@ abstract public class BaseCell<T extends BaseModel> extends RecyclerView.ViewHol
     public void setAdapter(GeneralBaseAdapter adapter) {
         mAdapter = adapter;
     }
+
+    public void setAdapter(SimpleBaseAdapter mSimpleAdapter) {
+        this.mSimpleAdapter = mSimpleAdapter;
+    }
+
 }

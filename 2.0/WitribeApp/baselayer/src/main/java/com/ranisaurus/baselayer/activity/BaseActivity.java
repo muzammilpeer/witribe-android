@@ -6,8 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
@@ -23,14 +21,9 @@ import butterknife.ButterKnife;
 abstract public class BaseActivity extends AppCompatActivity {
 
     protected AtomicBoolean isFragmentLoaded = new AtomicBoolean(false);
-    protected ActionBarDrawerToggle mToggle;
-    protected DrawerLayout mDrawer;
     protected Toolbar mainToolbar;
-
     private TabLayout tabLayoutView;
-
     public boolean isFullScreenOptionEnable = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +46,6 @@ abstract public class BaseActivity extends AppCompatActivity {
 
 
     public void initNetworkCalls() {
-        //setup network layer
 //        NetworkManager.setConfiguration(new NetworkConfig(this);
     }
 
@@ -199,6 +191,11 @@ abstract public class BaseActivity extends AppCompatActivity {
                     .commit();
         }
 
+    }
+
+    public void replaceFragment(Fragment frag, int containerID) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(containerID, frag).addToBackStack(null).commit();
     }
 
     public void replaceFragmentWithoutStack(Fragment frag, int containerID) {

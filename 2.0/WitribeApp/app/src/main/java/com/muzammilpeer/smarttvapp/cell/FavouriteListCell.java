@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.muzammilpeer.smarttvapp.MainActivityFragment;
+import com.muzammilpeer.smarttvapp.fragment.MainActivityFragment;
 import com.muzammilpeer.smarttvapp.manager.UserManager;
 import com.muzammilpeer.smarttvapp.view.SquareImageView;
 import com.ranisaurus.baselayer.cell.BaseCell;

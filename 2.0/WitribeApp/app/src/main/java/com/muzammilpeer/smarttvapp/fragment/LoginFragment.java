@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.muzammilpeer.smarttvapp.MainActivity;
 import com.muzammilpeer.smarttvapp.R;
+import com.muzammilpeer.smarttvapp.activity.DashboardActivity;
 import com.muzammilpeer.smarttvapp.manager.UserManager;
 import com.ranisaurus.baselayer.fragment.BaseFragment;
 import com.ranisaurus.newtorklayer.enums.NetworkRequestEnum;
@@ -149,7 +149,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
                             getBaseActivity().popAllFragment();
                             Log4a.e("Fragment Count after login  = ", getBaseActivity().getFragmentsCount() + "");
-                            Intent intent = new Intent(getBaseActivity(), MainActivity.class);
+                            Intent intent = new Intent(getBaseActivity(), DashboardActivity.class);
                             startActivity(intent);
                             getBaseActivity().finish();
                         }else {

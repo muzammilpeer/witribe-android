@@ -59,7 +59,6 @@ public class ListSubCategoryCell extends BaseCell implements View.OnClickListene
 
         if (model instanceof Data) {
             Data dataSource = (Data) model;
-
             tvCategoryName.setText(dataSource.title.toUpperCase());
             String imageUrl = ("http://pitelevision.com/" + dataSource.mobile_small_image);
 

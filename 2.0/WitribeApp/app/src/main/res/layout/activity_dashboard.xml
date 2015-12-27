@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarlayout_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.LiveTv.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/Theme.LiveTv.PopupOverlay" />
+
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="@android:color/white" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_video_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            custom:cardElevation="8dp">
+
+            <fragment
+                android:id="@+id/fragment_video_playback"
+                android:name="com.muzammilpeer.smarttvapp.controls.AudioPlaybackControlFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_audio_playback_control" />
+        </android.support.v7.widget.CardView>
+
+        <FrameLayout
+            android:id="@+id/framelayout_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/cardview_audio_playback"
+            android:layout_below="@+id/cardview_video_playback">
+
+        </FrameLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_audio_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            custom:cardElevation="8dp">
+
+            <fragment
+                android:id="@+id/fragment_audio_playback"
+                android:name="com.muzammilpeer.smarttvapp.controls.AudioPlaybackControlFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_audio_playback_control" />
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+
+    <!--<RelativeLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
+
+    <!--<android.support.v7.widget.CardView--><!--android:id="@+id/cardview_video_playback"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentBottom="true"--><!--android:visibility="gone"--><!--custom:cardElevation="8dp">-->
+
+    <!--<fragment--><!--android:id="@+id/fragment_video_playback"--><!--android:name="com.muzammilpeer.smarttvapp.controls.AudioPlaybackControlFragment"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentTop="true" />--><!--</android.support.v7.widget.CardView>-->
+
+    <!--<android.support.design.widget.AppBarLayout--><!--android:id="@+id/appbarlayout_dashboard"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:theme="@style/Theme.LiveTv.AppBarOverlay"--><!--android:layout_below="@+id/cardview_video_playback">-->
+
+    <!--<android.support.v7.widget.Toolbar--><!--android:id="@+id/toolbar_dashboard"--><!--android:layout_width="match_parent"--><!--android:layout_height="?attr/actionBarSize"--><!--android:background="?attr/colorPrimary"--><!--android:elevation="4dp"--><!--app:popupTheme="@style/Theme.LiveTv.PopupOverlay"--><!--app:layout_scrollFlags="scroll|enterAlways" />-->
+
+
+    <!--<android.support.design.widget.TabLayout--><!--android:id="@+id/tablayout_dashboard"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--app:tabIndicatorColor="@android:color/white"--><!--app:tabIndicatorHeight="3dp"--><!--app:tabMode="scrollable"--><!--app:tabSelectedTextColor="@android:color/white"--><!--app:tabTextColor="@android:color/white" />-->
+
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+
+    <!--<FrameLayout--><!--android:id="@+id/framelayout_dashboard"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:layout_above="@+id/cardview_audio_playback"--><!--android:layout_below="@+id/appbarlayout_dashboard" />-->
+
+    <!--<android.support.v7.widget.CardView--><!--android:id="@+id/cardview_audio_playback"--><!--custom:cardElevation="8dp"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentBottom="true"--><!--android:visibility="gone">-->
+
+    <!--<fragment--><!--android:id="@+id/fragment_audio_playback"--><!--android:name="com.muzammilpeer.smarttvapp.controls.AudioPlaybackControlFragment"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentBottom="true" />-->
+
+    <!--</android.support.v7.widget.CardView>-->
+
+    <!--</RelativeLayout>-->
+</android.support.design.widget.CoordinatorLayout>
+

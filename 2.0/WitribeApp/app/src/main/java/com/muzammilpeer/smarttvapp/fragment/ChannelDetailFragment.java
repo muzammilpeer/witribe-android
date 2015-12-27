@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.muzammilpeer.smarttvapp.MainActivityFragment;
 import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.cell.RelatedChannelCell;
 import com.muzammilpeer.smarttvapp.manager.UserManager;

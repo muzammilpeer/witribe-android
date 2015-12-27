@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.muzammilpeer.smarttvapp.MainActivityFragment;
+import com.muzammilpeer.smarttvapp.fragment.MainActivityFragment;
 import com.muzammilpeer.smarttvapp.constant.PreferencesKeys;
 import com.muzammilpeer.smarttvapp.fragment.EducationListFragment;
 import com.muzammilpeer.smarttvapp.view.SquareImageView;

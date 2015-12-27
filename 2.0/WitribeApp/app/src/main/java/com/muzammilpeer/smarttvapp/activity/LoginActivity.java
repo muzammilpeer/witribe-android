@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.muzammilpeer.smarttvapp.MainActivity;
 import com.muzammilpeer.smarttvapp.R;
 import com.muzammilpeer.smarttvapp.fragment.LoginFragment;
 import com.muzammilpeer.smarttvapp.manager.UserManager;
@@ -34,7 +33,7 @@ public class LoginActivity extends BaseActivity {
         if (savedInstanceState == null) {
 
             if (UserManager.getInstance().isUserLoggedIn()) {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, DashboardActivity.class);
                 startActivity(intent);
                 finish();
             } else {
