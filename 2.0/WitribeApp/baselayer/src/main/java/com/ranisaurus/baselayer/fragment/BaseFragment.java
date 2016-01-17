@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ranisaurus.baselayer.R;
-import com.ranisaurus.baselayer.activity.BaseActivity;
+import com.ranisaurus.baselayer.activity.BaseAppCompactActivity;
 import com.ranisaurus.baselayer.view.CircularLoader;
 import com.ranisaurus.newtorklayer.manager.NetworkConfig;
 import com.ranisaurus.newtorklayer.manager.NetworkManager;
@@ -115,8 +115,8 @@ public class BaseFragment extends Fragment implements IResponseProtocol {
         return (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public BaseActivity getBaseActivity() {
-        return (BaseActivity) this.getActivity();
+    public BaseAppCompactActivity getBaseActivity() {
+        return (BaseAppCompactActivity) this.getActivity();
     }
 
 

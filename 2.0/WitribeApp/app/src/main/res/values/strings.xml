@@ -183,4 +183,12 @@
 
     <string name="section_more">MORE</string>
 
+    <string name="settings_change_picture">Change Picture</string>
+    <string name="settings_change_password">Change Password</string>
+    <string name="settings_unsubscribe">Unsubscribe</string>
+    <string name="settings_payment">Payment</string>
+    <string name="settings_options">Options</string>
+    <string name="settings_request_for_vod">Request for Video</string>
+    <string name="settings_logout">Logout</string>
+
 </resources>

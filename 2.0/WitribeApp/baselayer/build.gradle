@@ -35,6 +35,11 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:palette-v7:23.1.1'
     compile 'com.android.support:multidex:1.0.1'
+    //lean back support for smart tv
+    compile 'com.android.support:leanback-v17:23.1.1'
+    //android new image loading library
+    compile 'com.github.bumptech.glide:glide:3.4.+'
+
     //View Injections
     compile 'com.jakewharton:butterknife:7.0.1'
     compile project(':databaselayer')
